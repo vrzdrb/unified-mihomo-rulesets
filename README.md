@@ -26,32 +26,32 @@ rule-providers:
     type: http
     behavior: domain
     format: mrs
-    url: https://raw.githubusercontent.com/vrzdrb/unified-mihomo-rulesets/master/uni-domains.mrs
-    path: ./uni-domains.mrs
+    url: https://github.com/vrzdrb/unified-mihomo-rulesets/blob/main/uni-domains.mrs
+    path: ./unified/uni-domains.mrs
     interval: 86400
   
   uni-ip4-cidr:
     type: http
     behavior: ipcidr
     format: mrs
-    url: https://raw.githubusercontent.com/vrzdrb/unified-mihomo-rulesets/master/uni-ip4-cidr.mrs
-    path: ./uni-ip4-cidr.mrs
+    url: https://github.com/vrzdrb/unified-mihomo-rulesets/blob/main/uni-ip4-cidr.mrs
+    path: ./unified/uni-ip4-cidr.mrs
     interval: 86400
   
   uni-app-proxy:
     type: http
     behavior: classical
     format: yaml
-    url: https://raw.githubusercontent.com/vrzdrb/unified-mihomo-rulesets/master/uni-app-proxy.yaml
-    path: ./uni-app-proxy.yaml
+    url: https://github.com/vrzdrb/unified-mihomo-rulesets/blob/main/uni-app-proxy.yaml
+    path: ./unified/uni-app-proxy.yaml
     interval: 86400
   
   uni-app-direct:
     type: http
     behavior: classical
     format: yaml
-    url: https://raw.githubusercontent.com/vrzdrb/unified-mihomo-rulesets/master/uni-app-direct.yaml
-    path: ./uni-app-direct.yaml
+    url: https://github.com/vrzdrb/unified-mihomo-rulesets/blob/main/uni-app-proxy.yaml
+    path: ./unified/uni-app-direct.yaml
     interval: 86400
 
 rules:

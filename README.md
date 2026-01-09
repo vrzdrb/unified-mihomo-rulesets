@@ -8,7 +8,7 @@ The scripts generate combined mihomo rules &amp; rulesets from 40+ lists from re
 - [legiz-ru mihomo-rule-sets (apps, games, torrent-clients](https://github.com/legiz-ru/mihomo-rule-sets/tree/main/other)
 
 # Usage:
-'''yaml
+```yaml
 sniffer:
   enable: true
   force-dns-mapping: true
@@ -60,4 +60,4 @@ rules:
   - RULE-SET,uni-app-proxy,PROXY
   - RULE-SET,uni-app-direct,DIRECT
   - MATCH,DIRECT
-'''
+```

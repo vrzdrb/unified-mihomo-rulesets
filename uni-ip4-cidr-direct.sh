@@ -1,34 +1,13 @@
 #!/bin/bash
 
-OUTPUT_YAML="uni-ip4-cidr.yaml"
-OUTPUT_TXT="uni-ip4-cidr.txt"
+OUTPUT_YAML="uni-ip4-cidr-direct.yaml"
+OUTPUT_TXT="uni-ip4-cidr-direct.txt"
 TEMP_FILE=$(mktemp)
 CLEANED_CIDRS=$(mktemp)
 
 # Список URL-источников
 URLS=(
-    "https://raw.githubusercontent.com/1andrevich/Re-filter-lists/refs/heads/main/community_ips.lst"
-    "https://raw.githubusercontent.com/1andrevich/Re-filter-lists/refs/heads/main/discord_ips.lst"
-    "https://raw.githubusercontent.com/1andrevich/Re-filter-lists/refs/heads/main/ipsum.lst"
-    "https://raw.githubusercontent.com/1andrevich/Re-filter-lists/refs/heads/main/sum/input/ip.lst"
-    "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Subnets/IPv4/Discord.lst"
-    "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Subnets/IPv4/Meta.lst"
-    "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Subnets/IPv4/Twitter.lst"
-    "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Subnets/IPv4/cloudflare.lst"
-    "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Subnets/IPv4/cloudfront.lst"
-    "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Subnets/IPv4/digitalocean.lst"
-    "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Subnets/IPv4/discord.lst"
-    "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Subnets/IPv4/hetzner.lst"
-    "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Subnets/IPv4/meta.lst"
-    "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Subnets/IPv4/ovh.lst"
-    "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Subnets/IPv4/roblox.lst"
-    "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Subnets/IPv4/telegram.lst"
-    "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Subnets/IPv4/twitter.lst"
-    "https://community.antifilter.download/list/community.lst"
-    "https://iplist.opencck.org/?format=clashx&data=cidr4&append=timeout%3D1d%22%20mode=https%20dst-path=cidr4.rsc"
-    "https://raw.githubusercontent.com/GhostRooter0953/discord-voice-ips/refs/heads/master/main_domains/discord-main-ip-list"
-    "https://raw.githubusercontent.com/GhostRooter0953/discord-voice-ips/refs/heads/master/voice_domains/discord-voice-ip-list"
-    "https://dl.dropboxusercontent.com/s/03w5ojffn6rhpk61rmv26/roblox-ip.yaml?rlkey=axx6ru32c4sg9rcbu65f06s4p&e=1&st=mz0oygfc&dl=0"
+    "https://raw.githubusercontent.com/AntiZapret/antizapret/refs/heads/master/blacklist4.txt"
 )
 
 echo "Начинаю загрузку IP-диапазонов из ${#URLS[@]} источников..."
@@ -49,8 +28,8 @@ echo "Исходных строк: $(wc -l < "$TEMP_FILE")"
 
 # Обрабатываем данные и сохраняем в очищенный файл
 cat "$TEMP_FILE" | \
-# 1. Удаляем комментарии
-grep -v '^[[:space:]]*[#!]' | \
+# 1. Удаляем строки, содержащие # (в любом месте)
+grep -v '#' | \
 # 2. Удаляем пустые строки
 grep -v '^[[:space:]]*$' | \
 # 3. Удаляем префикс IP-CIDR, если есть

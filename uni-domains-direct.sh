@@ -2,20 +2,15 @@
 
 # Создаем временные файлы
 TEMP_FILE=$(mktemp)
-OUTPUT_YAML="uni-domains-direct.yaml"
 OUTPUT_TXT="uni-domains-direct.txt"
 UNIQUE_DOMAINS=$(mktemp)
 
-# Очищаем выходные файлы
-> "$OUTPUT_YAML"
 > "$OUTPUT_TXT"
-
-# Добавляем первую строку с payload в YAML:
-echo "payload:" > "$OUTPUT_YAML"
 
 # Список URL-источников
 URLS=(
     "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Russia/outside-raw.lst"
+    "https://dl.dropboxusercontent.com/s/8ochab4da6m3pns4it23e/uni-custom-d-direct.yaml?rlkey=lacxcumsq72n7tjl7y3japj3s&e=1&st=nz6loz00&dl=0"
 )
 
 echo "Начинаю загрузку доменов из ${#URLS[@]} источников..."
@@ -71,34 +66,22 @@ sort -u > "$UNIQUE_DOMAINS"
 echo "Найдено уникальных доменов: $(wc -l < "$UNIQUE_DOMAINS")"
 echo ""
 
-# Сохраняем очищенные домены в текстовый файл (без форматирования Clash)
-echo "Сохраняю очищенные домены в $OUTPUT_TXT..."
-cp "$UNIQUE_DOMAINS" "$OUTPUT_TXT"
+# Преобразуем в нужный формат:   - DOMAIN-SUFFIX,domain.com,DIRECT
+echo "Форматирую домены в нужный вид..."
+# Добавляем отступ и форматирование для каждого домена
+sed 's/^/  - DOMAIN-SUFFIX,/' "$UNIQUE_DOMAINS" | sed 's/$/,DIRECT/' > "$OUTPUT_TXT"
+
 echo "Сохранено в $OUTPUT_TXT: $(wc -l < "$OUTPUT_TXT") доменов"
 echo ""
-
-echo "Формирую итоговый файл $OUTPUT_YAML..."
-
-# Преобразуем в формат Clash и добавляем в выходной файл
-while IFS= read -r domain; do
-    # Пропускаем пустые строки после всех преобразований
-    if [[ -n "$domain" ]]; then
-        # Добавляем два пробела в начале и формат DOMAIN-SUFFIX
-        echo "  - DOMAIN-SUFFIX,$domain" >> "$OUTPUT_YAML"
-    fi
-done < "$UNIQUE_DOMAINS"
-
-echo "Готово! Создан файл: $OUTPUT_YAML"
-echo "Всего доменов в YAML: $(grep -c "DOMAIN-SUFFIX" "$OUTPUT_YAML")"
 
 # Показываем примеры из обоих файлов
 echo ""
 echo "=== Примеры данных ==="
 echo "Первые 5 доменов из $OUTPUT_TXT:"
 head -5 "$OUTPUT_TXT"
-echo ""
-echo "Первые 5 записей из $OUTPUT_YAML:"
-head -6 "$OUTPUT_YAML"  # 6 строк, чтобы захватить "payload:" и 5 доменов
 
 # Очищаем временные файлы
 rm -f "$TEMP_FILE" "$UNIQUE_DOMAINS"
+
+echo ""
+echo "Готово! Все домены сохранены в формате Clash (DIRECT) в файле $OUTPUT_TXT"

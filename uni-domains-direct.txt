@@ -1,35 +1,38 @@
-1018213540.rsc.cdn77.org
-avtodor-tr.ru
-b2c-ticket-sentry.onelya.ru
-bitrix.info
-bkvet.ru
-cdn1.ozonusercontent.com
-cms1.dzvr.ru
-counter.yadro.ru
-dzvr.ru
-fairplay-proxy.ott.yandex.ru
-fssp.gov.ru
-gosuslugi.ru
-gov.ru
-graphql.kinopoisk.ru
-gu-st.ru
-lemanapro.ru
-leroymerlin.ru
-mobileapp.russianpost.ru
-mosenergosbyt.ru
-mosreg.ru
-mos.ru
-nalog.ru
-ozon.ru
-pesc.ru
-pochta.ru
-reso.ru
-rosreestr.gov.ru
-rzd-bonus.ru
-rzd.ru
-showip.net
-sys.refocus.ru
-vshark.ttk.ru
-widevine-proxy.ott.yandex.ru
-xn--90aijkdmaud0d.xn--p1ai
-yandex.net
+  - DOMAIN-SUFFIX,1018213540.rsc.cdn77.org,DIRECT
+  - DOMAIN-SUFFIX,avtodor-tr.ru,DIRECT
+  - DOMAIN-SUFFIX,b2c-ticket-sentry.onelya.ru,DIRECT
+  - DOMAIN-SUFFIX,bitrix.info,DIRECT
+  - DOMAIN-SUFFIX,bkvet.ru,DIRECT
+  - DOMAIN-SUFFIX,cdn1.ozonusercontent.com,DIRECT
+  - DOMAIN-SUFFIX,cms1.dzvr.ru,DIRECT
+  - DOMAIN-SUFFIX,counter.yadro.ru,DIRECT
+  - DOMAIN-SUFFIX,domain-suffix,github.com,direct,DIRECT
+  - DOMAIN-SUFFIX,domain-suffix,tencent.com,direct,DIRECT
+  - DOMAIN-SUFFIX,domain-suffix,wechat.com,direct,DIRECT
+  - DOMAIN-SUFFIX,dzvr.ru,DIRECT
+  - DOMAIN-SUFFIX,fairplay-proxy.ott.yandex.ru,DIRECT
+  - DOMAIN-SUFFIX,fssp.gov.ru,DIRECT
+  - DOMAIN-SUFFIX,gosuslugi.ru,DIRECT
+  - DOMAIN-SUFFIX,gov.ru,DIRECT
+  - DOMAIN-SUFFIX,graphql.kinopoisk.ru,DIRECT
+  - DOMAIN-SUFFIX,gu-st.ru,DIRECT
+  - DOMAIN-SUFFIX,lemanapro.ru,DIRECT
+  - DOMAIN-SUFFIX,leroymerlin.ru,DIRECT
+  - DOMAIN-SUFFIX,mobileapp.russianpost.ru,DIRECT
+  - DOMAIN-SUFFIX,mosenergosbyt.ru,DIRECT
+  - DOMAIN-SUFFIX,mosreg.ru,DIRECT
+  - DOMAIN-SUFFIX,mos.ru,DIRECT
+  - DOMAIN-SUFFIX,nalog.ru,DIRECT
+  - DOMAIN-SUFFIX,ozon.ru,DIRECT
+  - DOMAIN-SUFFIX,pesc.ru,DIRECT
+  - DOMAIN-SUFFIX,pochta.ru,DIRECT
+  - DOMAIN-SUFFIX,reso.ru,DIRECT
+  - DOMAIN-SUFFIX,rosreestr.gov.ru,DIRECT
+  - DOMAIN-SUFFIX,rzd-bonus.ru,DIRECT
+  - DOMAIN-SUFFIX,rzd.ru,DIRECT
+  - DOMAIN-SUFFIX,showip.net,DIRECT
+  - DOMAIN-SUFFIX,sys.refocus.ru,DIRECT
+  - DOMAIN-SUFFIX,vshark.ttk.ru,DIRECT
+  - DOMAIN-SUFFIX,widevine-proxy.ott.yandex.ru,DIRECT
+  - DOMAIN-SUFFIX,xn--90aijkdmaud0d.xn--p1ai,DIRECT
+  - DOMAIN-SUFFIX,yandex.net,DIRECT

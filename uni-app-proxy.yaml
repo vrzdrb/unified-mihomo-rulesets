@@ -1,7 +1,6 @@
 payload:
   - PROCESS-NAME-REGEX,(?i).*Protonpass.*
   - PROCESS-NAME-REGEX,(?i).*Protonmail.*
-  - PROCESS-NAME-REGEX,(?i).*Telegram.*
   - PROCESS-NAME-REGEX,(?i).*Whatsapp.*
   - PROCESS-NAME-REGEX,(?i).*Instagram.*
   - PROCESS-NAME-REGEX,(?i).*Facebook.*
@@ -25,4 +24,3 @@ payload:
   - PROCESS-NAME-REGEX,(?i).*Element.*
   - PROCESS-NAME-REGEX,(?i).*Fluffychat.*
   - PROCESS-NAME-REGEX,(?i).*Nheko.*
-  - PROCESS-NAME-REGEX,(?i).*Thunderbird.*

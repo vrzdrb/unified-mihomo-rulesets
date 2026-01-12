@@ -2,16 +2,11 @@
 
 # Создаем временные файлы
 TEMP_FILE=$(mktemp)
-OUTPUT_YAML="uni-domains.yaml"
 OUTPUT_TXT="uni-domains.txt"
 UNIQUE_DOMAINS=$(mktemp)
 
 # Очищаем выходные файлы
-> "$OUTPUT_YAML"
 > "$OUTPUT_TXT"
-
-# Добавляем первую строку с payload в YAML:
-echo "payload:" > "$OUTPUT_YAML"
 
 # Список URL-источников
 URLS=(
@@ -47,6 +42,7 @@ URLS=(
     "https://raw.githubusercontent.com/GhostRooter0953/discord-voice-ips/refs/heads/master/voice_domains/discord-voice-domains-list"
     "https://raw.githubusercontent.com/sjhgvr/oisd/refs/heads/main/domainswild2_nsfw.txt"
     "https://dl.dropboxusercontent.com/s/5cjhhmtthc0va3xo1pfy5/roblox-domains.yaml?rlkey=ab12bw3htswbc8lf1eeb5johu&e=1&st=mmk7azk4&dl=0"
+    "https://dl.dropboxusercontent.com/s/tltd3bt9fla2seh80d0ls/uni-custom-d-proxy.yaml?rlkey=u2fl0n9dw2vpd5qe4r610ni8o&e=1&st=ad33j8j4&dl=0"
 )
 
 echo "Начинаю загрузку доменов из ${#URLS[@]} источников..."
@@ -102,34 +98,22 @@ sort -u > "$UNIQUE_DOMAINS"
 echo "Найдено уникальных доменов: $(wc -l < "$UNIQUE_DOMAINS")"
 echo ""
 
-# Сохраняем очищенные домены в текстовый файл (без форматирования Clash)
-echo "Сохраняю очищенные домены в $OUTPUT_TXT..."
-cp "$UNIQUE_DOMAINS" "$OUTPUT_TXT"
+# Преобразуем в нужный формат:   - DOMAIN-SUFFIX,domain.com,PROXY
+echo "Форматирую домены в нужный вид..."
+# Добавляем отступ и форматирование для каждого домена
+sed 's/^/  - DOMAIN-SUFFIX,/' "$UNIQUE_DOMAINS" | sed 's/$/,PROXY/' > "$OUTPUT_TXT"
+
 echo "Сохранено в $OUTPUT_TXT: $(wc -l < "$OUTPUT_TXT") доменов"
 echo ""
-
-echo "Формирую итоговый файл $OUTPUT_YAML..."
-
-# Преобразуем в формат Clash и добавляем в выходной файл
-while IFS= read -r domain; do
-    # Пропускаем пустые строки после всех преобразований
-    if [[ -n "$domain" ]]; then
-        # Добавляем два пробела в начале и формат DOMAIN-SUFFIX
-        echo "  - DOMAIN-SUFFIX,$domain" >> "$OUTPUT_YAML"
-    fi
-done < "$UNIQUE_DOMAINS"
-
-echo "Готово! Создан файл: $OUTPUT_YAML"
-echo "Всего доменов в YAML: $(grep -c "DOMAIN-SUFFIX" "$OUTPUT_YAML")"
 
 # Показываем примеры из обоих файлов
 echo ""
 echo "=== Примеры данных ==="
 echo "Первые 5 доменов из $OUTPUT_TXT:"
 head -5 "$OUTPUT_TXT"
-echo ""
-echo "Первые 5 записей из $OUTPUT_YAML:"
-head -6 "$OUTPUT_YAML"  # 6 строк, чтобы захватить "payload:" и 5 доменов
 
 # Очищаем временные файлы
 rm -f "$TEMP_FILE" "$UNIQUE_DOMAINS"
+
+echo ""
+echo "Готово! Все домены сохранены в формате Clash в файле $OUTPUT_TXT"

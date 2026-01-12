@@ -1,0 +1,5 @@
+  - DOMAIN-SUFFIX,startpage.com,PROXY
+  - DOMAIN-SUFFIX,duckduckgo.com,PROXY
+  - DOMAIN-SUFFIX,google.com,PROXY
+  - DOMAIN-SUFFIX,bing.com,PROXY
+  - DOMAIN-SUFFIX,yahoo.com,PROXY

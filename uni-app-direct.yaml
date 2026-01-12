@@ -1,8 +1,8 @@
 payload:
-  - PROCESS-NAME-REGEX,(?i)Anydesk.*
-  - PROCESS-NAME-REGEX,(?i)Radmin.*
-  - PROCESS-NAME-REGEX,(?i)Teamviewer.*
-  - PROCESS-NAME-REGEX,(?i)Steam.*
+  - PROCESS-NAME-REGEX,(?i).*Anydesk.*
+  - PROCESS-NAME-REGEX,(?i).*Radmin.*
+  - PROCESS-NAME-REGEX,(?i).*Teamviewer.*
+  - PROCESS-NAME-REGEX,(?i).*Steam.*
   - PROCESS-NAME-REGEX,(?i).*BitTorrent.*
   - PROCESS-NAME-REGEX,(?i).*utweb.*
   - PROCESS-NAME-REGEX,(?i).*btweb.*
@@ -95,6 +95,7 @@ payload:
   - PROCESS-NAME,com.uip.gosuslugi2
   - PROCESS-NAME,com.vk.clips
   - PROCESS-NAME,com.vk.im
+  - PROCESS-NAME,com.tencent.mm
   - PROCESS-NAME,com.vk.vkvideo
   - PROCESS-NAME,com.wildberries.ru
   - PROCESS-NAME,com.yandex.bank
@@ -458,3 +459,4 @@ payload:
   - PROCESS-NAME,KRSDKExternal.exe    
   - DOMAIN-SUFFIX,faceit.com
   - DOMAIN-SUFFIX,faceit-cdn.net
+

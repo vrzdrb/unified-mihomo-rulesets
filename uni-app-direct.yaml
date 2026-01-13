@@ -357,6 +357,7 @@ payload:
   - PROCESS-NAME,mobi.zona
   - PROCESS-NAME,com.bittorrent.client
   - PROCESS-NAME,com.dv.adm
+  - PROCESS-NAME,com.tencent.mm
   - PROCESS-NAME,org.freedownloadmanager.fdm
   - PROCESS-NAME,com.houseoflife.bitlord
   - PROCESS-NAME,connect.torrentpower

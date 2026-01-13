@@ -1,87 +1,26 @@
 #!/bin/bash
 
-# Создаем временные файлы
-TEMP_FILE=$(mktemp)
-OUTPUT_TXT="uni-domains-direct.txt"
-UNIQUE_DOMAINS=$(mktemp)
-
-> "$OUTPUT_TXT"
-
-# Список URL-источников
-URLS=(
+T=$(mktemp) && U=$(mktemp) && O="uni-domains-direct.yaml"
+> "$O"
+urls=(
     "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Russia/outside-raw.lst"
     "https://dl.dropboxusercontent.com/s/8ochab4da6m3pns4it23e/uni-custom-d-direct.yaml?rlkey=lacxcumsq72n7tjl7y3japj3s&e=1&st=nz6loz00&dl=0"
 )
 
-echo "Начинаю загрузку доменов из ${#URLS[@]} источников..."
-
-# Обрабатываем каждый URL
-for url in "${URLS[@]}"; do
-    echo "Обрабатываю: $(basename "$url")"
-    
-    # Скачиваем данные
-    curl -sSL --connect-timeout 10 --max-time 30 "$url" >> "$TEMP_FILE" 2>/dev/null
-    
-    if [ $? -ne 0 ]; then
-        echo "  ⚠️  Ошибка при загрузке $url"
-    else
-        echo "  ✓ Успешно загружено"
-    fi
+echo "Загрузка ${#urls[@]} источников..."
+for u in "${urls[@]}"; do
+    echo -n "$(basename "$u")..."
+    curl -sSL --connect-timeout 10 --max-time 30 "$u" >> "$T" 2>/dev/null && echo " ✓" || echo " ✗"
 done
 
-echo ""
-echo "Очищаю и обрабатываю данные..."
+echo -n "Обработка..." && \
+sed -i 's/^[0-9]\+\.[0-9]\+\.[0-9]\+\.[0-9]\+[[:space:]]\+//;s/^[[:space:]]*127\.0\.0\.1[[:space:]]\+//;s/^[[:space:]]*0\.0\.0\.0[[:space:]]\+//' "$T" && \
+grep -v '#' "$T" | grep -v '^[[:space:]]*!' | grep -v '^[[:space:]]*$' | \
+sed 's/^[[:space:]]*DOMAIN-SUFFIX,[[:space:]]*//i;s/^[[:space:]]*DOMAIN,[[:space:]]*//i;s/^[[:space:]]*-[[:space:]]*//;s/["'\'']//g' | \
+grep '\.' | sed 's/^[[:space:]]*//;s/[[:space:]]*$//' | tr '[:upper:]' '[:lower:]' | sort -u > "$U"
 
-# Обрабатываем hosts-файл формат (0.0.0.0 domain.com)
-# Удаляем IP-адреса, оставляя только домены
-sed -i 's/^[0-9]\+\.[0-9]\+\.[0-9]\+\.[0-9]\+[[:space:]]\+//' "$TEMP_FILE"
-sed -i 's/^[[:space:]]*127\.0\.0\.1[[:space:]]\+//' "$TEMP_FILE"
-sed -i 's/^[[:space:]]*0\.0\.0\.0[[:space:]]\+//' "$TEMP_FILE"
+echo " найдено $(wc -l < "$U") доменов" && echo "payload:" > "$O" && \
+sed "s/^/  - '+./;s/$/'/" "$U" >> "$O"
 
-# Очищаем данные:
-# 1. Удаляем строки, содержащие # в любом месте (комментарии)
-# 2. Удаляем строки, начинающиеся с !
-# 3. Удаляем пустые строки
-# 4. Удаляем строки, содержащие только пробелы
-# 5. Удаляем префикс "DOMAIN-SUFFIX," если он уже есть в некоторых источниках
-# 6. Удаляем префикс "DOMAIN,"
-# 7. Удаляем префикс "  - " если он есть
-# 8. Удаляем кавычки
-# 9. Оставляем только строки, содержащие точку (чтобы отфильтровать не-домены)
-# 10. Удаляем начальные и конечные пробелы
-# 11. Конвертируем в нижний регистр для единообразия
-
-grep -v '#' "$TEMP_FILE" | \
-grep -v '^[[:space:]]*!' | \
-grep -v '^[[:space:]]*$' | \
-sed 's/^[[:space:]]*DOMAIN-SUFFIX,[[:space:]]*//i' | \
-sed 's/^[[:space:]]*DOMAIN,[[:space:]]*//i' | \
-sed 's/^[[:space:]]*-[[:space:]]*//' | \
-sed 's/["'\'']//g' | \
-grep '\.' | \
-sed 's/^[[:space:]]*//;s/[[:space:]]*$//' | \
-tr '[:upper:]' '[:lower:]' | \
-sort -u > "$UNIQUE_DOMAINS"
-
-echo "Найдено уникальных доменов: $(wc -l < "$UNIQUE_DOMAINS")"
-echo ""
-
-# Преобразуем в нужный формат:   - DOMAIN-SUFFIX,domain.com,DIRECT
-echo "Форматирую домены в нужный вид..."
-# Добавляем отступ и форматирование для каждого домена
-sed 's/^/  - DOMAIN-SUFFIX,/' "$UNIQUE_DOMAINS" | sed 's/$/,DIRECT/' > "$OUTPUT_TXT"
-
-echo "Сохранено в $OUTPUT_TXT: $(wc -l < "$OUTPUT_TXT") доменов"
-echo ""
-
-# Показываем примеры из обоих файлов
-echo ""
-echo "=== Примеры данных ==="
-echo "Первые 5 доменов из $OUTPUT_TXT:"
-head -5 "$OUTPUT_TXT"
-
-# Очищаем временные файлы
-rm -f "$TEMP_FILE" "$UNIQUE_DOMAINS"
-
-echo ""
-echo "Готово! Все домены сохранены в формате Clash (DIRECT) в файле $OUTPUT_TXT"
+echo "Первый домен: $(head -2 "$O" | tail -1)"
+rm -f "$T" "$U" && echo "Сохранено в $O"

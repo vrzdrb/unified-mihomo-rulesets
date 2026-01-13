@@ -1,11 +1,7 @@
 #!/bin/bash
 
-OUTPUT_TXT="uni-ip4-cidr.txt"
-TEMP_FILE=$(mktemp)
-CLEANED_CIDRS=$(mktemp)
-
-# Список URL-источников
-URLS=(
+T=$(mktemp) && O="uni-ip4-cidr.yaml" && > "$O"
+urls=(
     "https://raw.githubusercontent.com/1andrevich/Re-filter-lists/refs/heads/main/community_ips.lst"
     "https://raw.githubusercontent.com/1andrevich/Re-filter-lists/refs/heads/main/discord_ips.lst"
     "https://raw.githubusercontent.com/1andrevich/Re-filter-lists/refs/heads/main/ipsum.lst"
@@ -30,62 +26,43 @@ URLS=(
     "https://dl.dropboxusercontent.com/s/03w5ojffn6rhpk61rmv26/roblox-ip.yaml?rlkey=axx6ru32c4sg9rcbu65f06s4p&e=1&st=mz0oygfc&dl=0"
 )
 
-echo "Начинаю загрузку IP-диапазонов из ${#URLS[@]} источников..."
+echo "Загрузка ${#urls[@]} источников..."
+for u in "${urls[@]}"; do
+    echo -n "$(basename "$u")..." && \
+    curl -sSL --connect-timeout 10 --max-time 30 "$u" >> "$T" 2>/dev/null && \
+    echo " ✓" || echo " ✗"
+done
 
-# Загружаем все данные во временный файл
-for url in "${URLS[@]}"; do
-    echo "Загружаю: $(basename "$url")"
-    curl -sSL --connect-timeout 10 --max-time 30 "$url" 2>/dev/null
-    echo ""
-done > "$TEMP_FILE"
-
-echo "Загружено. Начинаю обработку..."
-echo "Исходных строк: $(wc -l < "$TEMP_FILE")"
-
-> "$OUTPUT_TXT"
-
-# Обрабатываем данные и сохраняем в очищенный файл
-cat "$TEMP_FILE" | \
-# 1. Удаляем комментарии
-grep -v '^[[:space:]]*[#!]' | \
-# 2. Удаляем пустые строки
-grep -v '^[[:space:]]*$' | \
-# 3. Удаляем префикс IP-CIDR, если есть
-sed 's/^[[:space:]]*IP-CIDR,[[:space:]]*//i' | \
-# 4. Удаляем префикс "  - " если есть (формат Clash)
-sed 's/^[[:space:]]*-[[:space:]]*//' | \
-# 5. Удаляем кавычки и лишние пробелы
-sed 's/["'\'']//g' | \
-sed 's/[[:space:]]*$//' | \
-sed 's/^[[:space:]]*//' | \
-# 6. Фильтруем только строки, похожие на IP/CIDR
+echo -n "Обработка..." && \
+grep -v '^[[:space:]]*[#!]' "$T" | grep -v '^[[:space:]]*$' | \
+sed 's/^[[:space:]]*IP-CIDR,[[:space:]]*//i;s/^[[:space:]]*-[[:space:]]*//;s/["'\'']//g' | \
+# Разделяем строки с несколькими IP/CIDR (заменяем пробелы на переводы строк)
+sed 's/[[:space:]]\+/\n/g' | \
+# Убираем лишние пробелы в начале/конце
+sed 's/^[[:space:]]*//;s/[[:space:]]*$//' | \
+# Фильтруем только строки, которые начинаются с IP-адреса
 grep -E '^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}' | \
-# 7. Конвертируем одиночные IP в CIDR (/32)
+# Удаляем мусорные символы после CIDR (типа "31138.128.136.0/21" из примера)
+sed 's/[^0-9\.\/].*$//' | \
+# Добавляем /32 к одиночным IP, проверяем корректность формата
 awk '{
+    # Убираем все лишние символы кроме цифр, точек и слеша
+    gsub(/[^0-9\.\/]/, "", $0)
     if ($0 ~ /^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+\/[0-9]+$/) {
-        # Уже CIDR - оставляем как есть
-        print $0
+        # Проверяем корректность CIDR
+        split($0, parts, "/")
+        if (parts[2] >= 0 && parts[2] <= 32) {
+            print $0
+        }
     } else if ($0 ~ /^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$/) {
         # Одиночный IP - добавляем /32
         print $0 "/32"
     }
-}' | \
-# 8. Сортируем и удаляем дубликаты
-sort -u -V > "$CLEANED_CIDRS"
+}' | sort -u | \
+sed "s/^/  - '/;s/$/'/" > "$T.2"
 
-echo "Очищено уникальных CIDR: $(wc -l < "$CLEANED_CIDRS")"
-echo ""
+echo " найдено $(wc -l < "$T.2") CIDR" && \
+echo "payload:" > "$O" && cat "$T.2" >> "$O"
 
-# Сохраняем очищенные CIDR в текстовый файл
-echo "Сохраняю очищенные CIDR в $OUTPUT_TXT..."
-cp "$CLEANED_CIDRS" "$OUTPUT_TXT"
-echo "Сохранено в $OUTPUT_TXT: $(wc -l < "$OUTPUT_TXT") CIDR"
-echo ""
-
-# Показываем примеры
-echo -e "\n=== Примеры данных ==="
-echo "Первые 5 CIDR из $OUTPUT_TXT:"
-head -5 "$OUTPUT_TXT"
-
-# Очистка временных файлов
-rm -f "$TEMP_FILE" "$CLEANED_CIDRS"
+echo "Первая подсеть: $(head -2 "$O" | tail -1)"
+rm -f "$T" "$T.2" && echo "Сохранено в $O"

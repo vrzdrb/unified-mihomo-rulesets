@@ -8,6 +8,7 @@ The scripts generate combined mihomo rules &amp; rulesets from 40+ lists from re
 - [legiz-ru mihomo-rule-sets (apps, games, torrent-clients, discord-vc](https://github.com/legiz-ru/mihomo-rule-sets/tree/main/other)
 - [GhostRooter0953 discord-voice-ips] (https://github.com/GhostRooter0953/discord-voice-ips)
 - [sjhgvr oisd] (https://github.com/sjhgvr/oisd)
+
 # Usage:
 ```yaml
 sniffer:
@@ -57,14 +58,6 @@ rule-providers:
     path: ./uni-domains.mrs
     interval: 86400
 
-  uni-ip4-cidr-direct:
-    type: http
-    behavior: ipcidr
-    format: mrs
-    url: https://raw.githubusercontent.com/vrzdrb/unified-mihomo-rulesets/master/uni-ip4-cidr-direct.mrs
-    path: ./uni-ip4-cidr-direct.mrs
-    interval: 86400
-
   uni-ip4-cidr:
     type: http
     behavior: ipcidr
@@ -82,12 +75,14 @@ rule-providers:
     interval: 86400
 
 rules:
-  - RULE-SET,uni-adblock,REJECT
+  - GEOIP,CN,DIRECT
+  - GEOSITE,CN,DIRECT
+  - GEOSITE,CATEGORY-RU,DIRECT
   - RULE-SET,uni-app-direct,DIRECT
-  - RULE-SET,uni-domains,DIRECT
+  - RULE-SET,uni-domains-direct,DIRECT
+  - RULE-SET,uni-adblock,REJECT
   - RULE-SET,uni-app-proxy,PROXY
   - RULE-SET,uni-domains,PROXY
-  - RULE-SET,uni-ip4-cidr-direct,DIRECT
-  - RULE-SET,uni-ip4-cidr,PROXY
+  - RULE-SET,uni-ip4-cidr,PROXY        #USE WITH CAUTION (OR JUST DON'T USE')
   - MATCH,DIRECT
 ```

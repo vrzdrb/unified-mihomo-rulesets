@@ -4,7 +4,7 @@ T=$(mktemp) && U=$(mktemp) && O="uni-domains-direct.yaml"
 > "$O"
 urls=(
     "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Russia/outside-raw.lst"
-    "https://dl.dropboxusercontent.com/s/8ochab4da6m3pns4it23e/uni-custom-d-direct.yaml?rlkey=lacxcumsq72n7tjl7y3japj3s&e=1&st=nz6loz00&dl=0"
+    "https://raw.githubusercontent.com/vrzdrb/unified-mihomo-rulesets/refs/heads/main/uni-custom-d-direct.yaml"
 )
 
 echo "Загрузка ${#urls[@]} источников..."

@@ -33,9 +33,9 @@ urls=(
     "https://raw.githubusercontent.com/1andrevich/Re-filter-lists/refs/heads/main/community.lst"
     "https://raw.githubusercontent.com/GhostRooter0953/discord-voice-ips/refs/heads/master/main_domains/discord-main-domains-list"
     "https://raw.githubusercontent.com/GhostRooter0953/discord-voice-ips/refs/heads/master/voice_domains/discord-voice-domains-list"
-    "https://dl.dropboxusercontent.com/s/5cjhhmtthc0va3xo1pfy5/roblox-domains.yaml?rlkey=ab12bw3htswbc8lf1eeb5johu&e=1&st=mmk7azk4&dl=0"
-    "https://dl.dropboxusercontent.com/s/tltd3bt9fla2seh80d0ls/uni-custom-d-proxy.yaml?rlkey=u2fl0n9dw2vpd5qe4r610ni8o&e=1&st=ad33j8j4&dl=0"
     "https://raw.githubusercontent.com/sjhgvr/oisd/refs/heads/main/domainswild2_nsfw_small.txt"
+    "https://raw.githubusercontent.com/vrzdrb/clash_roblox_ip_domains/refs/heads/main/roblox-domains.yaml"
+    "https://raw.githubusercontent.com/vrzdrb/unified-mihomo-rulesets/refs/heads/main/uni-custom-d-proxy.yaml"
 )
 
 echo "Загрузка ${#urls[@]} источников..."

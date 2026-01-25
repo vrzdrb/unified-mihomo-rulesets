@@ -22,3 +22,5 @@ sed "s/^/  - '+./;s/$/'/" "$U" >> "$O"
 
 echo "Первый домен: $(head -2 "$O" | tail -1)"
 rm -f "$T" "$U" && echo "Сохранено в $O"
+
+./mihomo convert-ruleset domain yaml uni-adblock.yaml uni-adblock.mrs

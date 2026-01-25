@@ -63,3 +63,5 @@ echo "payload:" > "$O" && cat "$T.2" >> "$O"
 
 echo "Первая подсеть: $(head -2 "$O" | tail -1)"
 rm -f "$T" "$T.2" && echo "Сохранено в $O"
+
+./mihomo convert-ruleset ipcidr yaml uni-ip4-cidr.yaml uni-ip4-cidr.mrs

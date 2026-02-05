@@ -2,6 +2,7 @@
 
 T=$(mktemp) && O="uni-ip4-cidr.yaml" && > "$O"
 urls=(
+    "https://iplist.opencck.org/?format=clashx&data=cidr4"
     "https://raw.githubusercontent.com/1andrevich/Re-filter-lists/refs/heads/main/community_ips.lst"
     "https://raw.githubusercontent.com/1andrevich/Re-filter-lists/refs/heads/main/discord_ips.lst"
     "https://raw.githubusercontent.com/1andrevich/Re-filter-lists/refs/heads/main/ipsum.lst"

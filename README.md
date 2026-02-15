@@ -75,14 +75,14 @@ rule-providers:
     interval: 86400
 
 rules:
+  - RULE-SET,uni-adblock,REJECT
+  - RULE-SET,uni-domains,PROXY
   - GEOIP,CN,DIRECT
   - GEOSITE,CN,DIRECT
   - GEOSITE,CATEGORY-RU,DIRECT
   - RULE-SET,uni-app-direct,DIRECT
   - RULE-SET,uni-domains-direct,DIRECT
-  - RULE-SET,uni-adblock,REJECT
   - RULE-SET,uni-app-proxy,PROXY
-  - RULE-SET,uni-domains,PROXY
-  - RULE-SET,uni-ip4-cidr,PROXY        #USE WITH CAUTION (OR JUST DON'T USE')
+  - RULE-SET,uni-ip4-cidr,PROXY
   - MATCH,DIRECT
 ```

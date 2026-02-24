@@ -8,6 +8,7 @@ payload:
   - '+.cdn1.ozonusercontent.com'
   - '+.cms1.dzvr.ru'
   - '+.counter.yadro.ru'
+  - '+.dropbox-api.arkoselabs.com'
   - '+.dropboxcaptcha.com'
   - '+.dropbox.com'
   - '+.dropboxstatic.com'

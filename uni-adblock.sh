@@ -4,7 +4,6 @@ T=$(mktemp) && U=$(mktemp) && O="uni-adblock.yaml"
 > "$O"
 urls=(
     "https://raw.githubusercontent.com/sjhgvr/oisd/main/domainswild2_big.txt"
-    "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/reject.txt"
 )
 echo "Загрузка ${#urls[@]} источников..."
 for u in "${urls[@]}"; do

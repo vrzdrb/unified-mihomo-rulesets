@@ -30,7 +30,7 @@ rule-providers:
     type: http
     behavior: domain
     format: mrs
-    url: https://raw.githubusercontent.com/vrzdrb/unified-mihomo-rulesets/master/uni-adblock.mrs
+    url: https://github.com/vrzdrb/unified-mihomo-rulesets/raw/refs/heads/main/uni-adblock.mrs
     path: ./uni-adblock.mrs
     interval: 86400
   
@@ -38,15 +38,15 @@ rule-providers:
     type: http
     behavior: classical
     format: yaml
-    url: https://raw.githubusercontent.com/vrzdrb/unified-mihomo-rulesets/master/uni-app-direct.yaml
-    path: ./uni-app-direct.yaml
+    url: https://raw.githubusercontent.com/vrzdrb/unified-mihomo-rulesets/refs/heads/main/uni-app-direct.yaml
+    path: ./unified/uni-app-direct.yaml
     interval: 86400
-    
+
   uni-domains-direct:
     type: http
     behavior: domain
     format: mrs
-    url: https://raw.githubusercontent.com/vrzdrb/unified-mihomo-rulesets/master/uni-domains-direct.mrs
+    url: https://github.com/vrzdrb/unified-mihomo-rulesets/raw/refs/heads/main/uni-domains-direct.mrs
     path: ./uni-domains-direct.mrs
     interval: 86400
 
@@ -54,35 +54,55 @@ rule-providers:
     type: http
     behavior: domain
     format: mrs
-    url: https://raw.githubusercontent.com/vrzdrb/unified-mihomo-rulesets/master/uni-domains.mrs
-    path: ./uni-domains.mrs
+    url: https://github.com/vrzdrb/unified-mihomo-rulesets/raw/refs/heads/main/uni-domains.mrs
+    path: ./unified/uni-domains.mrs
     interval: 86400
 
-  uni-ip4-cidr:
+  uni-ip4-cidr-direct:
     type: http
     behavior: ipcidr
     format: mrs
-    url: https://raw.githubusercontent.com/vrzdrb/unified-mihomo-rulesets/master/uni-ip4-cidr.mrs
-    path: ./uni-ip4-cidr.mrs
+    url: https://github.com/vrzdrb/unified-mihomo-rulesets/raw/refs/heads/main/uni-ip4-cidr-direct.mrs
+    path: ./unified/uni-ip4-cidr-direct.mrs
     interval: 86400
 
   uni-app-proxy:
     type: http
     behavior: classical
     format: yaml
-    url: https://raw.githubusercontent.com/vrzdrb/unified-mihomo-rulesets/master/uni-app-proxy.yaml
-    path: ./uni-app-proxy.yaml
+    url: https://raw.githubusercontent.com/vrzdrb/unified-mihomo-rulesets/refs/heads/main/uni-app-proxy.yaml
+    path: ./unified/uni-app-proxy.yaml
+    interval: 86400
+    
+  uni-ip4-cidr:
+    type: http
+    behavior: ipcidr
+    format: mrs
+    url: https://github.com/vrzdrb/unified-mihomo-rulesets/raw/refs/heads/main/uni-ip4-cidr.mrs
+    path: ./unified/uni-ip4-cidr.mrs
     interval: 86400
 
 rules:
   - RULE-SET,uni-adblock,REJECT
+  - RULE-SET,uni-app-direct,DIRECT
+  - GEOSITE,apple,DIRECT
+  - GEOSITE,icloud,DIRECT
+  - GEOSITE,CATEGORY-RU,DIRECT
+  - GEOSITE,CATEGORY-GOV-RU,DIRECT
+  - GEOSITE,CATEGORY-RETAIL-RU,DIRECT
+  - GEOSITE,CATEGORY-BANK-RU,DIRECT
+  - GEOSITE,OZON,DIRECT
+  - GEOSITE,MOSMETRO,DIRECT
+  - GEOSITE,KASPERSKY,DIRECT
+  - GEOIP,LAN,DIRECT
+  - RULE-SET,uni-domains-direct,DIRECT
   - RULE-SET,uni-domains,PROXY
+  - GEOSITE,google,PROXY
   - GEOIP,CN,DIRECT
   - GEOSITE,CN,DIRECT
-  - GEOSITE,CATEGORY-RU,DIRECT
-  - RULE-SET,uni-app-direct,DIRECT
-  - RULE-SET,uni-domains-direct,DIRECT
   - RULE-SET,uni-app-proxy,PROXY
+  - RULE-SET,uni-ip4-cidr-direct,DIRECT
   - RULE-SET,uni-ip4-cidr,PROXY
+  - GEOIP,CZ,PROXY
   - MATCH,DIRECT
 ```

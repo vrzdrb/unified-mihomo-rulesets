@@ -22,6 +22,7 @@ urls=(
     "https://raw.githubusercontent.com/GhostRooter0953/discord-voice-ips/refs/heads/master/main_domains/discord-main-ip-list"
     "https://raw.githubusercontent.com/GhostRooter0953/discord-voice-ips/refs/heads/master/voice_domains/discord-voice-ip-list"
     "https://raw.githubusercontent.com/vrzdrb/clash_roblox_ip_domains/refs/heads/main/roblox-ip.yaml"
+    "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/telegramcidr.txt"
 )
 
 echo "Загрузка ${#urls[@]} источников..."

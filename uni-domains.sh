@@ -36,6 +36,8 @@ urls=(
     "https://raw.githubusercontent.com/sjhgvr/oisd/refs/heads/main/domainswild2_nsfw_small.txt"
     "https://raw.githubusercontent.com/vrzdrb/clash_roblox_ip_domains/refs/heads/main/roblox-domains.yaml"
     "https://raw.githubusercontent.com/vrzdrb/unified-mihomo-rulesets/refs/heads/main/uni-custom-d-proxy.yaml"
+    "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/google.txt"
+    'https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/gfw.txt'
 )
 
 echo "Загрузка ${#urls[@]} источников..."

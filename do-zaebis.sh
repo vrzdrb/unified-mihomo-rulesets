@@ -2,3 +2,4 @@
 ./uni-domains.sh
 ./uni-domains-direct.sh
 ./uni-ip4-cidr.sh
+./uni-ip4-cidr-direct.sh

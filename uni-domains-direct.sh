@@ -5,6 +5,10 @@ T=$(mktemp) && U=$(mktemp) && O="uni-domains-direct.yaml"
 urls=(
     "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Russia/outside-raw.lst"
     "https://raw.githubusercontent.com/vrzdrb/unified-mihomo-rulesets/refs/heads/main/uni-custom-d-direct.yaml"
+    "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/private.txt"
+    "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/direct.txt"
+    "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/apple.txt"
+    "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/icloud.txt"
 )
 
 echo "Загрузка ${#urls[@]} источников..."

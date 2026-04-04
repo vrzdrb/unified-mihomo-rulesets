@@ -1,0 +1,73 @@
+name: Update
+
+on:
+  schedule:
+    - cron: '0 23 * * *'
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  generate_lists:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Pull Changes
+        run: git pull
+
+      - name: Install Dependencies
+        run: |
+          sudo apt update
+          sudo apt install -y curl wget git jq
+      
+      - name: Download and install Mihomo
+        run: |
+          curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" -L https://github.com/MetaCubeX/mihomo/releases/download/v1.19.22/mihomo-linux-amd64-v1.19.22.deb -o mihomo-linux-amd64-v1.19.22.deb
+          sudo apt install --fix-missing ./mihomo-linux-amd64-v1.19.22.deb
+      # Runs a single command using the runners shell
+      - name: Update lists
+        env:
+          NO_SKIP: true
+        run: |
+          chmod +x do-zaebis.sh
+          chmod +x uni-adblock.sh
+          chmod +x uni-domains.sh
+          chmod +x uni-domains-direct.sh
+          chmod +x uni-ip4-cidr.sh
+          chmod +x uni-ip4-cidr-direct.sh
+          chmod +x mihomo
+          ./uni-adblock.sh
+          ./uni-domains.sh
+          ./uni-domains-direct.sh
+          ./uni-ip4-cidr.sh
+          ./uni-ip4-cidr-direct.sh
+      - name: Create adblock rulesets
+        run: |
+          mihomo convert-ruleset domain yaml uni-adblock.yaml uni-adblock.mrs
+      - name: Create domains rulesets
+        run: |
+          mihomo convert-ruleset domain yaml uni-domains.yaml uni-domains.mrs
+      - name: Create domains-direct rulesets
+        run: |
+          mihomo convert-ruleset domain yaml uni-domains-direct.yaml uni-domains-direct.mrs
+      - name: Create ipcidr rulesets
+        run: |
+          mihomo convert-ruleset ipcidr yaml uni-ip4-cidr.yaml uni-ip4-cidr.mrs
+      - name: Create ipcidr-direct rulesets
+        run: |
+          mihomo convert-ruleset ipcidr yaml uni-ip4-cidr-direct.yaml uni-ip4-cidr-direct.mrs
+          
+      # Runs a set of commands using the runners shell
+      - name: Commit and push changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add .
+          git commit -m "autoupdate"
+          git push

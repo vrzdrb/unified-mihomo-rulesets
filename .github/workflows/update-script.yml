@@ -31,6 +31,11 @@ jobs:
       - name: Run update script
         run: |
           chmod +x do-zaebis.sh
+          chmod +x uni-adblock.sh
+          chmod +x uni-domains.sh
+          chmod +x uni-domains-direct.sh
+          chmod +x uni-ip4-cidr.sh
+          chmod +x uni-ip4-cidr-direct.sh
           ./do-zaebis.sh
 
       # Runs a set of commands using the runners shell

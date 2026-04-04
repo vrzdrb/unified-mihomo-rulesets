@@ -36,6 +36,7 @@ jobs:
           chmod +x uni-domains-direct.sh
           chmod +x uni-ip4-cidr.sh
           chmod +x uni-ip4-cidr-direct.sh
+          chmod +x mihomo
           ./do-zaebis.sh
 
       # Runs a set of commands using the runners shell

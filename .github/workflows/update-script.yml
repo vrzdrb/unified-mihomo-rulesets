@@ -40,6 +40,12 @@ jobs:
           chmod +x uni-ip4-cidr-direct.sh
           chmod +x mihomo
           ./do-zaebis.sh
+          ./mihomo convert-ruleset domain yaml uni-adblock.yaml uni-adblock.mrs
+          ./mihomo convert-ruleset domain yaml uni-domains.yaml uni-domains.mrs
+          ./mihomo convert-ruleset domain yaml uni-domains-direct.yaml uni-domains-direct.mrs
+          ./mihomo convert-ruleset ipcidr yaml uni-ip4-cidr.yaml uni-ip4-cidr.mrs
+          ./mihomo convert-ruleset ipcidr yaml uni-ip4-cidr-direct.yaml uni-ip4-cidr-direct.mrs
+          
 
       # Runs a set of commands using the runners shell
       - name: Commit and push changes

@@ -32,7 +32,7 @@ jobs:
           sudo apt install --fix-missing ./mihomo-linux-amd64-v1.19.22.deb
 
       # Runs a single command using the runners shell
-      - name: Run update script
+      - name: Update lists
         env:
           NO_SKIP: true
         run: |
@@ -43,7 +43,16 @@ jobs:
           chmod +x uni-ip4-cidr.sh
           chmod +x uni-ip4-cidr-direct.sh
           chmod +x mihomo
-          ./do-zaebis.sh
+          ./uni-adblock.sh
+          ./uni-domains.sh
+          ./uni-domains-direct.sh
+          ./uni-ip4-cidr.sh
+          ./uni-ip4-cidr-direct.sh
+
+      - name: Create rulesets
+        env:
+          NO_SKIP: true
+        run: |
           mihomo convert-ruleset domain yaml uni-adblock.yaml uni-adblock.mrs
           mihomo convert-ruleset domain yaml uni-domains.yaml uni-domains.mrs
           mihomo convert-ruleset domain yaml uni-domains-direct.yaml uni-domains-direct.mrs

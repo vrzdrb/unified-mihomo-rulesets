@@ -49,14 +49,24 @@ jobs:
           ./uni-ip4-cidr.sh
           ./uni-ip4-cidr-direct.sh
 
-      - name: Create rulesets
-        env:
-          NO_SKIP: true
+      - name: Create adblock rulesets
         run: |
           mihomo convert-ruleset domain yaml uni-adblock.yaml uni-adblock.mrs
+
+      - name: Create domains rulesets
+        run: |
           mihomo convert-ruleset domain yaml uni-domains.yaml uni-domains.mrs
+
+      - name: Create domains-direct rulesets
+        run: |
           mihomo convert-ruleset domain yaml uni-domains-direct.yaml uni-domains-direct.mrs
+
+      - name: Create ipcidr rulesets
+        run: |
           mihomo convert-ruleset ipcidr yaml uni-ip4-cidr.yaml uni-ip4-cidr.mrs
+
+      - name: Create ipcidr-direct rulesets
+        run: |
           mihomo convert-ruleset ipcidr yaml uni-ip4-cidr-direct.yaml uni-ip4-cidr-direct.mrs
           
 

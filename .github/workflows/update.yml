@@ -1,0 +1,31 @@
+name: Обновление списков
+
+on:
+  schedule:
+    - cron: '0 23 * * *'  # 23:00 UTC = 02:00 MSK (зимой)
+  workflow_dispatch:
+
+
+permissions:
+  contents: write
+
+jobs:
+  update-domains:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Run domain update script
+        run: |
+          chmod +x do-zaebis.sh
+          ./do-zaebis.sh
+
+      - name: Commit and push changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add .
+          git diff --staged --quiet || git commit -m "Автоматическое обновление"
+          git push

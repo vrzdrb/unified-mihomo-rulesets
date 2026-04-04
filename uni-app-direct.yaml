@@ -6,6 +6,8 @@ payload:
   - PROCESS-NAME-REGEX,(?i).*BitTorrent.*
   - PROCESS-NAME-REGEX,(?i).*utweb.*
   - PROCESS-NAME-REGEX,(?i).*btweb.*
+  - PROCESS-NAME-REGEX,(?i).*chivalry.*
+  - PROCESS-NAME-REGEX,(?i).*chivalry2.*
   - PROCESS-NAME-REGEX,(?i).*utorrentie.*
   - PROCESS-NAME-REGEX,(?i).*bittorrentie.*
   - PROCESS-NAME-REGEX,(?i).*qbittorrent.*

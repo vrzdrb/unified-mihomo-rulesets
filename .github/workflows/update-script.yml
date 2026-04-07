@@ -31,24 +31,242 @@ jobs:
           curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" -L https://github.com/MetaCubeX/mihomo/releases/download/v1.19.22/mihomo-linux-amd64-v1.19.22.deb -o mihomo-linux-amd64-v1.19.22.deb
           sudo apt install --fix-missing ./mihomo-linux-amd64-v1.19.22.deb
 
-      # Runs a single command using the runners shell
-      - name: Update lists
-        env:
-          NO_SKIP: true
+      - name: Update adblock list
         run: |
-          chmod +x do-zaebis.sh
-          chmod +x uni-adblock.sh
-          chmod +x uni-domains.sh
-          chmod +x uni-domains-direct.sh
-          chmod +x uni-ip4-cidr.sh
-          chmod +x uni-ip4-cidr-direct.sh
-          chmod +x mihomo
-          ./uni-adblock.sh
-          ./uni-domains.sh
-          ./uni-domains-direct.sh
-          ./uni-ip4-cidr.sh
-          ./uni-ip4-cidr-direct.sh
+          #!/bin/bash
+          
+          T=$(mktemp) && U=$(mktemp) && O="uni-adblock.yaml"
+          > "$O"
+          urls=(
+              "https://raw.githubusercontent.com/sjhgvr/oisd/main/domainswild2_big.txt"
+          )
+          echo "Загрузка ${#urls[@]} источников..."
+          for u in "${urls[@]}"; do
+              echo -n "$(basename "$u")..."
+              curl -sSL --connect-timeout 10 --max-time 30 "$u" >> "$T" 2>/dev/null && echo " ✓" || echo " ✗"
+          done
+          
+          echo -n "Обработка..." && \
+          sed -i 's/^[0-9]\+\.[0-9]\+\.[0-9]\+\.[0-9]\+[[:space:]]\+//;s/^[[:space:]]*127\.0\.0\.1[[:space:]]\+//;s/^[[:space:]]*0\.0\.0\.0[[:space:]]\+//' "$T" && \
+          grep -v '#' "$T" | grep -v '^[[:space:]]*!' | grep -v '^[[:space:]]*$' | \
+          sed 's/^[[:space:]]*DOMAIN-SUFFIX,[[:space:]]*//i;s/^[[:space:]]*DOMAIN,[[:space:]]*//i;s/^[[:space:]]*-[[:space:]]*//;s/["'\'']//g' | \
+          grep '\.' | sed 's/^[[:space:]]*//;s/[[:space:]]*$//' | tr '[:upper:]' '[:lower:]' | sort -u > "$U"
+          
+          echo " найдено $(wc -l < "$U") доменов" && echo "payload:" > "$O" && \
+          sed "s/^/  - '+./;s/$/'/" "$U" >> "$O"
+          
+          echo "Первый домен: $(head -2 "$O" | tail -1)"
+          rm -f "$T" "$U" && echo "Сохранено в $O"
 
+      - name: Update domains-to-proxy list
+        run: |
+          #!/bin/bash
+          
+          T=$(mktemp) && U=$(mktemp) && O="uni-domains.yaml"
+          > "$O"
+          urls=(
+              "https://iplist.opencck.org/?format=clashx&data=domains&append=timeout%3D1d%22%20mode=https%20dst-path=domains.rsc"
+              "https://raw.githubusercontent.com/dartraiden/no-russia-hosts/refs/heads/master/hosts.txt"
+              "https://community.antifilter.download/list/domains.lst"
+              "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Categories/anime.lst"
+              "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Categories/block.lst"
+              "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Categories/geoblock.lst"
+              "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Categories/hodca.lst"
+              "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Categories/news.lst"
+              "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Categories/porn.lst"
+              "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Services/cloudflare.lst"
+              "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Services/cloudfront.lst"
+              "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Services/digitalocean.lst"
+              "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Services/discord.lst"
+              "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Services/google_ai.lst"
+              "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Services/google_play.lst"
+              "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Services/hdrezka.lst"
+              "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Services/hetzner.lst"
+              "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Services/meta.lst"
+              "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Services/ovh.lst"
+              "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Services/telegram.lst"
+              "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Services/tiktok.lst"
+              "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Services/twitter.lst"
+              "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Services/youtube.lst"
+              "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Russia/inside-raw.lst"
+              "https://raw.githubusercontent.com/1andrevich/Re-filter-lists/refs/heads/main/ooni_domains.lst"
+              "https://raw.githubusercontent.com/1andrevich/Re-filter-lists/refs/heads/main/sum/input/domains.lst"
+              "https://raw.githubusercontent.com/1andrevich/Re-filter-lists/refs/heads/main/domains_all.lst"
+              "https://raw.githubusercontent.com/1andrevich/Re-filter-lists/refs/heads/main/community.lst"
+              "https://raw.githubusercontent.com/GhostRooter0953/discord-voice-ips/refs/heads/master/main_domains/discord-main-domains-list"
+              "https://raw.githubusercontent.com/GhostRooter0953/discord-voice-ips/refs/heads/master/voice_domains/discord-voice-domains-list"
+              "https://raw.githubusercontent.com/sjhgvr/oisd/refs/heads/main/domainswild2_nsfw_small.txt"
+              "https://raw.githubusercontent.com/vrzdrb/clash_roblox_ip_domains/refs/heads/main/roblox-domains.yaml"
+              "https://raw.githubusercontent.com/vrzdrb/unified-mihomo-rulesets/refs/heads/main/uni-custom-d-proxy.yaml"
+          )
+          
+          echo "Загрузка ${#urls[@]} источников..."
+          for u in "${urls[@]}"; do
+              echo -n "$(basename "$u")..."
+              curl -sSL --connect-timeout 10 --max-time 30 "$u" >> "$T" 2>/dev/null && echo " ✓" || echo " ✗"
+          done
+          
+          echo -n "Обработка..." && \
+          sed -i 's/^[0-9]\+\.[0-9]\+\.[0-9]\+\.[0-9]\+[[:space:]]\+//;s/^[[:space:]]*127\.0\.0\.1[[:space:]]\+//;s/^[[:space:]]*0\.0\.0\.0[[:space:]]\+//' "$T" && \
+          grep -v '#' "$T" | grep -v '^[[:space:]]*!' | grep -v '^[[:space:]]*$' | \
+          sed 's/^[[:space:]]*DOMAIN-SUFFIX,[[:space:]]*//i;s/^[[:space:]]*DOMAIN,[[:space:]]*//i;s/^[[:space:]]*-[[:space:]]*//;s/["'\'']//g' | \
+          grep '\.' | sed 's/^[[:space:]]*//;s/[[:space:]]*$//' | tr '[:upper:]' '[:lower:]' | sort -u > "$U"
+          
+          echo " найдено $(wc -l < "$U") доменов" && echo "payload:" > "$O" && \
+          sed "s/^/  - '+./;s/$/'/" "$U" >> "$O"
+          
+          echo "Первый домен: $(head -2 "$O" | tail -1)"
+          rm -f "$T" "$U" && echo "Сохранено в $O"
+
+      - name: Update domains-to-direct list
+        run: |
+          #!/bin/bash
+          
+          T=$(mktemp) && U=$(mktemp) && O="uni-domains-direct.yaml"
+          > "$O"
+          urls=(
+              "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Russia/outside-raw.lst"
+              "https://raw.githubusercontent.com/vrzdrb/unified-mihomo-rulesets/refs/heads/main/uni-custom-d-direct.yaml"
+          )
+          
+          echo "Загрузка ${#urls[@]} источников..."
+          for u in "${urls[@]}"; do
+              echo -n "$(basename "$u")..."
+              curl -sSL --connect-timeout 10 --max-time 30 "$u" >> "$T" 2>/dev/null && echo " ✓" || echo " ✗"
+          done
+          
+          echo -n "Обработка..." && \
+          sed -i 's/^[0-9]\+\.[0-9]\+\.[0-9]\+\.[0-9]\+[[:space:]]\+//;s/^[[:space:]]*127\.0\.0\.1[[:space:]]\+//;s/^[[:space:]]*0\.0\.0\.0[[:space:]]\+//' "$T" && \
+          grep -v '#' "$T" | grep -v '^[[:space:]]*!' | grep -v '^[[:space:]]*$' | \
+          sed 's/^[[:space:]]*DOMAIN-SUFFIX,[[:space:]]*//i;s/^[[:space:]]*DOMAIN,[[:space:]]*//i;s/^[[:space:]]*-[[:space:]]*//;s/["'\'']//g' | \
+          grep '\.' | sed 's/^[[:space:]]*//;s/[[:space:]]*$//' | tr '[:upper:]' '[:lower:]' | sort -u > "$U"
+          
+          echo " найдено $(wc -l < "$U") доменов" && echo "payload:" > "$O" && \
+          sed "s/^/  - '+./;s/$/'/" "$U" >> "$O"
+          
+          echo "Первый домен: $(head -2 "$O" | tail -1)"
+          rm -f "$T" "$U" && echo "Сохранено в $O"
+          
+      - name: Update ip4-cidr-to-proxy list
+        run: |
+          #!/bin/bash
+          
+          T=$(mktemp) && O="uni-ip4-cidr.yaml" && > "$O"
+          urls=(
+              "https://iplist.opencck.org/?format=clashx&data=cidr4"
+              "https://raw.githubusercontent.com/1andrevich/Re-filter-lists/refs/heads/main/community_ips.lst"
+              "https://raw.githubusercontent.com/1andrevich/Re-filter-lists/refs/heads/main/discord_ips.lst"
+              "https://raw.githubusercontent.com/1andrevich/Re-filter-lists/refs/heads/main/ipsum.lst"
+              "https://raw.githubusercontent.com/1andrevich/Re-filter-lists/refs/heads/main/sum/input/ip.lst"
+              "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Subnets/IPv4/Discord.lst"
+              "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Subnets/IPv4/Meta.lst"
+              "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Subnets/IPv4/Twitter.lst"
+              "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Subnets/IPv4/digitalocean.lst"
+              "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Subnets/IPv4/discord.lst"
+              "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Subnets/IPv4/hetzner.lst"
+              "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Subnets/IPv4/meta.lst"
+              "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Subnets/IPv4/ovh.lst"
+              "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Subnets/IPv4/roblox.lst"
+              "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Subnets/IPv4/telegram.lst"
+              "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Subnets/IPv4/twitter.lst"
+              "https://community.antifilter.download/list/community.lst"
+              "https://raw.githubusercontent.com/GhostRooter0953/discord-voice-ips/refs/heads/master/main_domains/discord-main-ip-list"
+              "https://raw.githubusercontent.com/GhostRooter0953/discord-voice-ips/refs/heads/master/voice_domains/discord-voice-ip-list"
+              "https://raw.githubusercontent.com/vrzdrb/clash_roblox_ip_domains/refs/heads/main/roblox-ip.yaml"
+              "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/telegramcidr.txt"
+          )
+          
+          echo "Загрузка ${#urls[@]} источников..."
+          for u in "${urls[@]}"; do
+              echo -n "$(basename "$u")..." && \
+              curl -sSL --connect-timeout 10 --max-time 30 "$u" >> "$T" 2>/dev/null && \
+              echo " ✓" || echo " ✗"
+          done
+          
+          echo -n "Обработка..." && \
+          grep -v '^[[:space:]]*[#!]' "$T" | grep -v '^[[:space:]]*$' | \
+          sed 's/^[[:space:]]*IP-CIDR,[[:space:]]*//i;s/^[[:space:]]*-[[:space:]]*//;s/["'\'']//g' | \
+          # Разделяем строки с несколькими IP/CIDR (заменяем пробелы на переводы строк)
+          sed 's/[[:space:]]\+/\n/g' | \
+          # Убираем лишние пробелы в начале/конце
+          sed 's/^[[:space:]]*//;s/[[:space:]]*$//' | \
+          # Фильтруем только строки, которые начинаются с IP-адреса
+          grep -E '^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}' | \
+          # Удаляем мусорные символы после CIDR (типа "31138.128.136.0/21" из примера)
+          sed 's/[^0-9\.\/].*$//' | \
+          # Добавляем /32 к одиночным IP, проверяем корректность формата
+          awk '{
+              # Убираем все лишние символы кроме цифр, точек и слеша
+              gsub(/[^0-9\.\/]/, "", $0)
+              if ($0 ~ /^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+\/[0-9]+$/) {
+                  # Проверяем корректность CIDR
+                  split($0, parts, "/")
+                  if (parts[2] >= 0 && parts[2] <= 32) {
+                      print $0
+                  }
+              } else if ($0 ~ /^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$/) {
+                  # Одиночный IP - добавляем /32
+                  print $0 "/32"
+              }
+          }' | sort -u | \
+          sed "s/^/  - '/;s/$/'/" > "$T.2"
+          
+          echo " найдено $(wc -l < "$T.2") CIDR" && \
+          echo "payload:" > "$O" && cat "$T.2" >> "$O"
+          
+          echo "Первая подсеть: $(head -2 "$O" | tail -1)"
+          rm -f "$T" "$T.2" && echo "Сохранено в $O"
+
+      - name: Update ip4-cidr-to-direct lists
+        run: |
+          #!/bin/bash
+          
+          T=$(mktemp) && O="uni-ip4-cidr-direct.yaml" && > "$O"
+          urls=(
+              "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/cncidr.txt"
+          )
+          
+          echo "Загрузка ${#urls[@]} источников..."
+          for u in "${urls[@]}"; do
+              echo -n "$(basename "$u")..." && \
+              curl -sSL --connect-timeout 10 --max-time 30 "$u" >> "$T" 2>/dev/null && \
+              echo " ✓" || echo " ✗"
+          done
+          
+          echo -n "Обработка..." && \
+          grep -v '^[[:space:]]*[#!]' "$T" | grep -v '^[[:space:]]*$' | \
+          sed 's/^[[:space:]]*IP-CIDR,[[:space:]]*//i;s/^[[:space:]]*-[[:space:]]*//;s/["'\'']//g' | \
+          # Разделяем строки с несколькими IP/CIDR (заменяем пробелы на переводы строк)
+          sed 's/[[:space:]]\+/\n/g' | \
+          # Убираем лишние пробелы в начале/конце
+          sed 's/^[[:space:]]*//;s/[[:space:]]*$//' | \
+          # Фильтруем только строки, которые начинаются с IP-адреса
+          grep -E '^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}' | \
+          # Удаляем мусорные символы после CIDR (типа "31138.128.136.0/21" из примера)
+          sed 's/[^0-9\.\/].*$//' | \
+          # Добавляем /32 к одиночным IP, проверяем корректность формата
+          awk '{
+              # Убираем все лишние символы кроме цифр, точек и слеша
+              gsub(/[^0-9\.\/]/, "", $0)
+              if ($0 ~ /^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+\/[0-9]+$/) {
+                  # Проверяем корректность CIDR
+                  split($0, parts, "/")
+                  if (parts[2] >= 0 && parts[2] <= 32) {
+                      print $0
+                  }
+              } else if ($0 ~ /^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$/) {
+                  # Одиночный IP - добавляем /32
+                  print $0 "/32"
+              }
+          }' | sort -u | \
+          sed "s/^/  - '/;s/$/'/" > "$T.2"
+          
+          echo " найдено $(wc -l < "$T.2") CIDR" && \
+          echo "payload:" > "$O" && cat "$T.2" >> "$O"
+          
+          echo "Первая подсеть: $(head -2 "$O" | tail -1)"
+          rm -f "$T" "$T.2" && echo "Сохранено в $O"
+        
       - name: Create adblock rulesets
         run: |
           mihomo convert-ruleset domain yaml uni-adblock.yaml uni-adblock.mrs
@@ -68,9 +286,7 @@ jobs:
       - name: Create ipcidr-direct rulesets
         run: |
           mihomo convert-ruleset ipcidr yaml uni-ip4-cidr-direct.yaml uni-ip4-cidr-direct.mrs
-          
 
-      # Runs a set of commands using the runners shell
       - name: Commit and push changes
         run: |
           git config user.name "github-actions[bot]"

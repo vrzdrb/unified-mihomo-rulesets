@@ -31,9 +31,9 @@ rule-providers:
     behavior: domain
     format: mrs
     url: https://github.com/vrzdrb/unified-mihomo-rulesets/raw/refs/heads/main/uni-adblock.mrs
-    path: ./uni-adblock.mrs
+    path: ./unified/uni-adblock.mrs
     interval: 86400
-  
+
   uni-app-direct:
     type: http
     behavior: classical
@@ -47,7 +47,7 @@ rule-providers:
     behavior: domain
     format: mrs
     url: https://github.com/vrzdrb/unified-mihomo-rulesets/raw/refs/heads/main/uni-domains-direct.mrs
-    path: ./uni-domains-direct.mrs
+    path: ./unified/uni-domains-direct.mrs
     interval: 86400
 
   uni-domains:
@@ -73,7 +73,7 @@ rule-providers:
     url: https://raw.githubusercontent.com/vrzdrb/unified-mihomo-rulesets/refs/heads/main/uni-app-proxy.yaml
     path: ./unified/uni-app-proxy.yaml
     interval: 86400
-    
+
   uni-ip4-cidr:
     type: http
     behavior: ipcidr

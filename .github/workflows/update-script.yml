@@ -39,6 +39,10 @@ jobs:
           > "$O"
           urls=(
               "https://raw.githubusercontent.com/sjhgvr/oisd/main/domainswild2_big.txt"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/category-speedtest"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/ookla-speedtest"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/openspeedtest"
+              "https://raw.githubusercontent.com/vrzdrb/unified-mihomo-rulesets/refs/heads/main/uni-custom-d-block.yaml"
           )
           echo "Загрузка ${#urls[@]} источников..."
           for u in "${urls[@]}"; do
@@ -48,9 +52,24 @@ jobs:
           
           echo -n "Обработка..." && \
           sed -i 's/^[0-9]\+\.[0-9]\+\.[0-9]\+\.[0-9]\+[[:space:]]\+//;s/^[[:space:]]*127\.0\.0\.1[[:space:]]\+//;s/^[[:space:]]*0\.0\.0\.0[[:space:]]\+//' "$T" && \
-          grep -v '#' "$T" | grep -v '^[[:space:]]*!' | grep -v '^[[:space:]]*$' | \
-          sed 's/^[[:space:]]*DOMAIN-SUFFIX,[[:space:]]*//i;s/^[[:space:]]*DOMAIN,[[:space:]]*//i;s/^[[:space:]]*-[[:space:]]*//;s/["'\'']//g' | \
-          grep '\.' | sed 's/^[[:space:]]*//;s/[[:space:]]*$//' | tr '[:upper:]' '[:lower:]' | sort -u > "$U"
+          grep -v '#' "$T" | \
+          grep -v '^[[:space:]]*!' | \
+          grep -v '^[[:space:]]*$' | \
+          grep -v '^[[:space:]]*include:' | \
+          sed 's/^[[:space:]]*full://i' | \
+          sed 's/^[[:space:]]*domain://i' | \
+          sed 's/^[[:space:]]*DOMAIN-SUFFIX,//i;s/^[[:space:]]*DOMAIN,//i;s/^[[:space:]]*-[[:space:]]*//;s/["'\'']//g' | \
+          sed 's/@ads.*$//' | \
+          sed 's/@.*$//' | \
+          sed 's/[[:space:]]*[!]cn[[:space:]]*$//' | \
+          sed 's/[[:space:]]*cn[[:space:]]*$//' | \
+          sed 's/[[:space:]]*![a-z]*[[:space:]]*$//' | \
+          sed 's/[[:space:]]\+$//' | \
+          grep '\.' | \
+          sed 's/\.\././g' | \
+          sed 's/^[[:space:]]*//;s/[[:space:]]*$//' | \
+          tr '[:upper:]' '[:lower:]' | \
+          sort -u > "$U"
           
           echo " найдено $(wc -l < "$U") доменов" && echo "payload:" > "$O" && \
           sed "s/^/  - '+./;s/$/'/" "$U" >> "$O"
@@ -96,8 +115,106 @@ jobs:
               "https://raw.githubusercontent.com/GhostRooter0953/discord-voice-ips/refs/heads/master/main_domains/discord-main-domains-list"
               "https://raw.githubusercontent.com/GhostRooter0953/discord-voice-ips/refs/heads/master/voice_domains/discord-voice-domains-list"
               "https://raw.githubusercontent.com/sjhgvr/oisd/refs/heads/main/domainswild2_nsfw_small.txt"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/beats"
               "https://raw.githubusercontent.com/vrzdrb/clash_roblox_ip_domains/refs/heads/main/roblox-domains.yaml"
               "https://raw.githubusercontent.com/vrzdrb/unified-mihomo-rulesets/refs/heads/main/uni-custom-d-proxy.yaml"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/github-copilot"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/category-media-ru"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/itchio"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/roblox"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/steaminventoryhelper"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/meta"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/facebook"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/facebook-dev"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/instagram"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/oculus"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/threads"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/whatsapp"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/adobe"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/typekit"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/adobe-activation"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/anime"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/showtimeanytime"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/bing"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/openai"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/tiktok"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/matrix"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/paypal"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/amazon"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/amazontrust"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/aws"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/imdb"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/kindle"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/kindle4rss"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/primevideo"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/wholefoodsmarket"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/netflix"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/spotify"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/anthropic"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/soundcloud"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/category-password-management"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/agilebits"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/bitwarden"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/lastpass"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/category-web-archive"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/internet-archive"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/archivetoday"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/4plebs"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/clubhouse"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/discord"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/freenode"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/intercom"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/keybase"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/line"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/mailcom"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/matrix"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/messenger"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/protonmail"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/signal"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/slack"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/telegram"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/temp-mail"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/viber"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/whatsapp"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/category-anticensorship"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/category-ipfs"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/cloudflare-ipfs"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/ceno"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/citizenlab"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/epicbrowser"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/greatfire"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/haveibeenpwned"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/lantern"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/paskoocheh"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/softether"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/torproject"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/v2ray"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/vpngate"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/category-antivirus"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/comodo"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/eset"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/symantec"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/category-porn"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/bongacams"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/camwhores"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/clips4sale"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/hentaichen"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/hentaivn"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/javcc"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/nudevista"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/playboy"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/pornhub"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/spankbang"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/theporndude"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/xhamster"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/xnxx"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/xvideos"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/google"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/google-deepmind"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/google-scholar"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/youtube"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/canva"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/tilda"
           )
           
           echo "Загрузка ${#urls[@]} источников..."
@@ -108,9 +225,24 @@ jobs:
           
           echo -n "Обработка..." && \
           sed -i 's/^[0-9]\+\.[0-9]\+\.[0-9]\+\.[0-9]\+[[:space:]]\+//;s/^[[:space:]]*127\.0\.0\.1[[:space:]]\+//;s/^[[:space:]]*0\.0\.0\.0[[:space:]]\+//' "$T" && \
-          grep -v '#' "$T" | grep -v '^[[:space:]]*!' | grep -v '^[[:space:]]*$' | \
-          sed 's/^[[:space:]]*DOMAIN-SUFFIX,[[:space:]]*//i;s/^[[:space:]]*DOMAIN,[[:space:]]*//i;s/^[[:space:]]*-[[:space:]]*//;s/["'\'']//g' | \
-          grep '\.' | sed 's/^[[:space:]]*//;s/[[:space:]]*$//' | tr '[:upper:]' '[:lower:]' | sort -u > "$U"
+          grep -v '#' "$T" | \
+          grep -v '^[[:space:]]*!' | \
+          grep -v '^[[:space:]]*$' | \
+          grep -v '^[[:space:]]*include:' | \
+          sed 's/^[[:space:]]*full://i' | \
+          sed 's/^[[:space:]]*domain://i' | \
+          sed 's/^[[:space:]]*DOMAIN-SUFFIX,//i;s/^[[:space:]]*DOMAIN,//i;s/^[[:space:]]*-[[:space:]]*//;s/["'\'']//g' | \
+          sed 's/@ads.*$//' | \
+          sed 's/@.*$//' | \
+          sed 's/[[:space:]]*[!]cn[[:space:]]*$//' | \
+          sed 's/[[:space:]]*cn[[:space:]]*$//' | \
+          sed 's/[[:space:]]*![a-z]*[[:space:]]*$//' | \
+          sed 's/[[:space:]]\+$//' | \
+          grep '\.' | \
+          sed 's/\.\././g' | \
+          sed 's/^[[:space:]]*//;s/[[:space:]]*$//' | \
+          tr '[:upper:]' '[:lower:]' | \
+          sort -u > "$U"
           
           echo " найдено $(wc -l < "$U") доменов" && echo "payload:" > "$O" && \
           sed "s/^/  - '+./;s/$/'/" "$U" >> "$O"
@@ -125,8 +257,188 @@ jobs:
           T=$(mktemp) && U=$(mktemp) && O="uni-domains-direct.yaml"
           > "$O"
           urls=(
-              "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Russia/outside-raw.lst"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/drweb"
               "https://raw.githubusercontent.com/vrzdrb/unified-mihomo-rulesets/refs/heads/main/uni-custom-d-direct.yaml"
+              "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Russia/outside-raw.lst"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/apple"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/apple-dev"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/swift"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/apple-pki"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/apple-tvplus"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/apple-update"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/apple-intelligence"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/icloud"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/itunes"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/github"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/npmjs"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/dropbox"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/category-gov-ir"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/category-ir"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/category-ru"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/category-gov-ru"  
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/category-retail-ru"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/category-travel-ru"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/aviasales"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/category-medicine-ru"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/avito"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/ozon"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/wildberries"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/category-entertainment-ru"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/rutube"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/kinopoisk"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/okko"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/wink"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/carrotquest"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/kaspersky"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/mailru-group"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/mailru"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/mindbox"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/selectel"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/yandex"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/category-bank-ru"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/sber"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/2gis"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/okko"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/tbank-ru"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/category-bank-cn"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/boc"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/ccb"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/citic"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/cmb"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/hsbc-cn"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/icbc"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/unionpay" 
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/category-ip-geo-detect"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/ipip"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/category-remote-control"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/teamviewer"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/category-number-verification-cn"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/category-entertainment-cn"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/aamgame"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/acfun"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/acplay"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/bestv"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/bilibili"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/bilibili-cdn"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/bilibili-game"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/ciweimao"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/dedao"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/douyin"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/douyu"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/duitang"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/fengxing"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/fqnovel"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/gamersky"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/gitv"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/hunantv"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/huya"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/iqiyi"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/ku6"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/kuaikan"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/kuaishou"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/kugou"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/kuwo"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/le"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/lizhi"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/pptv"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/qimao"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/qingtingfm"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/sakurafrp"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/taomee"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/u17"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/wasu"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/xiaoheihe"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/xiaoyuzhou"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/ximalaya"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/youku"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/yuewen"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/webnovel"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/tgbus"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/vgtime"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/category-games-!cn"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/blizzard"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/bluearchive"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/bohemia"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/curseforge"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/cygames"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/ea"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/origin"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/embark"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/eneba"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/epicgames"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/escapefromtarkov"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/faceit"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/gaijin"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/garena"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/gog"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/gog"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/hoyoverse"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/illusion"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/illusion-nonofficial"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/lowiro"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/modrinth"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/nexon"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/nikke"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/nintendo"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/op"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/osu"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/pandanet"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/pinkcore"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/playstation"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/projectsekai"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/pubg"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/purikonejp"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/riot"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/snk"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/steam"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/steamunlocked"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/supercell"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/take-two"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/2kgames"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/rockstar"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/zynga"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/ubisoft"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/vrchat"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/wargaming"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/wbgames"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/xbox"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/asobo"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/bethesda"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/forza"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/mojang"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/ynoproject"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/yostar"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/category-games-cn"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/4399"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/9game"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/bluepoch-games"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/cowlevel"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/herogame"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/kurogames"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/mihoyo-cn"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/tencent-games"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/tiancity"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/vrzwk"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/xd"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/yokaverse"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/meizu"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/xiaomi"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/xiaomi-ai"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/xiaomi-iot"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/honor"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/tencent"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/qcloud"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/discuz"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/dnspod"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/yuewen"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/tencent-dev"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/cnb"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/coding"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/tencent-games"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/onedrive"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/category-game-accelerator-cn"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/category-game-platforms-download"
+              
           )
           
           echo "Загрузка ${#urls[@]} источников..."
@@ -137,9 +449,24 @@ jobs:
           
           echo -n "Обработка..." && \
           sed -i 's/^[0-9]\+\.[0-9]\+\.[0-9]\+\.[0-9]\+[[:space:]]\+//;s/^[[:space:]]*127\.0\.0\.1[[:space:]]\+//;s/^[[:space:]]*0\.0\.0\.0[[:space:]]\+//' "$T" && \
-          grep -v '#' "$T" | grep -v '^[[:space:]]*!' | grep -v '^[[:space:]]*$' | \
-          sed 's/^[[:space:]]*DOMAIN-SUFFIX,[[:space:]]*//i;s/^[[:space:]]*DOMAIN,[[:space:]]*//i;s/^[[:space:]]*-[[:space:]]*//;s/["'\'']//g' | \
-          grep '\.' | sed 's/^[[:space:]]*//;s/[[:space:]]*$//' | tr '[:upper:]' '[:lower:]' | sort -u > "$U"
+          grep -v '#' "$T" | \
+          grep -v '^[[:space:]]*!' | \
+          grep -v '^[[:space:]]*$' | \
+          grep -v '^[[:space:]]*include:' | \
+          sed 's/^[[:space:]]*full://i' | \
+          sed 's/^[[:space:]]*domain://i' | \
+          sed 's/^[[:space:]]*DOMAIN-SUFFIX,//i;s/^[[:space:]]*DOMAIN,//i;s/^[[:space:]]*-[[:space:]]*//;s/["'\'']//g' | \
+          sed 's/@ads.*$//' | \
+          sed 's/@.*$//' | \
+          sed 's/[[:space:]]*[!]cn[[:space:]]*$//' | \
+          sed 's/[[:space:]]*cn[[:space:]]*$//' | \
+          sed 's/[[:space:]]*![a-z]*[[:space:]]*$//' | \
+          sed 's/[[:space:]]\+$//' | \
+          grep '\.' | \
+          sed 's/\.\././g' | \
+          sed 's/^[[:space:]]*//;s/[[:space:]]*$//' | \
+          tr '[:upper:]' '[:lower:]' | \
+          sort -u > "$U"
           
           echo " найдено $(wc -l < "$U") доменов" && echo "payload:" > "$O" && \
           sed "s/^/  - '+./;s/$/'/" "$U" >> "$O"
@@ -183,29 +510,27 @@ jobs:
               echo " ✓" || echo " ✗"
           done
           
+          # Замени существующий блок обработки CIDR на этот:
+          
           echo -n "Обработка..." && \
-          grep -v '^[[:space:]]*[#!]' "$T" | grep -v '^[[:space:]]*$' | \
+          grep -v '^[[:space:]]*[#!]' "$T" | \
+          grep -v '^[[:space:]]*$' | \
+          grep -v '^[[:space:]]*include:' | \
+          grep -v '^[[:space:]]*full:' | \
+          grep -v '^[[:space:]]*[a-zA-Z_-]*:' | \
           sed 's/^[[:space:]]*IP-CIDR,[[:space:]]*//i;s/^[[:space:]]*-[[:space:]]*//;s/["'\'']//g' | \
-          # Разделяем строки с несколькими IP/CIDR (заменяем пробелы на переводы строк)
           sed 's/[[:space:]]\+/\n/g' | \
-          # Убираем лишние пробелы в начале/конце
           sed 's/^[[:space:]]*//;s/[[:space:]]*$//' | \
-          # Фильтруем только строки, которые начинаются с IP-адреса
           grep -E '^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}' | \
-          # Удаляем мусорные символы после CIDR (типа "31138.128.136.0/21" из примера)
           sed 's/[^0-9\.\/].*$//' | \
-          # Добавляем /32 к одиночным IP, проверяем корректность формата
           awk '{
-              # Убираем все лишние символы кроме цифр, точек и слеша
               gsub(/[^0-9\.\/]/, "", $0)
               if ($0 ~ /^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+\/[0-9]+$/) {
-                  # Проверяем корректность CIDR
                   split($0, parts, "/")
                   if (parts[2] >= 0 && parts[2] <= 32) {
                       print $0
                   }
               } else if ($0 ~ /^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$/) {
-                  # Одиночный IP - добавляем /32
                   print $0 "/32"
               }
           }' | sort -u | \
@@ -236,15 +561,10 @@ jobs:
           echo -n "Обработка..." && \
           grep -v '^[[:space:]]*[#!]' "$T" | grep -v '^[[:space:]]*$' | \
           sed 's/^[[:space:]]*IP-CIDR,[[:space:]]*//i;s/^[[:space:]]*-[[:space:]]*//;s/["'\'']//g' | \
-          # Разделяем строки с несколькими IP/CIDR (заменяем пробелы на переводы строк)
           sed 's/[[:space:]]\+/\n/g' | \
-          # Убираем лишние пробелы в начале/конце
           sed 's/^[[:space:]]*//;s/[[:space:]]*$//' | \
-          # Фильтруем только строки, которые начинаются с IP-адреса
           grep -E '^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}' | \
-          # Удаляем мусорные символы после CIDR (типа "31138.128.136.0/21" из примера)
           sed 's/[^0-9\.\/].*$//' | \
-          # Добавляем /32 к одиночным IP, проверяем корректность формата
           awk '{
               # Убираем все лишние символы кроме цифр, точек и слеша
               gsub(/[^0-9\.\/]/, "", $0)

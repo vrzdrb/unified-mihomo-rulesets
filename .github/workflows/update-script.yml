@@ -65,6 +65,7 @@ jobs:
           sed 's/[[:space:]]*cn[[:space:]]*$//' | \
           sed 's/[[:space:]]*![a-z]*[[:space:]]*$//' | \
           sed 's/[[:space:]]\+$//' | \
+          sed 's/\.$//' | \
           grep '\.' | \
           sed 's/\.\././g' | \
           sed 's/^[[:space:]]*//;s/[[:space:]]*$//' | \
@@ -238,6 +239,7 @@ jobs:
           sed 's/[[:space:]]*cn[[:space:]]*$//' | \
           sed 's/[[:space:]]*![a-z]*[[:space:]]*$//' | \
           sed 's/[[:space:]]\+$//' | \
+          sed 's/\.$//' | \
           grep '\.' | \
           sed 's/\.\././g' | \
           sed 's/^[[:space:]]*//;s/[[:space:]]*$//' | \
@@ -462,6 +464,7 @@ jobs:
           sed 's/[[:space:]]*cn[[:space:]]*$//' | \
           sed 's/[[:space:]]*![a-z]*[[:space:]]*$//' | \
           sed 's/[[:space:]]\+$//' | \
+          sed 's/\.$//' | \
           grep '\.' | \
           sed 's/\.\././g' | \
           sed 's/^[[:space:]]*//;s/[[:space:]]*$//' | \

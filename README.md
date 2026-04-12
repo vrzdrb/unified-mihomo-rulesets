@@ -1,5 +1,6 @@
 # unified mihomo rulesets
-The scripts generate combined mihomo rules &amp; rulesets from 40+ lists from repositories such as:
+The scripts generate combined mihomo rules &amp; rulesets from 40+ lists from repositories such as
+- [v2fly domain-list-community](https://github.com/v2fly/domain-list-community/tree/master/data)
 - [itdoginfo allow-domains](https://github.com/itdoginfo/allow-domains)
 - [dartraiden no-russia-hosts](https://github.com/dartraiden/no-russia-hosts)
 - [antifilter-community](https://community.antifilter.download)
@@ -86,16 +87,9 @@ rules:
   - RULE-SET,uni-adblock,REJECT
   - RULE-SET,uni-app-direct,DIRECT
   - RULE-SET,uni-domains-direct,DIRECT
-  - GEOIP,LAN,DIRECT
-  - GEOSITE,CATEGORY-IR,DIRECT
-  - GEOSITE,CATEGORY-RU,DIRECT
-  - GEOSITE,KASPERSKY,DIRECT
   - RULE-SET,uni-domains,PROXY
-  - RULE-SET,uni-app-proxy,PROXY  
-  - GEOIP,CN,DIRECT
-  - GEOSITE,CN,DIRECT
+  - RULE-SET,uni-app-proxy,PROXY
   - RULE-SET,uni-ip4-cidr-direct,DIRECT
   - RULE-SET,uni-ip4-cidr,PROXY
-  - GEOIP,CZ,PROXY
   - MATCH,DIRECT
 ```

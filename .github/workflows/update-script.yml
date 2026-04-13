@@ -43,7 +43,6 @@ jobs:
               "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/ookla-speedtest"
               "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/openspeedtest"
               "https://raw.githubusercontent.com/vrzdrb/unified-mihomo-rulesets/refs/heads/main/uni-custom-d-block.yaml"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/category-ip-geo-detect"
           )
           echo "Загрузка ${#urls[@]} источников..."
           for u in "${urls[@]}"; do

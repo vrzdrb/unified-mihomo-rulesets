@@ -1,4 +1,18 @@
-www.speedtest.net.cdn.cloudflare.net
-hk-global-bgp.hkg.speedtest.yecaoyun.com
+# Telega
 telega.info
 telega.me
+
+# RKN geolocation block
+api.beacondb.net
+api.ipapi.is
+www.iplocate.io
+ipv4-internet.yandex.net
+ipv6-internet.yandex.net
+2ip.ru
+ifconfig.me
+ipv4.ifconfig.me
+ipv6.ifconfig.me
+checkip.amazonaws.com
+api.ipify.org
+api-ipv4.ip.sb
+api-ipv6.ip.sb

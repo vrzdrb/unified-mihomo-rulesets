@@ -504,6 +504,7 @@ jobs:
               "https://raw.githubusercontent.com/GhostRooter0953/discord-voice-ips/refs/heads/master/voice_domains/discord-voice-ip-list"
               "https://raw.githubusercontent.com/vrzdrb/clash_roblox_ip_domains/refs/heads/main/roblox-ip.yaml"
               "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/telegramcidr.txt"
+              "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geoip/cz.list"
           )
           
           echo "Загрузка ${#urls[@]} источников..."
@@ -552,6 +553,7 @@ jobs:
           T=$(mktemp) && O="uni-ip4-cidr-direct.yaml" && > "$O"
           urls=(
               "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/cncidr.txt"
+              "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geoip/cn.list"
           )
           
           echo "Загрузка ${#urls[@]} источников..."

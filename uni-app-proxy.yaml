@@ -5,6 +5,7 @@ payload:
   - PROCESS-NAME-REGEX,(?i).*Instagram.*
   - PROCESS-NAME-REGEX,(?i).*Ayugram-desktop.*
   - PROCESS-NAME-REGEX,(?i).*Ayugram.*
+  - PROCESS-NAME-REGEX,(?i).*Forkgram.*
   - PROCESS-NAME-REGEX,(?i).*Facebook.*
   - PROCESS-NAME-REGEX,(?i).*Signal.*
   - PROCESS-NAME-REGEX,(?i).*Discord.*

@@ -1,5 +1,5 @@
 # unified mihomo rulesets
-The scripts generate combined mihomo rules &amp; rulesets from 40+ lists from repositories such as
+The scripts generate combined and deduplicated mihomo rules &amp; rulesets from ~338 lists from repositories such as:
 - [v2fly domain-list-community](https://github.com/v2fly/domain-list-community/tree/master/data)
 - [itdoginfo allow-domains](https://github.com/itdoginfo/allow-domains)
 - [dartraiden no-russia-hosts](https://github.com/dartraiden/no-russia-hosts)

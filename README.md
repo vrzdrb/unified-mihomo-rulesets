@@ -51,6 +51,14 @@ rule-providers:
     path: ./unified/uni-domains-direct.mrs
     interval: 86400
 
+  uni-custom-k-proxy:
+    type: http
+    behavior: classical
+    format: yaml
+    url: https://raw.githubusercontent.com/vrzdrb/unified-mihomo-rulesets/refs/heads/main/uni-custom-k-proxy.yaml
+    path: ./unified/uni-custom-k-proxy.yaml
+    interval: 86400
+
   uni-domains:
     type: http
     behavior: domain

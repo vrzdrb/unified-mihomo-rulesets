@@ -353,6 +353,7 @@ payload:
   - PROCESS-NAME,ru.sima_land.spb.market
   - PROCESS-NAME,club.chizhik
   - PROCESS-NAME,com.yandex.lavka
+  - PROCESS-NAME,com.ru.dixy
 
   # Android Торренты
   - PROCESS-NAME,com.kevinforeman.nzb360

@@ -76,20 +76,20 @@ rule-providers:
     path: ./unified/uni-domains.mrs
     interval: 86400
 
-  uni-ip4-cidr-direct:
-    type: http
-    behavior: ipcidr
-    format: mrs
-    url: https://github.com/vrzdrb/unified-mihomo-rulesets/raw/refs/heads/main/uni-ip4-cidr-direct.mrs
-    path: ./unified/uni-ip4-cidr-direct.mrs
-    interval: 86400
-
   uni-app-proxy:
     type: http
     behavior: classical
     format: yaml
     url: https://raw.githubusercontent.com/vrzdrb/unified-mihomo-rulesets/refs/heads/main/uni-app-proxy.yaml
     path: ./unified/uni-app-proxy.yaml
+    interval: 86400
+
+  uni-ip4-cidr-direct:
+    type: http
+    behavior: ipcidr
+    format: mrs
+    url: https://github.com/vrzdrb/unified-mihomo-rulesets/raw/refs/heads/main/uni-ip4-cidr-direct.mrs
+    path: ./unified/uni-ip4-cidr-direct.mrs
     interval: 86400
 
   uni-ip4-cidr:

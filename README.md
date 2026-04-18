@@ -1,5 +1,6 @@
 # unified mihomo rulesets
 The scripts generate combined and deduplicated mihomo rules &amp; rulesets from ~338 lists from repositories such as:
+- [MetaCubeX/meta-rules-dat](https://github.com/MetaCubeX/meta-rules-dat/tree/meta/geo/geosite)
 - [v2fly domain-list-community](https://github.com/v2fly/domain-list-community/tree/master/data)
 - [itdoginfo allow-domains](https://github.com/itdoginfo/allow-domains)
 - [dartraiden no-russia-hosts](https://github.com/dartraiden/no-russia-hosts)
@@ -51,6 +52,14 @@ rule-providers:
     path: ./unified/uni-domains-direct.mrs
     interval: 86400
 
+  uni-custom-k-direct:
+    type: http
+    behavior: classical
+    format: yaml
+    url: https://raw.githubusercontent.com/vrzdrb/unified-mihomo-rulesets/refs/heads/main/uni-custom-k-direct.yaml
+    path: ./unified/uni-custom-k-direct.yaml
+    interval: 86400
+
   uni-custom-k-proxy:
     type: http
     behavior: classical
@@ -95,6 +104,7 @@ rules:
   - RULE-SET,uni-adblock,REJECT
   - RULE-SET,uni-app-direct,DIRECT
   - RULE-SET,uni-domains-direct,DIRECT
+  - RULE-SET,uni-custom-k-direct,DIRECT
   - RULE-SET,uni-custom-k-proxy,PROXY
   - RULE-SET,uni-domains,PROXY
   - RULE-SET,uni-app-proxy,PROXY

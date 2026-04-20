@@ -1,2 +1,6 @@
 payload:
   - DOMAIN-KEYWORD,aliexpress
+  - DOMAIN-REGEX,.*\.ru$
+  - DOMAIN-REGEX,.*\.рф$
+  - DOMAIN-REGEX,.*\.su$
+  - DOMAIN-REGEX,.*\.tatar$

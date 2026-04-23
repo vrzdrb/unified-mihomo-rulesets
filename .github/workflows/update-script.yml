@@ -31,11 +31,11 @@ jobs:
           curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" -L https://github.com/MetaCubeX/mihomo/releases/download/v1.19.22/mihomo-linux-amd64-v1.19.22.deb -o mihomo-linux-amd64-v1.19.22.deb
           sudo apt install --fix-missing ./mihomo-linux-amd64-v1.19.22.deb
 
-      - name: Update adblock list
+      - name: Update block list
         run: |
           #!/bin/bash
           
-          T=$(mktemp) && U=$(mktemp) && O="uni-adblock.yaml"
+          T=$(mktemp) && U=$(mktemp) && O="uni-block.yaml"
           > "$O"
           urls=(
               "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/category-speedtest"
@@ -591,9 +591,9 @@ jobs:
           echo "Первая подсеть: $(head -2 "$O" | tail -1)"
           rm -f "$T" "$T.2" && echo "Сохранено в $O"
         
-      - name: Create adblock rulesets
+      - name: Create block rulesets
         run: |
-          mihomo convert-ruleset domain yaml uni-adblock.yaml uni-adblock.mrs
+          mihomo convert-ruleset domain yaml uni-block.yaml uni-block.mrs
 
       - name: Create domains rulesets
         run: |

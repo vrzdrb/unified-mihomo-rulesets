@@ -28,12 +28,12 @@ sniffer:
       
 rule-providers:
 
-  uni-adblock:
+  uni-block:
     type: http
     behavior: domain
     format: mrs
-    url: https://github.com/vrzdrb/unified-mihomo-rulesets/raw/refs/heads/main/uni-adblock.mrs
-    path: ./unified/uni-adblock.mrs
+    url: https://github.com/vrzdrb/unified-mihomo-rulesets/raw/refs/heads/main/uni-block.mrs
+    path: ./unified/uni-block.mrs
     interval: 86400
 
   uni-app-direct:
@@ -101,7 +101,7 @@ rule-providers:
     interval: 86400
 
 rules:
-  - RULE-SET,uni-adblock,REJECT
+  - RULE-SET,uni-block,REJECT
   - RULE-SET,uni-app-direct,DIRECT
   - RULE-SET,uni-domains-direct,DIRECT
   - RULE-SET,uni-custom-k-direct,DIRECT

@@ -70,6 +70,8 @@ jobs:
               echo "Первый домен: $(head -2 "$O" | tail -1)"
           }
 
+          export -f process_domains
+
       - name: Process IP-CIDR function
         run: |
           # Функция обработки IP-CIDR списков
@@ -107,6 +109,8 @@ jobs:
               echo "Первая подсеть: $(head -2 "$O" | tail -1)"
               rm -f "$T.2"
           }
+
+          export -f process_ipcidr
 
       - name: Update adblock list
         run: |

@@ -31,6 +31,83 @@ jobs:
           curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" -L https://github.com/MetaCubeX/mihomo/releases/download/v1.19.22/mihomo-linux-amd64-v1.19.22.deb -o mihomo-linux-amd64-v1.19.22.deb
           sudo apt install --fix-missing ./mihomo-linux-amd64-v1.19.22.deb
 
+      - name: Process domains function
+        run: |
+          # Функция обработки доменов
+          process_domains() {
+              local T=$1
+              local U=$2
+              local O=$3
+              
+              echo -n "Обработка..." && \
+              sed -i 's/^[0-9]\+\.[0-9]\+\.[0-9]\+\.[0-9]\+[[:space:]]\+//;s/^[[:space:]]*127\.0\.0\.1[[:space:]]\+//;s/^[[:space:]]*0\.0\.0\.0[[:space:]]\+//' "$T" && \
+              grep -v '#' "$T" | \
+              grep -v '^[[:space:]]*!' | \
+              grep -v '^[[:space:]]*$' | \
+              grep -v '^[[:space:]]*include:' | \
+              sed 's/^[[:space:]]*full://i' | \
+              sed 's/^[[:space:]]*domain://i' | \
+              sed 's/^[[:space:]]*DOMAIN-SUFFIX,//i;s/^[[:space:]]*DOMAIN,//i;s/^[[:space:]]*-[[:space:]]*//;s/["'\'']//g' | \
+              sed 's/@ads.*$//' | \
+              sed 's/@.*$//' | \
+              sed 's/[[:space:]]*[!]cn[[:space:]]*$//' | \
+              sed 's/[[:space:]]*cn[[:space:]]*$//' | \
+              sed 's/[[:space:]]*![a-z]*[[:space:]]*$//' | \
+              sed 's/[[:space:]]\+$//' | \
+              sed 's/\.$//' | \
+              grep '\.' | \
+              sed 's/\.\././g' | \
+              sed 's/^[[:space:]]*//;s/[[:space:]]*$//' | \
+              tr '[:upper:]' '[:lower:]' | \
+              grep -v 'regexp' | \
+              grep -v '[^a-z0-9\.\-]' | \
+              awk -F. 'NF<=7' | \
+              sort -u > "$U"
+              
+              echo " найдено $(wc -l < "$U") доменов" && echo "payload:" > "$O" && \
+              sed "s/^/  - '+./;s/$/'/" "$U" >> "$O"
+              
+              echo "Первый домен: $(head -2 "$O" | tail -1)"
+          }
+
+      - name: Process IP-CIDR function
+        run: |
+          # Функция обработки IP-CIDR списков
+          process_ipcidr() {
+              local T=$1
+              local O=$2
+              
+              echo -n "Обработка..." && \
+              grep -v '^[[:space:]]*[#!]' "$T" | \
+              grep -v '^[[:space:]]*$' | \
+              grep -v '^[[:space:]]*include:' | \
+              grep -v '^[[:space:]]*full:' | \
+              grep -v '^[[:space:]]*[a-zA-Z_-]*:' | \
+              sed 's/^[[:space:]]*IP-CIDR,[[:space:]]*//i;s/^[[:space:]]*-[[:space:]]*//;s/["'\'']//g' | \
+              sed 's/[[:space:]]\+/\n/g' | \
+              sed 's/^[[:space:]]*//;s/[[:space:]]*$//' | \
+              grep -E '^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}' | \
+              sed 's/[^0-9\.\/].*$//' | \
+              awk '{
+                  gsub(/[^0-9\.\/]/, "", $0)
+                  if ($0 ~ /^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+\/[0-9]+$/) {
+                      split($0, parts, "/")
+                      if (parts[2] >= 0 && parts[2] <= 32) {
+                          print $0
+                      }
+                  } else if ($0 ~ /^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$/) {
+                      print $0 "/32"
+                  }
+              }' | sort -u | \
+              sed "s/^/  - '/;s/$/'/" > "$T.2"
+              
+              echo " найдено $(wc -l < "$T.2") CIDR" && \
+              echo "payload:" > "$O" && cat "$T.2" >> "$O"
+              
+              echo "Первая подсеть: $(head -2 "$O" | tail -1)"
+              rm -f "$T.2"
+          }
+
       - name: Update adblock list
         run: |
           #!/bin/bash
@@ -46,35 +123,7 @@ jobs:
               curl -sSL --connect-timeout 10 --max-time 30 "$u" >> "$T" 2>/dev/null && echo " ✓" || echo " ✗"
           done
           
-          echo -n "Обработка..." && \
-          sed -i 's/^[0-9]\+\.[0-9]\+\.[0-9]\+\.[0-9]\+[[:space:]]\+//;s/^[[:space:]]*127\.0\.0\.1[[:space:]]\+//;s/^[[:space:]]*0\.0\.0\.0[[:space:]]\+//' "$T" && \
-          grep -v '#' "$T" | \
-          grep -v '^[[:space:]]*!' | \
-          grep -v '^[[:space:]]*$' | \
-          grep -v '^[[:space:]]*include:' | \
-          sed 's/^[[:space:]]*full://i' | \
-          sed 's/^[[:space:]]*domain://i' | \
-          sed 's/^[[:space:]]*DOMAIN-SUFFIX,//i;s/^[[:space:]]*DOMAIN,//i;s/^[[:space:]]*-[[:space:]]*//;s/["'\'']//g' | \
-          sed 's/@ads.*$//' | \
-          sed 's/@.*$//' | \
-          sed 's/[[:space:]]*[!]cn[[:space:]]*$//' | \
-          sed 's/[[:space:]]*cn[[:space:]]*$//' | \
-          sed 's/[[:space:]]*![a-z]*[[:space:]]*$//' | \
-          sed 's/[[:space:]]\+$//' | \
-          sed 's/\.$//' | \
-          grep '\.' | \
-          sed 's/\.\././g' | \
-          sed 's/^[[:space:]]*//;s/[[:space:]]*$//' | \
-          tr '[:upper:]' '[:lower:]' | \
-          grep -v 'regexp' | \
-          grep -v '[^a-z0-9\.\-]' | \
-          awk -F. 'NF<=7' | \
-          sort -u > "$U"
-          
-          echo " найдено $(wc -l < "$U") доменов" && echo "payload:" > "$O" && \
-          sed "s/^/  - '+./;s/$/'/" "$U" >> "$O"
-          
-          echo "Первый домен: $(head -2 "$O" | tail -1)"
+          process_domains "$T" "$U" "$O"
           rm -f "$T" "$U" && echo "Сохранено в $O"
 
       - name: Update block list
@@ -97,35 +146,7 @@ jobs:
               curl -sSL --connect-timeout 10 --max-time 30 "$u" >> "$T" 2>/dev/null && echo " ✓" || echo " ✗"
           done
           
-          echo -n "Обработка..." && \
-          sed -i 's/^[0-9]\+\.[0-9]\+\.[0-9]\+\.[0-9]\+[[:space:]]\+//;s/^[[:space:]]*127\.0\.0\.1[[:space:]]\+//;s/^[[:space:]]*0\.0\.0\.0[[:space:]]\+//' "$T" && \
-          grep -v '#' "$T" | \
-          grep -v '^[[:space:]]*!' | \
-          grep -v '^[[:space:]]*$' | \
-          grep -v '^[[:space:]]*include:' | \
-          sed 's/^[[:space:]]*full://i' | \
-          sed 's/^[[:space:]]*domain://i' | \
-          sed 's/^[[:space:]]*DOMAIN-SUFFIX,//i;s/^[[:space:]]*DOMAIN,//i;s/^[[:space:]]*-[[:space:]]*//;s/["'\'']//g' | \
-          sed 's/@ads.*$//' | \
-          sed 's/@.*$//' | \
-          sed 's/[[:space:]]*[!]cn[[:space:]]*$//' | \
-          sed 's/[[:space:]]*cn[[:space:]]*$//' | \
-          sed 's/[[:space:]]*![a-z]*[[:space:]]*$//' | \
-          sed 's/[[:space:]]\+$//' | \
-          sed 's/\.$//' | \
-          grep '\.' | \
-          sed 's/\.\././g' | \
-          sed 's/^[[:space:]]*//;s/[[:space:]]*$//' | \
-          tr '[:upper:]' '[:lower:]' | \
-          grep -v 'regexp' | \
-          grep -v '[^a-z0-9\.\-]' | \
-          awk -F. 'NF<=7' | \
-          sort -u > "$U"
-          
-          echo " найдено $(wc -l < "$U") доменов" && echo "payload:" > "$O" && \
-          sed "s/^/  - '+./;s/$/'/" "$U" >> "$O"
-          
-          echo "Первый домен: $(head -2 "$O" | tail -1)"
+          process_domains "$T" "$U" "$O"
           rm -f "$T" "$U" && echo "Сохранено в $O"
 
       - name: Update domains-to-proxy list
@@ -278,35 +299,7 @@ jobs:
               curl -sSL --connect-timeout 10 --max-time 30 "$u" >> "$T" 2>/dev/null && echo " ✓" || echo " ✗"
           done
           
-          echo -n "Обработка..." && \
-          sed -i 's/^[0-9]\+\.[0-9]\+\.[0-9]\+\.[0-9]\+[[:space:]]\+//;s/^[[:space:]]*127\.0\.0\.1[[:space:]]\+//;s/^[[:space:]]*0\.0\.0\.0[[:space:]]\+//' "$T" && \
-          grep -v '#' "$T" | \
-          grep -v '^[[:space:]]*!' | \
-          grep -v '^[[:space:]]*$' | \
-          grep -v '^[[:space:]]*include:' | \
-          sed 's/^[[:space:]]*full://i' | \
-          sed 's/^[[:space:]]*domain://i' | \
-          sed 's/^[[:space:]]*DOMAIN-SUFFIX,//i;s/^[[:space:]]*DOMAIN,//i;s/^[[:space:]]*-[[:space:]]*//;s/["'\'']//g' | \
-          sed 's/@ads.*$//' | \
-          sed 's/@.*$//' | \
-          sed 's/[[:space:]]*[!]cn[[:space:]]*$//' | \
-          sed 's/[[:space:]]*cn[[:space:]]*$//' | \
-          sed 's/[[:space:]]*![a-z]*[[:space:]]*$//' | \
-          sed 's/[[:space:]]\+$//' | \
-          sed 's/\.$//' | \
-          grep '\.' | \
-          sed 's/\.\././g' | \
-          sed 's/^[[:space:]]*//;s/[[:space:]]*$//' | \
-          tr '[:upper:]' '[:lower:]' | \
-          grep -v 'regexp' | \
-          grep -v '[^a-z0-9\.\-]' | \
-          awk -F. 'NF<=7' | \
-          sort -u > "$U"
-          
-          echo " найдено $(wc -l < "$U") доменов" && echo "payload:" > "$O" && \
-          sed "s/^/  - '+./;s/$/'/" "$U" >> "$O"
-          
-          echo "Первый домен: $(head -2 "$O" | tail -1)"
+          process_domains "$T" "$U" "$O"
           rm -f "$T" "$U" && echo "Сохранено в $O"
 
       - name: Update domains-to-direct list
@@ -501,7 +494,6 @@ jobs:
               "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/onedrive"
               "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/category-game-accelerator-cn"
               "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/category-game-platforms-download"
-              
           )
           
           echo "Загрузка ${#urls[@]} источников..."
@@ -510,35 +502,7 @@ jobs:
               curl -sSL --connect-timeout 10 --max-time 30 "$u" >> "$T" 2>/dev/null && echo " ✓" || echo " ✗"
           done
           
-          echo -n "Обработка..." && \
-          sed -i 's/^[0-9]\+\.[0-9]\+\.[0-9]\+\.[0-9]\+[[:space:]]\+//;s/^[[:space:]]*127\.0\.0\.1[[:space:]]\+//;s/^[[:space:]]*0\.0\.0\.0[[:space:]]\+//' "$T" && \
-          grep -v '#' "$T" | \
-          grep -v '^[[:space:]]*!' | \
-          grep -v '^[[:space:]]*$' | \
-          grep -v '^[[:space:]]*include:' | \
-          sed 's/^[[:space:]]*full://i' | \
-          sed 's/^[[:space:]]*domain://i' | \
-          sed 's/^[[:space:]]*DOMAIN-SUFFIX,//i;s/^[[:space:]]*DOMAIN,//i;s/^[[:space:]]*-[[:space:]]*//;s/["'\'']//g' | \
-          sed 's/@ads.*$//' | \
-          sed 's/@.*$//' | \
-          sed 's/[[:space:]]*[!]cn[[:space:]]*$//' | \
-          sed 's/[[:space:]]*cn[[:space:]]*$//' | \
-          sed 's/[[:space:]]*![a-z]*[[:space:]]*$//' | \
-          sed 's/[[:space:]]\+$//' | \
-          sed 's/\.$//' | \
-          grep '\.' | \
-          sed 's/\.\././g' | \
-          sed 's/^[[:space:]]*//;s/[[:space:]]*$//' | \
-          tr '[:upper:]' '[:lower:]' | \
-          grep -v 'regexp' | \
-          grep -v '[^a-z0-9\.\-]' | \
-          awk -F. 'NF<=7' | \
-          sort -u > "$U"
-          
-          echo " найдено $(wc -l < "$U") доменов" && echo "payload:" > "$O" && \
-          sed "s/^/  - '+./;s/$/'/" "$U" >> "$O"
-          
-          echo "Первый домен: $(head -2 "$O" | tail -1)"
+          process_domains "$T" "$U" "$O"
           rm -f "$T" "$U" && echo "Сохранено в $O"
           
       - name: Update ip4-cidr-to-proxy list
@@ -579,37 +543,8 @@ jobs:
               echo " ✓" || echo " ✗"
           done
           
-          # Замени существующий блок обработки CIDR на этот:
-          
-          echo -n "Обработка..." && \
-          grep -v '^[[:space:]]*[#!]' "$T" | \
-          grep -v '^[[:space:]]*$' | \
-          grep -v '^[[:space:]]*include:' | \
-          grep -v '^[[:space:]]*full:' | \
-          grep -v '^[[:space:]]*[a-zA-Z_-]*:' | \
-          sed 's/^[[:space:]]*IP-CIDR,[[:space:]]*//i;s/^[[:space:]]*-[[:space:]]*//;s/["'\'']//g' | \
-          sed 's/[[:space:]]\+/\n/g' | \
-          sed 's/^[[:space:]]*//;s/[[:space:]]*$//' | \
-          grep -E '^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}' | \
-          sed 's/[^0-9\.\/].*$//' | \
-          awk '{
-              gsub(/[^0-9\.\/]/, "", $0)
-              if ($0 ~ /^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+\/[0-9]+$/) {
-                  split($0, parts, "/")
-                  if (parts[2] >= 0 && parts[2] <= 32) {
-                      print $0
-                  }
-              } else if ($0 ~ /^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$/) {
-                  print $0 "/32"
-              }
-          }' | sort -u | \
-          sed "s/^/  - '/;s/$/'/" > "$T.2"
-          
-          echo " найдено $(wc -l < "$T.2") CIDR" && \
-          echo "payload:" > "$O" && cat "$T.2" >> "$O"
-          
-          echo "Первая подсеть: $(head -2 "$O" | tail -1)"
-          rm -f "$T" "$T.2" && echo "Сохранено в $O"
+          process_ipcidr "$T" "$O"
+          rm -f "$T" && echo "Сохранено в $O"
 
       - name: Update ip4-cidr-to-direct lists
         run: |
@@ -629,34 +564,8 @@ jobs:
               echo " ✓" || echo " ✗"
           done
           
-          echo -n "Обработка..." && \
-          grep -v '^[[:space:]]*[#!]' "$T" | grep -v '^[[:space:]]*$' | \
-          sed 's/^[[:space:]]*IP-CIDR,[[:space:]]*//i;s/^[[:space:]]*-[[:space:]]*//;s/["'\'']//g' | \
-          sed 's/[[:space:]]\+/\n/g' | \
-          sed 's/^[[:space:]]*//;s/[[:space:]]*$//' | \
-          grep -E '^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}' | \
-          sed 's/[^0-9\.\/].*$//' | \
-          awk '{
-              # Убираем все лишние символы кроме цифр, точек и слеша
-              gsub(/[^0-9\.\/]/, "", $0)
-              if ($0 ~ /^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+\/[0-9]+$/) {
-                  # Проверяем корректность CIDR
-                  split($0, parts, "/")
-                  if (parts[2] >= 0 && parts[2] <= 32) {
-                      print $0
-                  }
-              } else if ($0 ~ /^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$/) {
-                  # Одиночный IP - добавляем /32
-                  print $0 "/32"
-              }
-          }' | sort -u | \
-          sed "s/^/  - '/;s/$/'/" > "$T.2"
-          
-          echo " найдено $(wc -l < "$T.2") CIDR" && \
-          echo "payload:" > "$O" && cat "$T.2" >> "$O"
-          
-          echo "Первая подсеть: $(head -2 "$O" | tail -1)"
-          rm -f "$T" "$T.2" && echo "Сохранено в $O"
+          process_ipcidr "$T" "$O"
+          rm -f "$T" && echo "Сохранено в $O"
 
       - name: Create adblock rulesets
         run: |

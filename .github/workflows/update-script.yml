@@ -46,7 +46,35 @@ jobs:
               curl -sSL --connect-timeout 10 --max-time 30 "$u" >> "$T" 2>/dev/null && echo " ✓" || echo " ✗"
           done
           
-          process_domains "$T" "$U" "$O"
+          echo -n "Обработка..." && \
+          sed -i 's/^[0-9]\+\.[0-9]\+\.[0-9]\+\.[0-9]\+[[:space:]]\+//;s/^[[:space:]]*127\.0\.0\.1[[:space:]]\+//;s/^[[:space:]]*0\.0\.0\.0[[:space:]]\+//' "$T" && \
+          grep -v '#' "$T" | \
+          grep -v '^[[:space:]]*!' | \
+          grep -v '^[[:space:]]*$' | \
+          grep -v '^[[:space:]]*include:' | \
+          sed 's/^[[:space:]]*full://i' | \
+          sed 's/^[[:space:]]*domain://i' | \
+          sed 's/^[[:space:]]*DOMAIN-SUFFIX,//i;s/^[[:space:]]*DOMAIN,//i;s/^[[:space:]]*-[[:space:]]*//;s/["'\'']//g' | \
+          sed 's/@ads.*$//' | \
+          sed 's/@.*$//' | \
+          sed 's/[[:space:]]*[!]cn[[:space:]]*$//' | \
+          sed 's/[[:space:]]*cn[[:space:]]*$//' | \
+          sed 's/[[:space:]]*![a-z]*[[:space:]]*$//' | \
+          sed 's/[[:space:]]\+$//' | \
+          sed 's/\.$//' | \
+          grep '\.' | \
+          sed 's/\.\././g' | \
+          sed 's/^[[:space:]]*//;s/[[:space:]]*$//' | \
+          tr '[:upper:]' '[:lower:]' | \
+          grep -v 'regexp' | \
+          grep -v '[^a-z0-9\.\-]' | \
+          awk -F. 'NF<=7' | \
+          sort -u > "$U"
+          
+          echo " найдено $(wc -l < "$U") доменов" && echo "payload:" > "$O" && \
+          sed "s/^/  - '+./;s/$/'/" "$U" >> "$O"
+          
+          echo "Первый домен: $(head -2 "$O" | tail -1)"
           rm -f "$T" "$U" && echo "Сохранено в $O"
 
       - name: Update block list

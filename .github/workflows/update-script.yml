@@ -81,6 +81,7 @@ jobs:
           T=$(mktemp) && U=$(mktemp) && O="uni-block.yaml"
           > "$O"
           urls=(
+              "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/category-speedtest.yaml"
               "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/category-speedtest"
               "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/ookla-speedtest"
               "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/openspeedtest"
@@ -128,8 +129,8 @@ jobs:
           T=$(mktemp) && U=$(mktemp) && O="uni-domains.yaml"
           > "$O"
           urls=(
-              "https://github.com/MetaCubeX/meta-rules-dat/blob/meta/geo/geosite/tor.yaml"
-              "https://github.com/MetaCubeX/meta-rules-dat/blob/meta/geo/geosite/category-anticensorship.yaml"
+              "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/tor.yaml"
+              "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/category-anticensorship.yaml"
               "https://raw.githubusercontent.com/Flowseal/zapret-discord-youtube/refs/heads/main/lists/list-google.txt"
               "https://raw.githubusercontent.com/Flowseal/zapret-discord-youtube/refs/heads/main/lists/list-general.txt"
               "https://iplist.opencck.org/?format=clashx&data=domains&append=timeout%3D1d%22%20mode=https%20dst-path=domains.rsc"
@@ -520,6 +521,9 @@ jobs:
           sed 's/\.\././g' | \
           sed 's/^[[:space:]]*//;s/[[:space:]]*$//' | \
           tr '[:upper:]' '[:lower:]' | \
+          grep -v 'regexp' | \
+          grep -v '[^a-z0-9\.\-]' | \
+          awk -F. 'NF<=3' | \
           sort -u > "$U"
           
           echo " найдено $(wc -l < "$U") доменов" && echo "payload:" > "$O" && \

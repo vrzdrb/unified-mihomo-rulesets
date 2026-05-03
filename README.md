@@ -1,5 +1,5 @@
 # unified mihomo rulesets
-The scripts generate combined and deduplicated mihomo rules &amp; rulesets from ~338 lists from repositories such as:
+The scripts generate combined and deduplicated mihomo rules &amp; rulesets from 338+ lists from repositories such as:
 - [MetaCubeX/meta-rules-dat](https://github.com/MetaCubeX/meta-rules-dat/tree/meta/geo/geosite)
 - [v2fly domain-list-community](https://github.com/v2fly/domain-list-community/tree/master/data)
 - [itdoginfo allow-domains](https://github.com/itdoginfo/allow-domains)
@@ -10,6 +10,7 @@ The scripts generate combined and deduplicated mihomo rules &amp; rulesets from 
 - [legiz-ru mihomo-rule-sets (apps, games, torrent-clients, discord-vc](https://github.com/legiz-ru/mihomo-rule-sets/tree/main/other)
 - [GhostRooter0953 discord-voice-ips](https://github.com/GhostRooter0953/discord-voice-ips)
 - [sjhgvr oisd](https://github.com/sjhgvr/oisd)
+- [Flowseal zapret-discord-youtube](https://github.com/flowseal/zapret-discord-youtube)
 
 # Usage:
 ```yaml
@@ -27,6 +28,14 @@ sniffer:
       ports: [443, 8443]
       
 rule-providers:
+
+  uni-adblock:
+    type: http
+    behavior: domain
+    format: mrs
+    url: https://github.com/vrzdrb/unified-mihomo-rulesets/raw/refs/heads/main/uni-adblock.mrs
+    path: ./unified/uni-adblock.mrs
+    interval: 86400
 
   uni-block:
     type: http
@@ -101,6 +110,7 @@ rule-providers:
     interval: 86400
 
 rules:
+  - RULE-SET,uni-adblock,REJECT
   - RULE-SET,uni-block,REJECT
   - RULE-SET,uni-app-direct,DIRECT
   - RULE-SET,uni-domains-direct,DIRECT

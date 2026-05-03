@@ -66,6 +66,9 @@ jobs:
           sed 's/\.\././g' | \
           sed 's/^[[:space:]]*//;s/[[:space:]]*$//' | \
           tr '[:upper:]' '[:lower:]' | \
+          grep -v 'regexp' | \
+          grep -v '[^a-z0-9\.\-]' | \
+          awk -F. 'NF<=3' | \
           sort -u > "$U"
           
           echo " найдено $(wc -l < "$U") доменов" && echo "payload:" > "$O" && \
@@ -295,6 +298,9 @@ jobs:
           sed 's/\.\././g' | \
           sed 's/^[[:space:]]*//;s/[[:space:]]*$//' | \
           tr '[:upper:]' '[:lower:]' | \
+          grep -v 'regexp' | \
+          grep -v '[^a-z0-9\.\-]' | \
+          awk -F. 'NF<=3' | \
           sort -u > "$U"
           
           echo " найдено $(wc -l < "$U") доменов" && echo "payload:" > "$O" && \

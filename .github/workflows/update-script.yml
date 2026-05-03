@@ -31,6 +31,49 @@ jobs:
           curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" -L https://github.com/MetaCubeX/mihomo/releases/download/v1.19.22/mihomo-linux-amd64-v1.19.22.deb -o mihomo-linux-amd64-v1.19.22.deb
           sudo apt install --fix-missing ./mihomo-linux-amd64-v1.19.22.deb
 
+      - name: Update adblock list
+        run: |
+          #!/bin/bash
+          
+          T=$(mktemp) && U=$(mktemp) && O="uni-adblock.yaml"
+          > "$O"
+          urls=(
+              "https://raw.githubusercontent.com/sjhgvr/oisd/refs/heads/main/domainswild2_small.txt"
+          )
+          echo "Загрузка ${#urls[@]} источников..."
+          for u in "${urls[@]}"; do
+              echo -n "$(basename "$u")..."
+              curl -sSL --connect-timeout 10 --max-time 30 "$u" >> "$T" 2>/dev/null && echo " ✓" || echo " ✗"
+          done
+          
+          echo -n "Обработка..." && \
+          sed -i 's/^[0-9]\+\.[0-9]\+\.[0-9]\+\.[0-9]\+[[:space:]]\+//;s/^[[:space:]]*127\.0\.0\.1[[:space:]]\+//;s/^[[:space:]]*0\.0\.0\.0[[:space:]]\+//' "$T" && \
+          grep -v '#' "$T" | \
+          grep -v '^[[:space:]]*!' | \
+          grep -v '^[[:space:]]*$' | \
+          grep -v '^[[:space:]]*include:' | \
+          sed 's/^[[:space:]]*full://i' | \
+          sed 's/^[[:space:]]*domain://i' | \
+          sed 's/^[[:space:]]*DOMAIN-SUFFIX,//i;s/^[[:space:]]*DOMAIN,//i;s/^[[:space:]]*-[[:space:]]*//;s/["'\'']//g' | \
+          sed 's/@ads.*$//' | \
+          sed 's/@.*$//' | \
+          sed 's/[[:space:]]*[!]cn[[:space:]]*$//' | \
+          sed 's/[[:space:]]*cn[[:space:]]*$//' | \
+          sed 's/[[:space:]]*![a-z]*[[:space:]]*$//' | \
+          sed 's/[[:space:]]\+$//' | \
+          sed 's/\.$//' | \
+          grep '\.' | \
+          sed 's/\.\././g' | \
+          sed 's/^[[:space:]]*//;s/[[:space:]]*$//' | \
+          tr '[:upper:]' '[:lower:]' | \
+          sort -u > "$U"
+          
+          echo " найдено $(wc -l < "$U") доменов" && echo "payload:" > "$O" && \
+          sed "s/^/  - '+./;s/$/'/" "$U" >> "$O"
+          
+          echo "Первый домен: $(head -2 "$O" | tail -1)"
+          rm -f "$T" "$U" && echo "Сохранено в $O"
+
       - name: Update block list
         run: |
           #!/bin/bash
@@ -38,10 +81,12 @@ jobs:
           T=$(mktemp) && U=$(mktemp) && O="uni-block.yaml"
           > "$O"
           urls=(
+              "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/category-speedtest.yaml"
               "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/category-speedtest"
               "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/ookla-speedtest"
               "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/openspeedtest"
               "https://raw.githubusercontent.com/vrzdrb/unified-mihomo-rulesets/refs/heads/main/uni-custom-d-block.yaml"
+              "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/category-ads.yaml"
           )
           echo "Загрузка ${#urls[@]} источников..."
           for u in "${urls[@]}"; do
@@ -84,6 +129,10 @@ jobs:
           T=$(mktemp) && U=$(mktemp) && O="uni-domains.yaml"
           > "$O"
           urls=(
+              "https://github.com/MetaCubeX/meta-rules-dat/blob/meta/geo/geosite/tor.yaml"
+              "https://github.com/MetaCubeX/meta-rules-dat/blob/meta/geo/geosite/category-anticensorship.yaml"
+              "https://raw.githubusercontent.com/Flowseal/zapret-discord-youtube/refs/heads/main/lists/list-google.txt"
+              "https://raw.githubusercontent.com/Flowseal/zapret-discord-youtube/refs/heads/main/lists/list-general.txt"
               "https://iplist.opencck.org/?format=clashx&data=domains&append=timeout%3D1d%22%20mode=https%20dst-path=domains.rsc"
               "https://raw.githubusercontent.com/dartraiden/no-russia-hosts/refs/heads/master/hosts.txt"
               "https://community.antifilter.download/list/domains.lst"
@@ -258,6 +307,10 @@ jobs:
           T=$(mktemp) && U=$(mktemp) && O="uni-domains-direct.yaml"
           > "$O"
           urls=(
+              "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/category-android-app-download.yaml"
+              "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/category-ir.yaml"
+              "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/category-ru.yaml"
+              "https://raw.githubusercontent.com/Flowseal/zapret-discord-youtube/refs/heads/main/lists/list-exclude.txt"
               "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/drweb"
               "https://raw.githubusercontent.com/vrzdrb/unified-mihomo-rulesets/refs/heads/main/uni-custom-d-direct.yaml"
               "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Russia/outside-raw.lst"
@@ -482,6 +535,7 @@ jobs:
           
           T=$(mktemp) && O="uni-ip4-cidr.yaml" && > "$O"
           urls=(
+              "https://raw.githubusercontent.com/Flowseal/zapret-discord-youtube/refs/heads/main/lists/ipset-all.txt.backup"
               "https://iplist.opencck.org/?format=clashx&data=cidr4"
               "https://raw.githubusercontent.com/1andrevich/Re-filter-lists/refs/heads/main/community_ips.lst"
               "https://raw.githubusercontent.com/1andrevich/Re-filter-lists/refs/heads/main/discord_ips.lst"
@@ -551,6 +605,7 @@ jobs:
           
           T=$(mktemp) && O="uni-ip4-cidr-direct.yaml" && > "$O"
           urls=(
+              "https://raw.githubusercontent.com/Flowseal/zapret-discord-youtube/refs/heads/main/lists/ipset-exclude.txt"
               "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/cncidr.txt"
               "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geoip/cn.list"
           )
@@ -590,6 +645,10 @@ jobs:
           
           echo "Первая подсеть: $(head -2 "$O" | tail -1)"
           rm -f "$T" "$T.2" && echo "Сохранено в $O"
+
+      - name: Create adblock rulesets
+        run: |
+          mihomo convert-ruleset domain yaml uni-adblock.yaml uni-adblock.mrs
         
       - name: Create block rulesets
         run: |

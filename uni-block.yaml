@@ -275,6 +275,7 @@ payload:
   - '+.sentry.dev-my.com'
   - '+.sentry.dev-my.games'
   - '+.sentry.hetzner.company'
+  - '+.sentry.iptv.rt.ru'
   - '+.sentry.kontur.host'
   - '+.sentry.mindbox.ru'
   - '+.sentry.ozon.ru'

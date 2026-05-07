@@ -98,6 +98,8 @@ payload:
   - '+.clck.yandex.net'
   - '+.clck.yango.com'
   - '+.click.rustore.ru'
+  - '+.copilot-telemetry-service.githubusercontent.com'
+  - '+.copilot-telemetry.githubusercontent.com'
   - '+.country.is'
   - '+.curlmyip.net'
   - '+.dadata.ru'

@@ -38,7 +38,7 @@ jobs:
           T=$(mktemp) && U=$(mktemp) && O="uni-adblock.yaml"
           > "$O"
           urls=(
-              "https://raw.githubusercontent.com/sjhgvr/oisd/refs/heads/main/domainswild2_small.txt"
+              "https://raw.githubusercontent.com/sjhgvr/oisd/refs/heads/main/domainswild2_big.txt"
           )
           echo "Загрузка ${#urls[@]} источников..."
           for u in "${urls[@]}"; do

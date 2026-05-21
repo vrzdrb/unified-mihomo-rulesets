@@ -548,7 +548,6 @@ jobs:
           T=$(mktemp) && O="uni-ip4-cidr.yaml" && > "$O"
           urls=(
               "https://raw.githubusercontent.com/Flowseal/zapret-discord-youtube/refs/heads/main/lists/ipset-all.txt.backup"
-              "https://iplist.opencck.org/?format=clashx&data=cidr4"
               "https://raw.githubusercontent.com/1andrevich/Re-filter-lists/refs/heads/main/community_ips.lst"
               "https://raw.githubusercontent.com/1andrevich/Re-filter-lists/refs/heads/main/discord_ips.lst"
               "https://raw.githubusercontent.com/1andrevich/Re-filter-lists/refs/heads/main/ipsum.lst"

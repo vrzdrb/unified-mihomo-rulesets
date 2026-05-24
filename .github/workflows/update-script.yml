@@ -564,6 +564,7 @@ jobs:
               "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Subnets/IPv4/telegram.lst"
               "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Subnets/IPv4/twitter.lst"
               "https://community.antifilter.download/list/community.lst"
+              "https://iplist.opencck.org/?format=clashx&data=cidr4"
               "https://raw.githubusercontent.com/GhostRooter0953/discord-voice-ips/refs/heads/master/main_domains/discord-main-ip-list"
               "https://raw.githubusercontent.com/GhostRooter0953/discord-voice-ips/refs/heads/master/voice_domains/discord-voice-ip-list"
               "https://raw.githubusercontent.com/vrzdrb/clash_roblox_ip_domains/refs/heads/main/roblox-ip.yaml"

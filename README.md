@@ -7,7 +7,7 @@ The scripts generate combined and deduplicated mihomo rules &amp; rulesets from 
 - [antifilter-community](https://community.antifilter.download)
 - [1andrevich Re-filter-lists](https://github.com/1andrevich/Re-filter-lists)
 - [iplist.opencck.org](https://iplist.opencck.org)
-- [legiz-ru mihomo-rule-sets (apps, games, torrent-clients, discord-vc](https://github.com/legiz-ru/mihomo-rule-sets/tree/main/other)
+- [legiz-ru mihomo-rule-sets (apps, games, torrent-clients, discord-vc)](https://github.com/legiz-ru/mihomo-rule-sets/tree/main/other)
 - [GhostRooter0953 discord-voice-ips](https://github.com/GhostRooter0953/discord-voice-ips)
 - [sjhgvr oisd](https://github.com/sjhgvr/oisd)
 - [Flowseal zapret-discord-youtube](https://github.com/flowseal/zapret-discord-youtube)

@@ -502,7 +502,6 @@ jobs:
               "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/cnb"
               "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/coding"
               "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/tencent-games"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/onedrive"
               "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/category-game-accelerator-cn"
               "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/category-game-platforms-download"
           )

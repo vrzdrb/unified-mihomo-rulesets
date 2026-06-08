@@ -388,6 +388,7 @@ payload:
   - PROCESS-NAME,com.gianlu.aria2app
 
   # Android Остальное
+  - PROCESS-NAME,com.duolingo
   - PROCESS-NAME,com.imo.android.imoim
   - PROCESS-NAME,ru.dns.shop.android
   - PROCESS-NAME,com.deepseek.chat

@@ -57,6 +57,8 @@ payload:
   - PROCESS-NAME,transmission-daemon
 
   # PC games
+  - PROCESS-NAME,morimens.exe
+  - PROCESS-NAME,TuanjieCrashHandler64.exe
   - PROCESS-NAME,Among Us.exe
   - PROCESS-NAME,ApexLauncher.exe
   - PROCESS-NAME,r5apex_dx12.exe

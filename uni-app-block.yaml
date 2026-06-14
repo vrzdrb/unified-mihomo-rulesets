@@ -1,0 +1,5 @@
+payload:
+  - PROCESS-NAME-REGEX,(?i).*com.yandex.browser.*
+  - PROCESS-NAME-REGEX,(?i).*com.yandex.yamb.*
+  - PROCESS-NAME,browser.exe
+  - PROCESS-NAME,Yandex

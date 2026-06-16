@@ -39,3 +39,15 @@ payload:
   - PROCESS-NAME,org.telegram.messenger
   - PROCESS-NAME,com.whatsapp
   - PROCESS-NAME,de.danoeh.antennapod
+  - PROCESS-NAME,com.supercell.brawlstars
+  - PROCESS-NAME,com.openai.chatgpt
+  - PROCESS-NAME,com.google.android.apps.bard
+  - PROCESS-NAME,com.google.android.apps.agentspace
+  - PROCESS-NAME,com.google.android.apps.labs.language.tailwind
+  - PROCESS-NAME,com.google.android.youtube
+  - PROCESS-NAME,com.zhiliaoapp.musically
+  - PROCESS-NAME,com.ss.android.tt.creator
+  - PROCESS-NAME,org.thoughtcrime.securesms
+  - PROCESS-NAME,ch.protonmail.android
+  - PROCESS-NAME,com.spotify.music
+  - PROCESS-NAME,com.google.android.apps.youtube.music

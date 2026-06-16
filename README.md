@@ -115,13 +115,13 @@ rules:
   - RULE-SET,uni-app-direct,DIRECT
   - RULE-SET,uni-domains-direct,DIRECT
   - RULE-SET,uni-custom-k-direct,DIRECT
+  - DOMAIN-REGEX,^.*.ru$,DIRECT
+  - DOMAIN-REGEX,^.*.su$,DIRECT
+  - DOMAIN-REGEX,^.*.tatar$,DIRECT
   - RULE-SET,uni-custom-k-proxy,PROXY
   - RULE-SET,uni-domains,PROXY
   - RULE-SET,uni-app-proxy,PROXY
-  - RULE-SET,uni-ip4-cidr-direct,
-  - DOMAIN-REGEX,^.*.ru$,DIRECT,
-  - DOMAIN-REGEX,^.*.su$,DIRECT,
-  - DOMAIN-REGEX,^.*.tatar$,DIRECT,
+  - RULE-SET,uni-ip4-cidr-direct,DIRECT
   - RULE-SET,uni-ip4-cidr,PROXY
   - MATCH,DIRECT
 ```

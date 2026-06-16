@@ -27,3 +27,15 @@ payload:
   - PROCESS-NAME-REGEX,(?i).*Element.*
   - PROCESS-NAME-REGEX,(?i).*Fluffychat.*
   - PROCESS-NAME-REGEX,(?i).*Nheko.*
+  - PROCESS-NAME,com.anthropic.claude
+  - PROCESS-NAME,com.davidtakac.bura
+  - PROCESS-NAME,com.microsoft.copilot
+  - PROCESS-NAME,deezer.android.app
+  - PROCESS-NAME,com.discord
+  - PROCESS-NAME,org.fdroid.fdroid
+  - PROCESS-NAME,com.google.android.googlequicksearchbox
+  - PROCESS-NAME,com.instagram.android
+  - PROCESS-NAME,com.soundcloud.android
+  - PROCESS-NAME,org.telegram.messenger
+  - PROCESS-NAME,com.whatsapp
+  - PROCESS-NAME,de.danoeh.antennapod

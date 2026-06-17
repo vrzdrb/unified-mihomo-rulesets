@@ -1,4 +1,10 @@
 payload:
+  # REGEX
+  - DOMAIN-REGEX,^.*.ru$
+  - DOMAIN-REGEX,^.*.su$
+  - DOMAIN-REGEX,^.*.tatar$
+  - DOMAIN-REGEX,^.*.рф$
+
   # PC Удалённый Доступ
   - PROCESS-NAME-REGEX,(?i).*Anydesk.*
   - PROCESS-NAME-REGEX,(?i).*Radmin.*

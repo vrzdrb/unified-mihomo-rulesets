@@ -45,12 +45,28 @@ rule-providers:
     path: ./unified/uni-block.mrs
     interval: 86400
 
-  uni-app-direct:
+  uni-app-block:
     type: http
     behavior: classical
     format: yaml
-    url: https://raw.githubusercontent.com/vrzdrb/unified-mihomo-rulesets/refs/heads/main/uni-app-direct.yaml
-    path: ./unified/uni-app-direct.yaml
+    url: https://raw.githubusercontent.com/vrzdrb/unified-mihomo-rulesets/refs/heads/main/uni-app-block.yaml
+    path: ./unified/uni-app-block.yaml
+    interval: 86400
+    
+  uni-custom-proxy:
+    type: http
+    behavior: classical
+    format: yaml
+    url: https://raw.githubusercontent.com/vrzdrb/unified-mihomo-rulesets/refs/heads/main/uni-custom-proxy.yaml
+    path: ./unified/uni-custom-proxy.yaml
+    interval: 86400
+    
+  uni-custom-direct:
+    type: http
+    behavior: classical
+    format: yaml
+    url: https://raw.githubusercontent.com/vrzdrb/unified-mihomo-rulesets/refs/heads/main/uni-custom-direct.yaml
+    path: ./unified/uni-custom-direct.yaml
     interval: 86400
 
   uni-domains-direct:
@@ -61,36 +77,12 @@ rule-providers:
     path: ./unified/uni-domains-direct.mrs
     interval: 86400
 
-  uni-custom-k-direct:
-    type: http
-    behavior: classical
-    format: yaml
-    url: https://raw.githubusercontent.com/vrzdrb/unified-mihomo-rulesets/refs/heads/main/uni-custom-k-direct.yaml
-    path: ./unified/uni-custom-k-direct.yaml
-    interval: 86400
-
-  uni-custom-k-proxy:
-    type: http
-    behavior: classical
-    format: yaml
-    url: https://raw.githubusercontent.com/vrzdrb/unified-mihomo-rulesets/refs/heads/main/uni-custom-k-proxy.yaml
-    path: ./unified/uni-custom-k-proxy.yaml
-    interval: 86400
-
   uni-domains:
     type: http
     behavior: domain
     format: mrs
     url: https://github.com/vrzdrb/unified-mihomo-rulesets/raw/refs/heads/main/uni-domains.mrs
     path: ./unified/uni-domains.mrs
-    interval: 86400
-
-  uni-app-proxy:
-    type: http
-    behavior: classical
-    format: yaml
-    url: https://raw.githubusercontent.com/vrzdrb/unified-mihomo-rulesets/refs/heads/main/uni-app-proxy.yaml
-    path: ./unified/uni-app-proxy.yaml
     interval: 86400
 
   uni-ip4-cidr-direct:
@@ -112,13 +104,10 @@ rule-providers:
 rules:
   - RULE-SET,uni-adblock,REJECT
   - RULE-SET,uni-block,REJECT
-  - RULE-SET,uni-app-direct,DIRECT
+  - RULE-SET,uni-app-block,REJECT
+  - RULE-SET,uni-custom-proxy,PROXY
+  - RULE-SET,uni-custom-direct,DIRECT
   - RULE-SET,uni-domains-direct,DIRECT
-  - RULE-SET,uni-custom-k-direct,DIRECT
-  - DOMAIN-REGEX,^.*.ru$,DIRECT
-  - DOMAIN-REGEX,^.*.su$,DIRECT
-  - DOMAIN-REGEX,^.*.tatar$,DIRECT
-  - RULE-SET,uni-custom-k-proxy,PROXY
   - RULE-SET,uni-domains,PROXY
   - RULE-SET,uni-app-proxy,PROXY
   - RULE-SET,uni-ip4-cidr-direct,DIRECT

@@ -1,4 +1,5 @@
 payload:
+  - DOMAIN,raw.githubusercontent.com
     #SUFFIX
   - DOMAIN-SUFFIX,startpage.com
   - DOMAIN-SUFFIX,duckduckgo.com

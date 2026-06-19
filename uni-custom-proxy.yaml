@@ -28,6 +28,8 @@ payload:
   - DOMAIN-SUFFIX,copilot.microsoft.com
   - DOMAIN-SUFFIX,dropboxusercontent.com
   - DOMAIN-SUFFIX,steamcommunity.com
+  - DOMAIN-SUFFIX,cloudfront.net
+  - DOMAIN-SUFFIX,spryfox-api.com
     #KEYWORD
   - DOMAIN-KEYWORD,kinogo,PROXY
   - DOMAIN-KEYWORD,baskino,PROXY
@@ -72,6 +74,7 @@ payload:
   - PROCESS-NAME-REGEX,(?i).*Element.*
   - PROCESS-NAME-REGEX,(?i).*Fluffychat.*
   - PROCESS-NAME-REGEX,(?i).*Nheko.*
+  - PROCESS-NAME-REGEX,(?i)SpiritCrossing
     #PROCESS
   - PROCESS-NAME,com.anthropic.claude
   - PROCESS-NAME,com.davidtakac.bura

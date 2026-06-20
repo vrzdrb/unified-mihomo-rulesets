@@ -114,7 +114,6 @@ rules:
   - RULE-SET,uni-block,REJECT
   - RULE-SET,uni-app-block,REJECT
   - RULE-SET,uni-custom-proxy,PROXY
-  - RULE-SET.uni-epic-proxy,PROXY
   - RULE-SET,uni-custom-direct,DIRECT
   - RULE-SET,uni-domains-direct,DIRECT
   - RULE-SET,uni-domains,PROXY

@@ -74,7 +74,7 @@ payload:
   - PROCESS-NAME-REGEX,(?i).*Element.*
   - PROCESS-NAME-REGEX,(?i).*Fluffychat.*
   - PROCESS-NAME-REGEX,(?i).*Nheko.*
-  - PROCESS-NAME-REGEX,(?i)SpiritCrossing
+  - PROCESS-NAME-REGEX,(?i).*SpiritCrossing.*
     #PROCESS
   - PROCESS-NAME,com.anthropic.claude
   - PROCESS-NAME,com.davidtakac.bura

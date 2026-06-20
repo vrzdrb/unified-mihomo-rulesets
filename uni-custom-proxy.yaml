@@ -101,6 +101,7 @@ payload:
   - PROCESS-NAME-REGEX,(?i).*Nheko.*
   - PROCESS-NAME-REGEX,(?i).*SpiritCrossing.*
     #PROCESS
+  - PROCESS-NAME,com.sololearn
   - PROCESS-NAME,com.anthropic.claude
   - PROCESS-NAME,com.davidtakac.bura
   - PROCESS-NAME,com.microsoft.copilot

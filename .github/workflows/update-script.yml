@@ -567,6 +567,7 @@ jobs:
               "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geoip/netflix.yaml"
               "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geoip/telegram.yaml"
               "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geoip/twitter.yaml"
+              "https://raw.githubusercontent.com/legiz-ru/mihomo-rule-sets/refs/heads/main/ru-bundle/rknasnblock.list"
           )
 
           echo "Загрузка ${#urls[@]} источников..."
@@ -616,6 +617,7 @@ jobs:
               "https://raw.githubusercontent.com/Flowseal/zapret-discord-youtube/refs/heads/main/lists/ipset-exclude.txt"
               "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/cncidr.txt"
               "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geoip/cn.list"
+              "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geoip/ir.list"
           )
           
           echo "Загрузка ${#urls[@]} источников..."

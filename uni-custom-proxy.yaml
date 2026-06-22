@@ -26,6 +26,7 @@ payload:
   - IP-CIDR,188.42.147.0/24
   - IP-CIDR,216.52.233.0/24
     #SUFFIX
+  - DOMAIN-SUFFIX,s3.amazonaws.com
   - DOMAIN-SUFFIX,startpage.com
   - DOMAIN-SUFFIX,duckduckgo.com
   - DOMAIN-SUFFIX,www.google.com
@@ -75,8 +76,6 @@ payload:
   - PROCESS-NAME-REGEX,(?i).*Protonmail.*
   - PROCESS-NAME-REGEX,(?i).*Whatsapp.*
   - PROCESS-NAME-REGEX,(?i).*Instagram.*
-  - PROCESS-NAME-REGEX,(?i).*Ayugram-desktop.*
-  - PROCESS-NAME-REGEX,(?i).*Ayugram.*
   - PROCESS-NAME-REGEX,(?i).*Forkgram.*
   - PROCESS-NAME-REGEX,(?i).*Facebook.*
   - PROCESS-NAME-REGEX,(?i).*Signal.*

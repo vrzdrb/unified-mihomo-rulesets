@@ -52,14 +52,6 @@ rule-providers:
     url: https://raw.githubusercontent.com/vrzdrb/unified-mihomo-rulesets/refs/heads/main/uni-app-block.yaml
     path: ./unified/uni-app-block.yaml
     interval: 86400
-    
-  uni-epic-proxy:
-    type: http
-    behavior: classical
-    format: yaml
-    url: https://raw.githubusercontent.com/vrzdrb/unified-mihomo-rulesets/refs/heads/main/uni-epic-proxy.yaml
-    path: ./unified/uni-epic-proxy.yaml
-    interval: 86400
 
   uni-custom-proxy:
     type: http

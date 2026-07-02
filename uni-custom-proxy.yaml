@@ -28,7 +28,6 @@ payload:
   - DOMAIN-SUFFIX,s3.amazonaws.com
   - DOMAIN-SUFFIX,startpage.com
   - DOMAIN-SUFFIX,duckduckgo.com
-  - DOMAIN-SUFFIX,www.google.com
   - DOMAIN-SUFFIX,bing.com
   - DOMAIN-SUFFIX,yahoo.com
   - DOMAIN-SUFFIX,qwant.com

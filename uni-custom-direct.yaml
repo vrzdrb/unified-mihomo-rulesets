@@ -1,4 +1,6 @@
 payload:
+  - DOMAIN-SUFFIX,ultahost.com
+
   # REGEX
   - DOMAIN-REGEX,^.*.ru$
   - DOMAIN-REGEX,^.*.su$
@@ -88,7 +90,6 @@ payload:
   - PROCESS-NAME,RainbowSix.exe
   - PROCESS-NAME,osu!.exe
   - PROCESS-NAME,Quaver.exe
-  - PROCESS-NAME,VALORANT-Win64-Shipping.exe
   - PROCESS-NAME,BsgLauncher.exe
   - PROCESS-NAME,EscapeFromTarkov.exe
   - PROCESS-NAME,EscapeFromTarkovArena.exe

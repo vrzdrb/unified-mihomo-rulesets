@@ -1,5 +1,4 @@
 payload:
-  - DOMAIN-SUFFIX,ultahost.com
 
   # REGEX
   - DOMAIN-REGEX,^.*.ru$

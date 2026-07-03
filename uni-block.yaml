@@ -123,6 +123,7 @@ payload:
   - '+.ookla.com'
   - '+.ooklaserver.net'
   - '+.open.cachefly.net'
+  - '+.openai.qualtrics.com'
   - '+.openspeedtest.com'
   - '+.openspeedtest.ru'
   - '+.p3-ad-sign.byteimg.com'

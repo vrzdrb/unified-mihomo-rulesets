@@ -1,5 +1,5 @@
 payload:
-
+  - DOMAIN-SUFFIX,lenovo.com
   # REGEX
   - DOMAIN-REGEX,^.*.ru$
   - DOMAIN-REGEX,^.*.su$

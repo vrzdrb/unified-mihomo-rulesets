@@ -7,7 +7,6 @@ payload:
   - DOMAIN-REGEX,^.*.рф$
 
   # PC Удалённый Доступ
-  - PROCESS-NAME-REGEX,(?i).*Anydesk.*
   - PROCESS-NAME-REGEX,(?i).*Radmin.*
   - PROCESS-NAME-REGEX,(?i).*Teamviewer.*
 

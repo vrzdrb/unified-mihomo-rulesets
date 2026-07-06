@@ -374,7 +374,6 @@ jobs:
               "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/unionpay" 
               "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/category-ip-geo-detect"
               "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/ipip"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/category-remote-control"
               "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/teamviewer"
               "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/category-number-verification-cn"
               "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/category-entertainment-cn"

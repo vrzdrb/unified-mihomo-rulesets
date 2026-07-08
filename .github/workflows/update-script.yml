@@ -333,7 +333,6 @@ jobs:
               "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/apple-intelligence"
               "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/icloud"
               "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/itunes"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/github"
               "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/npmjs"
               "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/dropbox"
               "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/category-gov-ir"

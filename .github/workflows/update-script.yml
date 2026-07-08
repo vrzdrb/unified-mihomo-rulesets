@@ -324,6 +324,7 @@ jobs:
               "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/onedrive.yaml"
               "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/drweb"
               "https://raw.githubusercontent.com/vrzdrb/unified-mihomo-rulesets/refs/heads/main/uni-custom-d-direct.yaml"
+              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/github"
               "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Russia/outside-raw.lst"
               "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/apple"
               "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/apple-dev"

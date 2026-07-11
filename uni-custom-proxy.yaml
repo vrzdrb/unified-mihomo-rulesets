@@ -122,4 +122,5 @@ payload:
   - PROCESS-NAME,org.thoughtcrime.securesms
   - PROCESS-NAME,ch.protonmail.android
   - PROCESS-NAME,com.spotify.music
+  - PROCESS-NAME,deezer.android.app
   - PROCESS-NAME,com.google.android.apps.youtube.music

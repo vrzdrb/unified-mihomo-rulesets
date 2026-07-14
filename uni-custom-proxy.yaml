@@ -54,6 +54,7 @@ payload:
   - DOMAIN-SUFFIX,steamcommunity.com
   - DOMAIN-SUFFIX,cloudfront.net
   - DOMAIN-SUFFIX,spryfox-api.com
+  - DOMAIN-SUFFIX,github.io
     #KEYWORD
   - DOMAIN-KEYWORD,kinogo,PROXY
   - DOMAIN-KEYWORD,baskino,PROXY

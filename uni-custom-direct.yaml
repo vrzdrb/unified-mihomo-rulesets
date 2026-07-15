@@ -1,5 +1,13 @@
 payload:
-  - DOMAIN-SUFFIX,lenovo.com
+  # PC Остальное
+  - PROCESS-NAME,club.skllzz.fitness
+  
+  # Microsoft Store
+  - PROCESS-NAME-REGEX,(?i)WinStore.App,DIRECT
+  - PROCESS-NAME-REGEX,(?i)Microsoft.WindowsStore,DIRECT
+  - PROCESS-NAME-REGEX,(?i)RuntimeBroker,DIRECT
+  - PROCESS-NAME-REGEX,(?i)StoreDesktopExtension,DIRECT
+  
   # REGEX
   - DOMAIN-REGEX,^.*.ru$
   - DOMAIN-REGEX,^.*.su$
@@ -157,9 +165,6 @@ payload:
   - DOMAIN-SUFFIX,faceit.com
   - DOMAIN-SUFFIX,faceit-cdn.net
   - DOMAIN-SUFFIX,codefusion.technology
-
-  # PC Остальное
-  - PROCESS-NAME,club.skllzz.fitness
 
   # Android Государственные и Московские сервисы
   - PROCESS-NAME,ru.dublgis.dgismobile

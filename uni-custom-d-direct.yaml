@@ -1,7 +1,11 @@
-tencent.com
-wechat.com
+#other
+duolingo.com
 reddit.com
 api.oneme.ru
+mosmetro.ru
+mosmetro.tech
+
+#Geolocation services
 ip.mail.ru
 checkip.amazonaws.com
 api.ipify.org
@@ -189,13 +193,32 @@ whois.pconline.com.cn
 myip.la
 ip.mail.ru
 api.sypexgeo.net
-mosmetro.ru
-mosmetro.tech
+
+#China
+tencent.com
+wechat.com
+
+#China AI
 qwen.ai
 alicdn.com
 alibaba.com
 deepseek.com
 chat.deepseek.com
-duolingo.com
+
+#Pinterest
 pinterest.com
 pinimg.com
+
+#Microsoft Store domains
+storeedgefd.microsoft.com
+dl.delivery.mp.microsoft.com
+windowsupdate.com
+microsoft.com
+akamaiedge.net
+store-images.s-microsoft.com
+officecdn.microsoft.com
+cdn.office.net
+manage.microsoft.com
+graph.microsoft.com
+azureedge.net
+res.cdn.office.net

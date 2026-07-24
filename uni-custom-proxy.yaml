@@ -1,5 +1,11 @@
 payload:
-    #Epic proximity & team chats
+    # The Isle
+  - PROCESS-NAME,TheIsle.exe
+    # Valorant
+  - PROCESS-NAME-REGEX,(?i).*RiotClientServices.*
+  - PROCESS-NAME-REGEX,(?i).*VALORANT.*
+  - PROCESS-NAME,vgc.exe
+    # Epic proximity & team chats
   - DOMAIN-SUFFIX,turn.rtcp.on.epicgames.com
   - DOMAIN-SUFFIX,turn-eun1.rtcp.on.epicgames.com
   - DOMAIN-SUFFIX,turn-euc1.rtcp.on.epicgames.com
@@ -24,7 +30,7 @@ payload:
   - IP-CIDR,188.42.95.0/24
   - IP-CIDR,188.42.147.0/24
   - IP-CIDR,216.52.233.0/24
-    #SUFFIX
+    # SUFFIX
   - DOMAIN-SUFFIX,gstatic.com
   - DOMAIN-SUFFIX,s3.amazonaws.com
   - DOMAIN-SUFFIX,startpage.com

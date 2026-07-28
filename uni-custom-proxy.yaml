@@ -1,6 +1,6 @@
 payload:
     # The Isle
-  - PROCESS-NAME,TheIsle.exe
+  - PROCESS-NAME-REGEX,(?i).*TheIsleClient.*
     # Valorant
   - PROCESS-NAME-REGEX,(?i).*RiotClientServices.*
   - PROCESS-NAME-REGEX,(?i).*VALORANT.*

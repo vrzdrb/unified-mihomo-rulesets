@@ -160,7 +160,6 @@ payload:
   - DOMAIN-SUFFIX,faceit.com
   - DOMAIN-SUFFIX,faceit-cdn.net
   - DOMAIN-SUFFIX,codefusion.technology
-  - DOMAIN-SUFFIX,docs.google.com
 
   # Android Государственные и Московские сервисы
   - PROCESS-NAME,ru.dublgis.dgismobile
@@ -396,6 +395,7 @@ payload:
   - PROCESS-NAME,com.gianlu.aria2app
 
   # Android Остальное
+  - PROCESS-NAME,com.uptodown
   - PROCESS-NAME,com.duolingo
   - PROCESS-NAME,com.imo.android.imoim
   - PROCESS-NAME,ru.dns.shop.android

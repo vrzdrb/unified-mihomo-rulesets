@@ -1,4 +1,12 @@
 payload:
+
+    # Games
+  - DOMAIN-REGEX,brawlstars
+  - DOMAIN-REGEX,supercell
+  - DOMAIN-SUFFIX,steamcommunity.com
+  - PROCESS-NAME-REGEX,(?i).*SpiritCrossing.*
+  - PROCESS-NAME,com.supercell.brawlstars
+
     # The Isle
   - PROCESS-NAME-REGEX,(?i).*TheIsleClient.*
 
@@ -18,7 +26,7 @@ payload:
   - DOMAIN-SUFFIX,signaling-service-prod.use1a.live.rtcp.on.epicgames.com
   - DOMAIN-SUFFIX,rtcp.on.epicgames.com
   - IP-CIDR,13.48.0.0/13
-  - IP-CIDR, 13.24.0.0/13
+  - IP-CIDR,13.24.0.0/13
   - IP-CIDR,13.56.0.0/14
   - IP-CIDR,13.32.0.0/12
   - IP-CIDR,18.128.0.0/9
@@ -33,66 +41,96 @@ payload:
   - IP-CIDR,188.42.147.0/24
   - IP-CIDR,216.52.233.0/24
 
-    # SUFFIX
-  - DOMAIN-SUFFIX,anydesk.com
-  - DOMAIN-SUFFIX,gstatic.com
-  - DOMAIN-SUFFIX,s3.amazonaws.com
+    # Messengers
+  - PROCESS-NAME-REGEX,(?i).*Whatsapp.*
+  - PROCESS-NAME-REGEX,(?i).*Forkgram.*
+  - PROCESS-NAME-REGEX,(?i).*Signal.*
+  - PROCESS-NAME-REGEX,(?i).*Discord.*
+  - PROCESS-NAME-REGEX,(?i).*Viber.*
+  - PROCESS-NAME,org.telegram.messenger
+  - PROCESS-NAME,com.whatsapp
+  - PROCESS-NAME,com.discord
+
+    # Kakao talk, DAUM
+  - PROCESS-NAME,com.kakao.talk
+  - DOMAIN-SUFFIX,daumcdn.net
+  - DOMAIN-SUFFIX,kakaocdn.net
+  - DOMAIN-SUFFIX,kakao.com
+  - IP-ASN,7625
+  - IP-ASN,9764
+  - IP-ASN,10158
+  - IP-ASN,38099
+
+    # BiP
+  - PROCESS-NAME,com.turkcell.bip
+  - DOMAIN-SUFFIX,bip.com
+  - DOMAIN-SUFFIX,turkcell.com.tr
+  - IP-ASN,16135
+
+    # Paranoia
+  - DOMAIN-SUFFIX,grapheneos.org
+  - PROCESS-NAME,org.thoughtcrime.securesms
+  - PROCESS-NAME,ch.protonmail.android
+  - PROCESS-NAME-REGEX,(?i).*Protonpass.*
+  - PROCESS-NAME-REGEX,(?i).*Protonmail.*
+  - PROCESS-NAME-REGEX,(?i).*Element.*
+  - PROCESS-NAME-REGEX,(?i).*Fluffychat.*
+  - PROCESS-NAME-REGEX,(?i).*Nheko.*
+
+    # Search engines
   - DOMAIN-SUFFIX,startpage.com
   - DOMAIN-SUFFIX,duckduckgo.com
   - DOMAIN-SUFFIX,bing.com
   - DOMAIN-SUFFIX,yahoo.com
   - DOMAIN-SUFFIX,qwant.com
-  - DOMAIN-SUFFIX,grapheneos.org
+
+    # AI
+  - DOMAIN-SUFFIX,chatgpt.com
+  - DOMAIN-SUFFIX,copilot.microsoft.com
+  - PROCESS-NAME,com.anthropic.claude
+  - PROCESS-NAME,com.openai.chatgpt
+  - PROCESS-NAME,com.google.android.apps.bard
+  - PROCESS-NAME,com.google.android.apps.agentspace
+  - PROCESS-NAME,com.google.android.apps.labs.language.tailwind
+
+    # SUFFIX
+  - DOMAIN-SUFFIX,anydesk.com
+  - DOMAIN-SUFFIX,gstatic.com
+  - DOMAIN-SUFFIX,s3.amazonaws.com
   - DOMAIN-SUFFIX,amnezia.org
   - DOMAIN-SUFFIX,content.luanti.org
+  - DOMAIN-SUFFIX,servers.luanti.org
+  - DOMAIN-SUFFIX,dropboxusercontent.com
+  - DOMAIN-SUFFIX,cloudfront.net
+  - DOMAIN-SUFFIX,spryfox-api.com
+  - DOMAIN-SUFFIX,github.io
   - DOMAIN-SUFFIX,ingramcontent.com
-  - DOMAIN-SUFFIX,ipage.ingramcontent.com
   - DOMAIN-SUFFIX,shure.com.cn
-  - DOMAIN-SUFFIX,software.shure.com.cn
-  - DOMAIN-SUFFIX,adisspr.mfcr.cz
-  - DOMAIN-SUFFIX,info.mojedatovaschranka.cz
-  - DOMAIN-SUFFIX,kz.generaliceska.cz
   - DOMAIN-SUFFIX,mojedatovaschranka.cz
   - DOMAIN-SUFFIX,mfcr.cz
   - DOMAIN-SUFFIX,generaliceska.cz
   - DOMAIN-SUFFIX,isds.cz
-  - DOMAIN-SUFFIX,servers.luanti.org
   - DOMAIN-SUFFIX,alza.cz
-  - DOMAIN-SUFFIX,chatgpt.com
-  - DOMAIN-SUFFIX,euphoria-hdrezka.org
-  - DOMAIN-SUFFIX,copilot.microsoft.com
-  - DOMAIN-SUFFIX,dropboxusercontent.com
-  - DOMAIN-SUFFIX,steamcommunity.com
-  - DOMAIN-SUFFIX,cloudfront.net
-  - DOMAIN-SUFFIX,spryfox-api.com
-  - DOMAIN-SUFFIX,github.io
 
-    # KEYWORD
-  - DOMAIN-KEYWORD,kinogo,PROXY
-  - DOMAIN-KEYWORD,baskino,PROXY
-  - DOMAIN-KEYWORD,lordfilm,PROXY
-  - DOMAIN-KEYWORD,anime,PROXY
-  - DOMAIN-KEYWORD,zagonka,PROXY
-  - DOMAIN-KEYWORD,cinema,PROXY
-  - DOMAIN-KEYWORD,deaf,PROXY
-  - DOMAIN-KEYWORD,player,PROXY
+    # Cinema
+  - DOMAIN-KEYWORD,kinogo
+  - DOMAIN-KEYWORD,baskino
+  - DOMAIN-KEYWORD,lordfilm
+  - DOMAIN-KEYWORD,anime
+  - DOMAIN-KEYWORD,zagonka
+  - DOMAIN-KEYWORD,cinema
+  - DOMAIN-KEYWORD,deaf
+  - DOMAIN-KEYWORD,player
+  - DOMAIN-REGEX,kinogo
+  - DOMAIN-SUFFIX,euphoria-hdrezka.org
 
     # REGEX
   - DOMAIN-REGEX,blsp
   - DOMAIN-REGEX,bs2best
-  - DOMAIN-REGEX,kinogo
-  - DOMAIN-REGEX,brawlstars
-  - DOMAIN-REGEX,supercell
 
-    #PROCESS-REGEX
-  - PROCESS-NAME-REGEX,(?i).*Protonpass.*
-  - PROCESS-NAME-REGEX,(?i).*Protonmail.*
-  - PROCESS-NAME-REGEX,(?i).*Whatsapp.*
+    # PROCESS-REGEX
   - PROCESS-NAME-REGEX,(?i).*Instagram.*
-  - PROCESS-NAME-REGEX,(?i).*Forkgram.*
   - PROCESS-NAME-REGEX,(?i).*Facebook.*
-  - PROCESS-NAME-REGEX,(?i).*Signal.*
-  - PROCESS-NAME-REGEX,(?i).*Discord.*
   - PROCESS-NAME-REGEX,(?i).*Xbox.*
   - PROCESS-NAME-REGEX,(?i).*Tiktok.*
   - PROCESS-NAME-REGEX,(?i).*Threads.*
@@ -101,42 +139,26 @@ payload:
   - PROCESS-NAME-REGEX,(?i).*Payeer.*
   - PROCESS-NAME-REGEX,(?i).*Booking.*
   - PROCESS-NAME-REGEX,(?i).*Airbnb.*
-  - PROCESS-NAME-REGEX,(?i).*Viber.*
   - PROCESS-NAME-REGEX,(?i).*Twitter.*
   - PROCESS-NAME-REGEX,(?i).*Soundcloud.*
   - PROCESS-NAME-REGEX,(?i).*Patreon.*
   - PROCESS-NAME-REGEX,(?i).*Linkedin.*
   - PROCESS-NAME-REGEX,(?i).*Envato.*
   - PROCESS-NAME-REGEX,(?i).*Youtube.*
-  - PROCESS-NAME-REGEX,(?i).*Element.*
-  - PROCESS-NAME-REGEX,(?i).*Fluffychat.*
-  - PROCESS-NAME-REGEX,(?i).*Nheko.*
-  - PROCESS-NAME-REGEX,(?i).*SpiritCrossing.*
 
     # PROCESS
   - PROCESS-NAME,com.sololearn
-  - PROCESS-NAME,com.anthropic.claude
   - PROCESS-NAME,com.davidtakac.bura
   - PROCESS-NAME,com.microsoft.copilot
   - PROCESS-NAME,deezer.android.app
-  - PROCESS-NAME,com.discord
   - PROCESS-NAME,org.fdroid.fdroid
   - PROCESS-NAME,com.google.android.googlequicksearchbox
   - PROCESS-NAME,com.instagram.android
   - PROCESS-NAME,com.soundcloud.android
-  - PROCESS-NAME,org.telegram.messenger
-  - PROCESS-NAME,com.whatsapp
   - PROCESS-NAME,de.danoeh.antennapod
-  - PROCESS-NAME,com.supercell.brawlstars
-  - PROCESS-NAME,com.openai.chatgpt
-  - PROCESS-NAME,com.google.android.apps.bard
-  - PROCESS-NAME,com.google.android.apps.agentspace
-  - PROCESS-NAME,com.google.android.apps.labs.language.tailwind
   - PROCESS-NAME,com.google.android.youtube
   - PROCESS-NAME,com.zhiliaoapp.musically
   - PROCESS-NAME,com.ss.android.tt.creator
-  - PROCESS-NAME,org.thoughtcrime.securesms
-  - PROCESS-NAME,ch.protonmail.android
   - PROCESS-NAME,com.spotify.music
   - PROCESS-NAME,deezer.android.app
   - PROCESS-NAME,com.google.android.apps.youtube.music

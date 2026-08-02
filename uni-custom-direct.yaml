@@ -395,6 +395,7 @@ payload:
   - PROCESS-NAME,com.gianlu.aria2app
 
   # Android Остальное
+  - DOMAIN-KEYWORD,uptodown
   - PROCESS-NAME,com.uptodown
   - PROCESS-NAME,com.duolingo
   - PROCESS-NAME,com.imo.android.imoim

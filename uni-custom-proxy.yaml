@@ -4,6 +4,8 @@ payload:
   - DOMAIN-REGEX,brawlstars
   - DOMAIN-REGEX,supercell
   - DOMAIN-SUFFIX,usercentrics.eu
+  - DOMAIN-SUFFIX,clashroyaleapp.com
+  - DOMAIN-SUFFIX,clashofclans.com
   - DOMAIN-SUFFIX,steamcommunity.com
   - PROCESS-NAME-REGEX,(?i).*SpiritCrossing.*
   - PROCESS-NAME,com.supercell.brawlstars

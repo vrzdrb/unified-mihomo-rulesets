@@ -110,7 +110,7 @@ rules:
   - RULE-SET,uni-domains-direct,DIRECT
   - RULE-SET,uni-domains,PROXY
   - RULE-SET,uni-app-proxy,PROXY
-  - RULE-SET,uni-ip4-cidr-direct,DIRECT,no-resolve
-  - RULE-SET,uni-ip4-cidr,PROXY,no-resolve
+  - RULE-SET,uni-ip4-cidr-direct,DIRECT
+  - RULE-SET,uni-ip4-cidr,PROXY
   - MATCH,DIRECT
 ```

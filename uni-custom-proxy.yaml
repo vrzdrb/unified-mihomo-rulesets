@@ -4,6 +4,12 @@ payload:
   - DOMAIN-REGEX,brawlstars
   - DOMAIN-REGEX,supercell
   - DOMAIN-SUFFIX,usercentrics.eu
+  - DOMAIN-SUFFIX,nikke-kr.com
+  - DOMAIN-SUFFIX,nikke-en.com
+  - DOMAIN-SUFFIX,intlgame.com
+  - DOMAIN-SUFFIX,na-community.playerinfinite.com
+  - DOMAIN-SUFFIX,jupiterlauncher.com
+  - DOMAIN-SUFFIX,fleetlogd.com
   - DOMAIN-SUFFIX,clashroyaleapp.com
   - DOMAIN-SUFFIX,clashofclans.com
   - DOMAIN-SUFFIX,steamcommunity.com
@@ -11,6 +17,7 @@ payload:
   - PROCESS-NAME,com.supercell.brawlstars
   - PROCESS-NAME,com.supercell.clashofclans
   - PROCESS-NAME,com.supercell.clashroyale
+  - PROCESS-NAME,com.proximabeta.nikke
 
     # The Isle
   - PROCESS-NAME-REGEX,(?i).*TheIsleClient.*

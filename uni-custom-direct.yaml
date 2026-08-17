@@ -3,6 +3,16 @@ payload:
   - PROCESS-NAME,club.skllzz.fitness
   - DOMAIN-SUFFIX,dropboxcaptcha.com
   
+  # Aliexpress
+  - DOMAIN-REGEX,aliexpress
+  - DOMAIN-SUFFIX,ae-rus.net
+  - DOMAIN-SUFFIX,aestatic.net
+  - DOMAIN-SUFFIX,aeplatform.ru
+  - DOMAIN-SUFFIX,aedns.ru
+  - DOMAIN-SUFFIX,alicdn.ru
+  - DOMAIN-SUFFIX,alipay.com
+  - DOMAIN-SUFFIX,alipayplus.com
+
   # Microsoft Store
   - PROCESS-NAME-REGEX,(?i)WinStore.App,DIRECT
   - PROCESS-NAME-REGEX,(?i)Microsoft.WindowsStore,DIRECT

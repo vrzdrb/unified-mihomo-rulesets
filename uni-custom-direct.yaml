@@ -1,6 +1,7 @@
 payload:
   # PC Остальное
   - PROCESS-NAME,club.skllzz.fitness
+  - DOMAIN-SUFFIX,dropboxcaptcha.com
   
   # Microsoft Store
   - PROCESS-NAME-REGEX,(?i)WinStore.App,DIRECT

@@ -2,6 +2,7 @@ payload:
   # PC Остальное
   - PROCESS-NAME,club.skllzz.fitness
   - DOMAIN-SUFFIX,dropboxcaptcha.com
+  - DOMAIN-SUFFIX,jit.si
   
   # Aliexpress
   - DOMAIN-REGEX,aliexpress

@@ -3,6 +3,7 @@ payload:
   - PROCESS-NAME,club.skllzz.fitness
   - DOMAIN-SUFFIX,dropboxcaptcha.com
   - DOMAIN-SUFFIX,jit.si
+  - DOMAIN-SUFFIX,jit.net
   
   # Aliexpress
   - DOMAIN-REGEX,aliexpress

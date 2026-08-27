@@ -99,6 +99,7 @@ payload:
     # AI
   - DOMAIN-SUFFIX,chatgpt.com
   - DOMAIN-SUFFIX,copilot.microsoft.com
+  - DOMAIN-SUFFIX,qwen.ai
   - PROCESS-NAME,com.anthropic.claude
   - PROCESS-NAME,com.openai.chatgpt
   - PROCESS-NAME,com.google.android.apps.bard

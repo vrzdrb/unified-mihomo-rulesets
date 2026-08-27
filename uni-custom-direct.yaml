@@ -4,6 +4,7 @@ payload:
   - DOMAIN-SUFFIX,dropboxcaptcha.com
   - DOMAIN-SUFFIX,jit.si
   - DOMAIN-SUFFIX,jitsi.net
+  - DOMAIN-SUFFIX,lmstudio.ai
   
   # Aliexpress
   - DOMAIN-REGEX,aliexpress

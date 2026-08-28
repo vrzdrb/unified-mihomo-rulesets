@@ -1,7 +1,6 @@
 payload:
   # PC Остальное
   - PROCESS-NAME,club.skllzz.fitness
-  - DOMAIN-SUFFIX,dropboxcaptcha.com
   - DOMAIN-SUFFIX,jit.si
   - DOMAIN-SUFFIX,jitsi.net
   - DOMAIN-SUFFIX,lmstudio.ai

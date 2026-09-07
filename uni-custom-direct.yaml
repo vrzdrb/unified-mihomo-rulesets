@@ -5,6 +5,13 @@ payload:
   - DOMAIN-SUFFIX,jitsi.net
   - DOMAIN-SUFFIX,lmstudio.ai
   - DOMAIN-SUFFIX,tilda.cc
+  - DOMAIN-SUFFIX,tilda.ws
+  - DOMAIN-SUFFIX,tilda.link
+  - DOMAIN-SUFFIX,tilda.domains
+  - DOMAIN-SUFFIX,tilda.dns
+  - DOMAIN-SUFFIX,tildacdn.com
+  - DOMAIN-SUFFIX,tildacdn.info
+  - DOMAIN-SUFFIX,tildacdn.me
   
   # Aliexpress
   - DOMAIN-REGEX,aliexpress

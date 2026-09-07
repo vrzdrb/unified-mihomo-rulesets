@@ -1,9 +1,10 @@
 payload:
-  # PC Остальное
+  # Остальное
   - PROCESS-NAME,club.skllzz.fitness
   - DOMAIN-SUFFIX,jit.si
   - DOMAIN-SUFFIX,jitsi.net
   - DOMAIN-SUFFIX,lmstudio.ai
+  - DOMAIN-SUFFIX,tilda.cc
   
   # Aliexpress
   - DOMAIN-REGEX,aliexpress

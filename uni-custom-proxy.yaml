@@ -1,5 +1,25 @@
 payload:
 
+    # Other
+  - DOMAIN-SUFFIX,anydesk.com
+  - DOMAIN-SUFFIX,gstatic.com
+  - DOMAIN-SUFFIX,s3.amazonaws.com
+  - DOMAIN-SUFFIX,amnezia.org
+  - DOMAIN-SUFFIX,content.luanti.org
+  - DOMAIN-SUFFIX,servers.luanti.org
+  - DOMAIN-SUFFIX,dropboxusercontent.com
+  - DOMAIN-SUFFIX,cloudfront.net
+  - DOMAIN-SUFFIX,spryfox-api.com
+  - DOMAIN-SUFFIX,github.io
+  - DOMAIN-SUFFIX,ingramcontent.com
+  - DOMAIN-SUFFIX,shure.com.cn
+  - DOMAIN-SUFFIX,mojedatovaschranka.cz
+  - DOMAIN-SUFFIX,mfcr.cz
+  - DOMAIN-SUFFIX,generaliceska.cz
+  - DOMAIN-SUFFIX,isds.cz
+  - DOMAIN-SUFFIX,alza.cz
+  - DOMAIN-SUFFIX,sourceforge.net
+
     # Games
   - DOMAIN-REGEX,brawlstars
   - DOMAIN-REGEX,supercell
@@ -104,25 +124,6 @@ payload:
   - PROCESS-NAME,com.google.android.apps.bard
   - PROCESS-NAME,com.google.android.apps.agentspace
   - PROCESS-NAME,com.google.android.apps.labs.language.tailwind
-
-    # SUFFIX
-  - DOMAIN-SUFFIX,anydesk.com
-  - DOMAIN-SUFFIX,gstatic.com
-  - DOMAIN-SUFFIX,s3.amazonaws.com
-  - DOMAIN-SUFFIX,amnezia.org
-  - DOMAIN-SUFFIX,content.luanti.org
-  - DOMAIN-SUFFIX,servers.luanti.org
-  - DOMAIN-SUFFIX,dropboxusercontent.com
-  - DOMAIN-SUFFIX,cloudfront.net
-  - DOMAIN-SUFFIX,spryfox-api.com
-  - DOMAIN-SUFFIX,github.io
-  - DOMAIN-SUFFIX,ingramcontent.com
-  - DOMAIN-SUFFIX,shure.com.cn
-  - DOMAIN-SUFFIX,mojedatovaschranka.cz
-  - DOMAIN-SUFFIX,mfcr.cz
-  - DOMAIN-SUFFIX,generaliceska.cz
-  - DOMAIN-SUFFIX,isds.cz
-  - DOMAIN-SUFFIX,alza.cz
 
     # Cinema
   - DOMAIN-KEYWORD,kinogo

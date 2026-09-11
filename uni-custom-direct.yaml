@@ -1,6 +1,12 @@
 payload:
   # Остальное
   - PROCESS-NAME,club.skllzz.fitness
+
+  # Google Search
+  - DOMAIN,google.com
+  - DOMAIN,www.google.com
+  - DOMAIN,google.ru
+  - DOMAIN,www.google.ru
   
   # Aliexpress
   - DOMAIN-REGEX,aliexpress

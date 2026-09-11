@@ -1,27 +1,9 @@
 payload:
   # Остальное
   - PROCESS-NAME,club.skllzz.fitness
-  - DOMAIN-SUFFIX,jit.si
-  - DOMAIN-SUFFIX,jitsi.net
-  - DOMAIN-SUFFIX,lmstudio.ai
-  - DOMAIN-SUFFIX,tilda.cc
-  - DOMAIN-SUFFIX,tilda.ws
-  - DOMAIN-SUFFIX,tilda.link
-  - DOMAIN-SUFFIX,tilda.domains
-  - DOMAIN-SUFFIX,tilda.dns
-  - DOMAIN-SUFFIX,tildacdn.com
-  - DOMAIN-SUFFIX,tildacdn.info
-  - DOMAIN-SUFFIX,tildacdn.me
   
   # Aliexpress
   - DOMAIN-REGEX,aliexpress
-  - DOMAIN-SUFFIX,ae-rus.net
-  - DOMAIN-SUFFIX,aestatic.net
-  - DOMAIN-SUFFIX,aeplatform.ru
-  - DOMAIN-SUFFIX,aedns.ru
-  - DOMAIN-SUFFIX,alicdn.ru
-  - DOMAIN-SUFFIX,alipay.com
-  - DOMAIN-SUFFIX,alipayplus.com
 
   # Microsoft Store
   - PROCESS-NAME-REGEX,(?i)WinStore.App,DIRECT
@@ -177,10 +159,6 @@ payload:
   - PROCESS-NAME-REGEX,(?i).*chivalry.*
   - PROCESS-NAME-REGEX,(?i).*chivalry2.
   - PROCESS-NAME-REGEX,(?i).*Steam.*
- 
-  - DOMAIN-SUFFIX,faceit.com
-  - DOMAIN-SUFFIX,faceit-cdn.net
-  - DOMAIN-SUFFIX,codefusion.technology
 
   # Android Государственные и Московские сервисы
   - PROCESS-NAME,ru.dublgis.dgismobile

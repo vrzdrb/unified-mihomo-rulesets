@@ -2,7 +2,6 @@ payload:
 
     # Other
   - DOMAIN-SUFFIX,anydesk.com
-  - DOMAIN-SUFFIX,gstatic.com
   - DOMAIN-SUFFIX,s3.amazonaws.com
   - DOMAIN-SUFFIX,amnezia.org
   - DOMAIN-SUFFIX,content.luanti.org
@@ -10,7 +9,6 @@ payload:
   - DOMAIN-SUFFIX,dropboxusercontent.com
   - DOMAIN-SUFFIX,cloudfront.net
   - DOMAIN-SUFFIX,spryfox-api.com
-  - DOMAIN-SUFFIX,github.io
   - DOMAIN-SUFFIX,ingramcontent.com
   - DOMAIN-SUFFIX,shure.com.cn
   - DOMAIN-SUFFIX,mojedatovaschranka.cz

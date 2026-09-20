@@ -1,6 +1,7 @@
 payload:
   # Остальное
   - PROCESS-NAME,club.skllzz.fitness
+  - DOMAIN-SUFFIX,varekai.kinogo.luxury
 
   # Google Search
   - DOMAIN,google.com

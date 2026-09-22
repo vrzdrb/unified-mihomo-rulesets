@@ -2,6 +2,8 @@ payload:
   # Остальное
   - PROCESS-NAME,club.skllzz.fitness
   - DOMAIN-SUFFIX,varekai.kinogo.luxury
+  - DOMAIN-SUFFIX,moonshot.cn
+  - DOMAIN-SUFFIX,moonshot.ai
 
   # Google Search
   - DOMAIN,google.com

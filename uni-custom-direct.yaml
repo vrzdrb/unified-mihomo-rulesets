@@ -93,7 +93,6 @@ payload:
   - PROCESS-NAME,eurotrucks2.exe
   - PROCESS-NAME,amtrucks.exe
   - PROCESS-NAME,PartyAnimals.exe
-  - PROCESS-NAME,PEAK.exe
   - PROCESS-NAME,ExecPubg.exe
   - PROCESS-NAME,javaw.exe
   - PROCESS-NAME,FragPunk.exe

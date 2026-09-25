@@ -17,6 +17,7 @@ payload:
   - DOMAIN-SUFFIX,isds.cz
   - DOMAIN-SUFFIX,alza.cz
   - DOMAIN-SUFFIX,sourceforge.net
+  - DOMAIN-SUFFIX,protonengine.io
 
     # Games
   - DOMAIN-REGEX,brawlstars

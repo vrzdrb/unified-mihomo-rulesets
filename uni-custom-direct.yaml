@@ -166,7 +166,6 @@ payload:
   - PROCESS-NAME-REGEX,(?i).*RustClient.*
   - PROCESS-NAME-REGEX,(?i).*chivalry.*
   - PROCESS-NAME-REGEX,(?i).*chivalry2.
-  - PROCESS-NAME-REGEX,(?i).*Steam.*
 
   # Android Государственные и Московские сервисы
   - PROCESS-NAME,ru.dublgis.dgismobile

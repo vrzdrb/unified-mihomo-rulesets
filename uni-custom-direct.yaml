@@ -112,8 +112,6 @@ payload:
   - PROCESS-NAME,morimens.exe
   - PROCESS-NAME,TuanjieCrashHandler64.exe
   - PROCESS-NAME,Among Us.exe
-  - PROCESS-NAME,ApexLauncher.exe
-  - PROCESS-NAME,r5apex_dx12.exe
   - PROCESS-NAME,Content Warning.exe
   - PROCESS-NAME,cs2.exe
   - PROCESS-NAME,eurotrucks2.exe
@@ -161,7 +159,6 @@ payload:
   - PROCESS-NAME,UAGame.exe
   - PROCESS-NAME,MarvelRivals_Launcher.exe
   - PROCESS-NAME,Marvel-Win64-Shipping.exe
-  - PROCESS-NAME,Overwatch.exe
   - PROCESS-NAME,Battle.net.exe
   - PROCESS-NAME,BlizzardBrowser.exe
   - PROCESS-NAME,GenshinImpact.exe
@@ -186,8 +183,6 @@ payload:
   - PROCESS-NAME-REGEX,(?i).*Minecraft.*
   - PROCESS-NAME-REGEX,(?i).*ragemp.*
   - PROCESS-NAME-REGEX,(?i).*Majestic.*
-  - PROCESS-NAME-REGEX,(?i).*Rockstar.*
-  - PROCESS-NAME-REGEX,(?i).*SocialClub.*
   - PROCESS-NAME-REGEX,(?i).*RustClient.*
   - PROCESS-NAME-REGEX,(?i).*chivalry.*
   - PROCESS-NAME-REGEX,(?i).*chivalry2.

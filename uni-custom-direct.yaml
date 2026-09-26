@@ -1,9 +1,12 @@
 payload:
   # Остальное
   - PROCESS-NAME,club.skllzz.fitness
-  - DOMAIN-SUFFIX,varekai.kinogo.luxury
+
+  # Kimi.ai
   - DOMAIN-SUFFIX,moonshot.cn
   - DOMAIN-SUFFIX,moonshot.ai
+  - DOMAIN-SUFFIX,kimi.ai
+  - DOMAIN-SUFFIX,kimi.com
 
   # Google Search
   - DOMAIN,google.com
@@ -13,6 +16,29 @@ payload:
   
   # Aliexpress
   - DOMAIN-REGEX,aliexpress
+  - DOMAIN-SUFFIX,ae.alibabacorp.com  
+  - DOMAIN-SUFFIX,ae-rus.net  
+  - DOMAIN-SUFFIX,aerdns.ru  
+
+  # Alibaba  
+  - DOMAIN-SUFFIX,alibaba.com
+  - DOMAIN-SUFFIX,alibaba-inc.com
+  - DOMAIN-SUFFIX,alibabacloud.com
+  - DOMAIN-SUFFIX,alibabagroup.com  
+  - DOMAIN-SUFFIX,aliyun.com
+
+  # Taobao, Tmall, 1688  
+  - DOMAIN-SUFFIX,taobao.com  
+  - DOMAIN-SUFFIX,taobao.org
+  - DOMAIN-SUFFIX,tmall.com  
+  - DOMAIN-SUFFIX,tmall.hk  
+  - DOMAIN-SUFFIX,1688.com  
+
+  # Инфраструктура, авторизация и CDN (Alibaba Group)
+  - DOMAIN-SUFFIX,alicdn.com  
+  - DOMAIN-SUFFIX,tbcdn.cn
+  - DOMAIN-SUFFIX,alipay.com
+  - DOMAIN-SUFFIX,alipayobjects.com
 
   # Microsoft Store
   - PROCESS-NAME-REGEX,(?i)WinStore.App,DIRECT

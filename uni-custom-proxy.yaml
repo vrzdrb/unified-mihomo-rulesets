@@ -17,7 +17,6 @@ payload:
   - DOMAIN-SUFFIX,isds.cz
   - DOMAIN-SUFFIX,alza.cz
   - DOMAIN-SUFFIX,sourceforge.net
-  - DOMAIN-SUFFIX,protonengine.io
 
     # Games
   - DOMAIN-REGEX,brawlstars
@@ -32,7 +31,9 @@ payload:
   - DOMAIN-SUFFIX,clashroyaleapp.com
   - DOMAIN-SUFFIX,clashofclans.com
   - DOMAIN-SUFFIX,steamcommunity.com
+  - DOMAIN-SUFFIX,protonengine.io
   - PROCESS-NAME-REGEX,(?i).*SpiritCrossing.*
+  - PROCESS-NAME-REGEX,(?i).*PEAK.*
   - PROCESS-NAME,com.supercell.brawlstars
   - PROCESS-NAME,com.supercell.clashofclans
   - PROCESS-NAME,com.supercell.clashroyale
@@ -74,6 +75,7 @@ payload:
 
     # Messengers
   - PROCESS-NAME-REGEX,(?i).*Whatsapp.*
+  - PROCESS-NAME-REGEX,(?i).*Mercurygram.*
   - PROCESS-NAME-REGEX,(?i).*Forkgram.*
   - PROCESS-NAME-REGEX,(?i).*Signal.*
   - PROCESS-NAME-REGEX,(?i).*Discord.*

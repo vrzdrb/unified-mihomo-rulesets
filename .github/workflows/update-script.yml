@@ -13,7 +13,6 @@ permissions:
 jobs:
   generate_lists:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -25,7 +24,7 @@ jobs:
         run: |
           sudo apt update
           sudo apt install -y curl wget git jq
-      
+
       - name: Download and install Mihomo
         run: |
           curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" -L https://github.com/MetaCubeX/mihomo/releases/download/v1.19.22/mihomo-linux-amd64-v1.19.22.deb -o mihomo-linux-amd64-v1.19.22.deb
@@ -34,19 +33,17 @@ jobs:
       - name: Update adblock list
         run: |
           #!/bin/bash
-          
           T=$(mktemp) && U=$(mktemp) && O="uni-adblock.yaml"
           > "$O"
           urls=(
-              "https://raw.githubusercontent.com/sjhgvr/oisd/refs/heads/main/domainswild2_small.txt"
-               "https://raw.githubusercontent.com/sjhgvr/oisd/refs/heads/main/domainswild_small.txt"
+            "https://raw.githubusercontent.com/sjhgvr/oisd/refs/heads/main/domainswild2_small.txt"
+            "https://raw.githubusercontent.com/sjhgvr/oisd/refs/heads/main/domainswild_small.txt"
           )
           echo "Загрузка ${#urls[@]} источников..."
           for u in "${urls[@]}"; do
-              echo -n "$(basename "$u")..."
-              curl -sSL --connect-timeout 10 --max-time 30 "$u" >> "$T" 2>/dev/null && echo " ✓" || echo " ✗"
+            echo -n "$(basename "$u")..."
+            curl -sSL --connect-timeout 10 --max-time 30 "$u" >> "$T" 2>/dev/null && echo " ✓" || echo " ✗"
           done
-          
           echo -n "Обработка..." && \
           sed -i 's/^[0-9]\+\.[0-9]\+\.[0-9]\+\.[0-9]\+[[:space:]]\+//;s/^[[:space:]]*127\.0\.0\.1[[:space:]]\+//;s/^[[:space:]]*0\.0\.0\.0[[:space:]]\+//' "$T" && \
           grep -v '#' "$T" | \
@@ -70,34 +67,39 @@ jobs:
           grep -v 'regexp' | \
           grep -v '[^a-z0-9\.\-]' | \
           awk -F. 'NF<=7' | \
-          sort -u > "$U"
-          
-          echo " найдено $(wc -l < "$U") доменов" && echo "payload:" > "$O" && \
-          sed "s/^/  - '+./;s/$/'/" "$U" >> "$O"
-          
+          sort -u > "$U" && \
+          awk '{
+            n = split($0, a, ".")
+            rev = a[n]
+            for (i = n - 1; i >= 1; i--) rev = rev "." a[i]
+            print rev "\t" $0
+          }' "$U" | sort | awk -F'\t' '
+          {
+            key = $1; dom = $2
+            if (prev != "" && (key == prev || index(key, prev ".") == 1)) next
+            print dom
+            prev = key
+          }' | sort > "$U.dedup" && mv "$U.dedup" "$U"
+          echo " найдено $(wc -l < "$U") доменов (поддомены, покрытые родительскими +.доменами, удалены)" && echo "payload:" > "$O" && \
+          sed "s/^/ - '+./;s/$/'/" "$U" >> "$O"
           echo "Первый домен: $(head -2 "$O" | tail -1)"
           rm -f "$T" "$U" && echo "Сохранено в $O"
 
       - name: Update block list
         run: |
           #!/bin/bash
-          
           T=$(mktemp) && U=$(mktemp) && O="uni-block.yaml"
           > "$O"
           urls=(
-              "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/category-speedtest.yaml"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/category-speedtest"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/ookla-speedtest"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/openspeedtest"
-              "https://raw.githubusercontent.com/vrzdrb/unified-mihomo-rulesets/refs/heads/main/uni-custom-d-block.yaml"
-              "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/category-ads.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/category-speedtest.yaml"
+            "https://raw.githubusercontent.com/vrzdrb/unified-mihomo-rulesets/refs/heads/main/uni-custom-d-block.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/category-ads.yaml"
           )
           echo "Загрузка ${#urls[@]} источников..."
           for u in "${urls[@]}"; do
-              echo -n "$(basename "$u")..."
-              curl -sSL --connect-timeout 10 --max-time 30 "$u" >> "$T" 2>/dev/null && echo " ✓" || echo " ✗"
+            echo -n "$(basename "$u")..."
+            curl -sSL --connect-timeout 10 --max-time 30 "$u" >> "$T" 2>/dev/null && echo " ✓" || echo " ✗"
           done
-          
           echo -n "Обработка..." && \
           sed -i 's/^[0-9]\+\.[0-9]\+\.[0-9]\+\.[0-9]\+[[:space:]]\+//;s/^[[:space:]]*127\.0\.0\.1[[:space:]]\+//;s/^[[:space:]]*0\.0\.0\.0[[:space:]]\+//' "$T" && \
           grep -v '#' "$T" | \
@@ -121,164 +123,164 @@ jobs:
           grep -v 'regexp' | \
           grep -v '[^a-z0-9\.\-]' | \
           awk -F. 'NF<=7' | \
-          sort -u > "$U"
-          
-          echo " найдено $(wc -l < "$U") доменов" && echo "payload:" > "$O" && \
-          sed "s/^/  - '+./;s/$/'/" "$U" >> "$O"
-          
+          sort -u > "$U" && \
+          awk '{
+            n = split($0, a, ".")
+            rev = a[n]
+            for (i = n - 1; i >= 1; i--) rev = rev "." a[i]
+            print rev "\t" $0
+          }' "$U" | sort | awk -F'\t' '
+          {
+            key = $1; dom = $2
+            if (prev != "" && (key == prev || index(key, prev ".") == 1)) next
+            print dom
+            prev = key
+          }' | sort > "$U.dedup" && mv "$U.dedup" "$U"
+          echo " найдено $(wc -l < "$U") доменов (поддомены, покрытые родительскими +.доменами, удалены)" && echo "payload:" > "$O" && \
+          sed "s/^/ - '+./;s/$/'/" "$U" >> "$O"
           echo "Первый домен: $(head -2 "$O" | tail -1)"
           rm -f "$T" "$U" && echo "Сохранено в $O"
 
       - name: Update domains-to-proxy list
         run: |
           #!/bin/bash
-          
           T=$(mktemp) && U=$(mktemp) && O="uni-domains.yaml"
           > "$O"
           urls=(
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/nikke"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/dropbox"
-              "https://raw.githubusercontent.com/vrzdrb/unified-mihomo-rulesets/refs/heads/main/uni-custom-d-proxy.yaml"
-              "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/google-gemini.yaml"
-              "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/google-deepmind.yaml"
-              "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/anthropic.yaml"
-              "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/openai.yaml"
-              "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/github-copilot.yaml"
-              "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/tor.yaml"
-              "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/category-anticensorship.yaml"
-              "https://raw.githubusercontent.com/Flowseal/zapret-discord-youtube/refs/heads/main/lists/list-general.txt"
-              "https://iplist.opencck.org/?format=clashx&data=domains&append=timeout%3D1d%22%20mode=https%20dst-path=domains.rsc"
-              "https://raw.githubusercontent.com/dartraiden/no-russia-hosts/refs/heads/master/hosts.txt"
-              "https://community.antifilter.download/list/domains.lst"
-              "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Categories/anime.lst"
-              "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Categories/block.lst"
-              "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Categories/geoblock.lst"
-              "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Categories/hodca.lst"
-              "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Categories/news.lst"
-              "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Categories/porn.lst"
-              "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Services/cloudflare.lst"
-              "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Services/cloudfront.lst"
-              "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Services/digitalocean.lst"
-              "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Services/discord.lst"
-              "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Services/google_ai.lst"
-              "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Services/hdrezka.lst"
-              "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Services/hetzner.lst"
-              "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Services/meta.lst"
-              "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Services/ovh.lst"
-              "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Services/telegram.lst"
-              "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Services/tiktok.lst"
-              "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Services/twitter.lst"
-              "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Services/youtube.lst"
-              "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Russia/inside-raw.lst"
-              "https://raw.githubusercontent.com/1andrevich/Re-filter-lists/refs/heads/main/ooni_domains.lst"
-              "https://raw.githubusercontent.com/1andrevich/Re-filter-lists/refs/heads/main/sum/input/domains.lst"
-              "https://raw.githubusercontent.com/1andrevich/Re-filter-lists/refs/heads/main/domains_all.lst"
-              "https://raw.githubusercontent.com/1andrevich/Re-filter-lists/refs/heads/main/community.lst"
-              "https://raw.githubusercontent.com/GhostRooter0953/discord-voice-ips/refs/heads/master/main_domains/discord-main-domains-list"
-              "https://raw.githubusercontent.com/GhostRooter0953/discord-voice-ips/refs/heads/master/voice_domains/discord-voice-domains-list"
-              "https://raw.githubusercontent.com/sjhgvr/oisd/refs/heads/main/domainswild2_nsfw_small.txt"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/beats"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/github-copilot"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/category-media-ru"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/itchio"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/steaminventoryhelper"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/meta"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/facebook"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/facebook-dev"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/instagram"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/oculus"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/threads"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/whatsapp"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/adobe"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/typekit"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/adobe-activation"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/anime"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/showtimeanytime"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/bing"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/openai"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/tiktok"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/matrix"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/paypal"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/amazon"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/amazontrust"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/aws"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/imdb"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/kindle"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/kindle4rss"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/primevideo"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/wholefoodsmarket"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/netflix"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/spotify"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/anthropic"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/soundcloud"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/category-password-management"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/agilebits"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/bitwarden"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/lastpass"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/category-web-archive"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/internet-archive"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/archivetoday"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/4plebs"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/clubhouse"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/discord"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/freenode"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/intercom"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/keybase"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/line"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/mailcom"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/matrix"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/messenger"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/protonmail"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/signal"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/slack"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/telegram"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/temp-mail"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/viber"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/whatsapp"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/category-anticensorship"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/category-ipfs"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/cloudflare-ipfs"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/ceno"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/citizenlab"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/epicbrowser"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/greatfire"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/haveibeenpwned"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/lantern"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/paskoocheh"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/softether"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/torproject"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/v2ray"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/vpngate"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/category-antivirus"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/comodo"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/eset"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/symantec"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/category-porn"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/bongacams"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/camwhores"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/clips4sale"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/hentaichen"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/hentaivn"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/javcc"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/nudevista"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/playboy"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/pornhub"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/spankbang"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/theporndude"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/xhamster"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/xnxx"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/xvideos"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/google-deepmind"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/youtube"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/canva"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/nikke.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/dropbox.yaml"
+            "https://raw.githubusercontent.com/vrzdrb/unified-mihomo-rulesets/refs/heads/main/uni-custom-d-proxy.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/google-gemini.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/google-deepmind.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/anthropic.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/openai.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/github-copilot.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/tor.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/category-anticensorship.yaml"
+            "https://raw.githubusercontent.com/Flowseal/zapret-discord-youtube/refs/heads/main/lists/list-general.txt"
+            "https://iplist.opencck.org/?format=clashx&data=domains&append=timeout%3D1d%22%20mode=https%20dst-path=domains.rsc"
+            "https://raw.githubusercontent.com/dartraiden/no-russia-hosts/refs/heads/master/hosts.txt"
+            "https://community.antifilter.download/list/domains.lst"
+            "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Categories/anime.lst"
+            "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Categories/block.lst"
+            "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Categories/geoblock.lst"
+            "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Categories/hodca.lst"
+            "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Categories/news.lst"
+            "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Categories/porn.lst"
+            "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Services/cloudflare.lst"
+            "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Services/cloudfront.lst"
+            "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Services/digitalocean.lst"
+            "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Services/discord.lst"
+            "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Services/google_ai.lst"
+            "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Services/hdrezka.lst"
+            "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Services/hetzner.lst"
+            "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Services/meta.lst"
+            "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Services/ovh.lst"
+            "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Services/telegram.lst"
+            "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Services/tiktok.lst"
+            "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Services/twitter.lst"
+            "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Services/youtube.lst"
+            "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Russia/inside-raw.lst"
+            "https://raw.githubusercontent.com/1andrevich/Re-filter-lists/refs/heads/main/ooni_domains.lst"
+            "https://raw.githubusercontent.com/1andrevich/Re-filter-lists/refs/heads/main/sum/input/domains.lst"
+            "https://raw.githubusercontent.com/1andrevich/Re-filter-lists/refs/heads/main/domains_all.lst"
+            "https://raw.githubusercontent.com/1andrevich/Re-filter-lists/refs/heads/main/community.lst"
+            "https://raw.githubusercontent.com/GhostRooter0953/discord-voice-ips/refs/heads/master/main_domains/discord-main-domains-list"
+            "https://raw.githubusercontent.com/GhostRooter0953/discord-voice-ips/refs/heads/master/voice_domains/discord-voice-domains-list"
+            "https://raw.githubusercontent.com/sjhgvr/oisd/refs/heads/main/domainswild2_nsfw_small.txt"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/beats.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/category-media-ru.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/itchio.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/steaminventoryhelper.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/meta.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/facebook.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/facebook-dev.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/instagram.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/oculus.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/threads.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/whatsapp.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/adobe.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/typekit.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/adobe-activation.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/anime.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/showtimeanytime.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/bing.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/tiktok.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/matrix.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/paypal.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/amazon.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/amazontrust.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/aws.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/imdb.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/kindle.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/kindle4rss.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/primevideo.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/wholefoodsmarket.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/netflix.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/spotify.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/soundcloud.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/category-password-management.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/agilebits.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/bitwarden.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/lastpass.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/category-web-archive.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/internet-archive.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/archivetoday.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/4plebs.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/clubhouse.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/discord.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/freenode.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/intercom.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/keybase.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/line.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/mailcom.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/messenger.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/protonmail.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/signal.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/slack.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/telegram.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/temp-mail.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/viber.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/category-ipfs.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/cloudflare-ipfs.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/ceno.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/citizenlab.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/epicbrowser.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/greatfire.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/haveibeenpwned.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/lantern.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/paskoocheh.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/softether.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/torproject.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/v2ray.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/vpngate.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/category-antivirus.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/comodo.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/eset.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/symantec.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/category-porn.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/bongacams.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/camwhores.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/clips4sale.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/hentaichen.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/hentaivn.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/javcc.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/nudevista.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/playboy.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/pornhub.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/spankbang.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/theporndude.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/xhamster.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/xnxx.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/xvideos.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/youtube.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/canva.yaml"
           )
-          
           echo "Загрузка ${#urls[@]} источников..."
           for u in "${urls[@]}"; do
-              echo -n "$(basename "$u")..."
-              curl -sSL --connect-timeout 10 --max-time 30 "$u" >> "$T" 2>/dev/null && echo " ✓" || echo " ✗"
+            echo -n "$(basename "$u")..."
+            curl -sSL --connect-timeout 10 --max-time 30 "$u" >> "$T" 2>/dev/null && echo " ✓" || echo " ✗"
           done
-          
           echo -n "Обработка..." && \
           sed -i 's/^[0-9]\+\.[0-9]\+\.[0-9]\+\.[0-9]\+[[:space:]]\+//;s/^[[:space:]]*127\.0\.0\.1[[:space:]]\+//;s/^[[:space:]]*0\.0\.0\.0[[:space:]]\+//' "$T" && \
           grep -v '#' "$T" | \
@@ -302,185 +304,186 @@ jobs:
           grep -v 'regexp' | \
           grep -v '[^a-z0-9\.\-]' | \
           awk -F. 'NF<=7' | \
-          sort -u > "$U"
-          
-          echo " найдено $(wc -l < "$U") доменов" && echo "payload:" > "$O" && \
-          sed "s/^/  - '+./;s/$/'/" "$U" >> "$O"
-          
+          sort -u > "$U" && \
+          awk '{
+            n = split($0, a, ".")
+            rev = a[n]
+            for (i = n - 1; i >= 1; i--) rev = rev "." a[i]
+            print rev "\t" $0
+          }' "$U" | sort | awk -F'\t' '
+          {
+            key = $1; dom = $2
+            if (prev != "" && (key == prev || index(key, prev ".") == 1)) next
+            print dom
+            prev = key
+          }' | sort > "$U.dedup" && mv "$U.dedup" "$U"
+          echo " найдено $(wc -l < "$U") доменов (поддомены, покрытые родительскими +.доменами, удалены)" && echo "payload:" > "$O" && \
+          sed "s/^/ - '+./;s/$/'/" "$U" >> "$O"
           echo "Первый домен: $(head -2 "$O" | tail -1)"
           rm -f "$T" "$U" && echo "Сохранено в $O"
 
       - name: Update domains-to-direct list
         run: |
           #!/bin/bash
-          
           T=$(mktemp) && U=$(mktemp) && O="uni-domains-direct.yaml"
           > "$O"
           urls=(
-              "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/category-ai-ru.yaml"
-              "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/category-ai-cn.yaml"
-              "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/github.yaml"
-              "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/category-android-app-download.yaml"
-              "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/category-ir.yaml"
-              "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/category-ru.yaml"
-              "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/onedrive.yaml"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/drweb"
-              "https://raw.githubusercontent.com/vrzdrb/unified-mihomo-rulesets/refs/heads/main/uni-custom-d-direct.yaml"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/github"
-              "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Russia/outside-raw.lst"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/apple"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/apple-dev"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/swift"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/apple-pki"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/apple-tvplus"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/apple-update"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/apple-intelligence"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/icloud"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/itunes"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/npmjs"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/category-gov-ir"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/category-ir"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/category-ru"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/category-gov-ru"  
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/category-retail-ru"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/category-travel-ru"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/aviasales"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/category-medicine-ru"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/avito"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/ozon"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/wildberries"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/category-entertainment-ru"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/rutube"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/kinopoisk"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/okko"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/wink"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/carrotquest"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/kaspersky"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/mailru-group"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/mailru"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/mindbox"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/selectel"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/yandex"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/category-bank-ru"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/sber"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/2gis"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/okko"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/tbank-ru"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/category-bank-cn"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/boc"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/ccb"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/citic"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/cmb"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/hsbc-cn"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/icbc"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/unionpay" 
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/category-ip-geo-detect"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/ipip"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/teamviewer"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/category-number-verification-cn"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/category-entertainment-cn"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/aamgame"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/acfun"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/acplay"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/bestv"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/bilibili"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/bilibili-cdn"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/bilibili-game"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/ciweimao"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/dedao"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/douyin"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/douyu"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/duitang"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/fengxing"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/fqnovel"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/gamersky"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/gitv"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/hunantv"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/huya"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/iqiyi"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/ku6"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/kuaikan"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/kuaishou"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/kugou"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/kuwo"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/le"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/lizhi"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/pptv"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/qimao"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/qingtingfm"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/sakurafrp"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/taomee"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/u17"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/wasu"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/xiaoheihe"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/xiaoyuzhou"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/ximalaya"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/youku"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/yuewen"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/webnovel"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/tgbus"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/vgtime"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/escapefromtarkov"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/faceit"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/hoyoverse"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/illusion"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/illusion-nonofficial"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/lowiro"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/modrinth"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/nexon"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/op"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/osu"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/pandanet"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/pinkcore"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/projectsekai"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/pubg"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/purikonejp"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/snk"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/steam"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/steamunlocked"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/zynga"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/vrchat"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/wargaming"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/wbgames"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/asobo"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/ynoproject"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/yostar"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/category-games-cn"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/4399"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/9game"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/cowlevel"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/herogame"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/kurogames"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/mihoyo-cn"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/tencent-games"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/tiancity"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/vrzwk"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/xd"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/yokaverse"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/meizu"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/xiaomi"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/xiaomi-ai"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/xiaomi-iot"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/honor"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/tencent"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/qcloud"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/discuz"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/dnspod"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/yuewen"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/tencent-dev"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/cnb"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/coding"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/tencent-games"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/category-game-accelerator-cn"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/category-game-platforms-download"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/category-ai-ru.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/category-ai-cn.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/github.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/category-android-app-download.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/category-ir.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/category-ru.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/onedrive.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/drweb.yaml"
+            "https://raw.githubusercontent.com/vrzdrb/unified-mihomo-rulesets/refs/heads/main/uni-custom-d-direct.yaml"
+            "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Russia/outside-raw.lst"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/apple.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/apple-dev.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/swift.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/apple-pki.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/apple-tvplus.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/apple-update.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/apple-intelligence.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/icloud.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/itunes.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/npmjs.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/category-gov-ir.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/category-gov-ru.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/category-retail-ru.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/category-travel-ru.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/aviasales.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/category-medicine-ru.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/avito.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/ozon.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/wildberries.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/category-entertainment-ru.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/rutube.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/kinopoisk.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/okko.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/wink.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/carrotquest.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/kaspersky.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/mailru-group.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/mailru.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/mindbox.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/selectel.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/yandex.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/category-bank-ru.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/sber.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/2gis.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/tbank-ru.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/category-bank-cn.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/boc.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/ccb.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/citic.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/cmb.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/hsbc-cn.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/icbc.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/unionpay.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/category-ip-geo-detect.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/ipip.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/teamviewer.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/category-number-verification-cn.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/category-entertainment-cn.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/aamgame.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/acfun.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/acplay.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/bestv.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/bilibili.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/bilibili-cdn.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/bilibili-game.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/ciweimao.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/dedao.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/douyin.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/douyu.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/duitang.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/fengxing.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/fqnovel.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/gamersky.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/gitv.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/hunantv.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/huya.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/iqiyi.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/ku6.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/kuaikan.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/kuaishou.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/kugou.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/kuwo.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/le.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/lizhi.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/pptv.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/qimao.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/qingtingfm.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/sakurafrp.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/taomee.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/u17.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/wasu.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/xiaoheihe.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/xiaoyuzhou.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/ximalaya.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/youku.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/yuewen.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/webnovel.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/tgbus.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/vgtime.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/escapefromtarkov.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/faceit.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/hoyoverse.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/illusion.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/illusion-nonofficial.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/lowiro.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/modrinth.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/nexon.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/op.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/osu.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/pandanet.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/pinkcore.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/projectsekai.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/pubg.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/purikonejp.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/snk.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/steam.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/steamunlocked.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/zynga.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/vrchat.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/wargaming.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/wbgames.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/asobo.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/ynoproject.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/yostar.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/category-games-cn.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/4399.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/9game.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/cowlevel.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/herogame.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/kurogames.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/mihoyo-cn.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/tencent-games.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/tiancity.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/vrzwk.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/xd.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/yokaverse.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/meizu.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/xiaomi.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/xiaomi-ai.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/xiaomi-iot.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/honor.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/tencent.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/qcloud.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/discuz.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/dnspod.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/tencent-dev.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/cnb.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/coding.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/category-game-accelerator-cn.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/category-game-platforms-download.yaml"
           )
-          
           echo "Загрузка ${#urls[@]} источников..."
           for u in "${urls[@]}"; do
-              echo -n "$(basename "$u")..."
-              curl -sSL --connect-timeout 10 --max-time 30 "$u" >> "$T" 2>/dev/null && echo " ✓" || echo " ✗"
+            echo -n "$(basename "$u")..."
+            curl -sSL --connect-timeout 10 --max-time 30 "$u" >> "$T" 2>/dev/null && echo " ✓" || echo " ✗"
           done
-          
           echo -n "Обработка..." && \
           sed -i 's/^[0-9]\+\.[0-9]\+\.[0-9]\+\.[0-9]\+[[:space:]]\+//;s/^[[:space:]]*127\.0\.0\.1[[:space:]]\+//;s/^[[:space:]]*0\.0\.0\.0[[:space:]]\+//' "$T" && \
           grep -v '#' "$T" | \
@@ -504,48 +507,55 @@ jobs:
           grep -v 'regexp' | \
           grep -v '[^a-z0-9\.\-]' | \
           awk -F. 'NF<=7' | \
-          sort -u > "$U"
-          
-          echo " найдено $(wc -l < "$U") доменов" && echo "payload:" > "$O" && \
-          sed "s/^/  - '+./;s/$/'/" "$U" >> "$O"
-          
+          sort -u > "$U" && \
+          awk '{
+            n = split($0, a, ".")
+            rev = a[n]
+            for (i = n - 1; i >= 1; i--) rev = rev "." a[i]
+            print rev "\t" $0
+          }' "$U" | sort | awk -F'\t' '
+          {
+            key = $1; dom = $2
+            if (prev != "" && (key == prev || index(key, prev ".") == 1)) next
+            print dom
+            prev = key
+          }' | sort > "$U.dedup" && mv "$U.dedup" "$U"
+          echo " найдено $(wc -l < "$U") доменов (поддомены, покрытые родительскими +.доменами, удалены)" && echo "payload:" > "$O" && \
+          sed "s/^/ - '+./;s/$/'/" "$U" >> "$O"
           echo "Первый домен: $(head -2 "$O" | tail -1)"
           rm -f "$T" "$U" && echo "Сохранено в $O"
-          
+
       - name: Update ip4-cidr-to-proxy list
         run: |
           #!/bin/bash
-          
           T=$(mktemp) && O="uni-ip4-cidr.yaml" && > "$O"
           urls=(
-              "https://raw.githubusercontent.com/Flowseal/zapret-discord-youtube/refs/heads/main/lists/ipset-all.txt.backup"
-              "https://raw.githubusercontent.com/1andrevich/Re-filter-lists/refs/heads/main/community_ips.lst"
-              "https://raw.githubusercontent.com/1andrevich/Re-filter-lists/refs/heads/main/discord_ips.lst"
-              "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Subnets/IPv4/Discord.lst"
-              "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Subnets/IPv4/Meta.lst"
-              "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Subnets/IPv4/Twitter.lst"
-              "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Subnets/IPv4/discord.lst"
-              "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Subnets/IPv4/meta.lst"
-              "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Subnets/IPv4/telegram.lst"
-              "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Subnets/IPv4/twitter.lst"
-              "https://raw.githubusercontent.com/GhostRooter0953/discord-voice-ips/refs/heads/master/main_domains/discord-main-ip-list"
-              "https://raw.githubusercontent.com/GhostRooter0953/discord-voice-ips/refs/heads/master/voice_domains/discord-voice-ip-list"
-              "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/telegramcidr.txt"
-              "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geoip/cz.list"
-              "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geoip/ua.yaml"
-              "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geoip/netflix.yaml"
-              "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geoip/telegram.yaml"
-              "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geoip/twitter.yaml"
-              "https://raw.githubusercontent.com/legiz-ru/mihomo-rule-sets/refs/heads/main/ru-bundle/rknasnblock.list"
+            "https://raw.githubusercontent.com/Flowseal/zapret-discord-youtube/refs/heads/main/lists/ipset-all.txt.backup"
+            "https://raw.githubusercontent.com/1andrevich/Re-filter-lists/refs/heads/main/community_ips.lst"
+            "https://raw.githubusercontent.com/1andrevich/Re-filter-lists/refs/heads/main/discord_ips.lst"
+            "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Subnets/IPv4/Discord.lst"
+            "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Subnets/IPv4/Meta.lst"
+            "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Subnets/IPv4/Twitter.lst"
+            "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Subnets/IPv4/discord.lst"
+            "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Subnets/IPv4/meta.lst"
+            "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Subnets/IPv4/telegram.lst"
+            "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Subnets/IPv4/twitter.lst"
+            "https://raw.githubusercontent.com/GhostRooter0953/discord-voice-ips/refs/heads/master/main_domains/discord-main-ip-list"
+            "https://raw.githubusercontent.com/GhostRooter0953/discord-voice-ips/refs/heads/master/voice_domains/discord-voice-ip-list"
+            "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/telegramcidr.txt"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geoip/cz.list"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geoip/ua.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geoip/netflix.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geoip/telegram.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geoip/twitter.yaml"
+            "https://raw.githubusercontent.com/legiz-ru/mihomo-rule-sets/refs/heads/main/ru-bundle/rknasnblock.list"
           )
-
           echo "Загрузка ${#urls[@]} источников..."
           for u in "${urls[@]}"; do
-              echo -n "$(basename "$u")..." && \
-              curl -sSL --connect-timeout 10 --max-time 30 "$u" >> "$T" 2>/dev/null && \
-              echo " ✓" || echo " ✗"
+            echo -n "$(basename "$u")..." && \
+            curl -sSL --connect-timeout 10 --max-time 30 "$u" >> "$T" 2>/dev/null && \
+            echo " ✓" || echo " ✗"
           done
-          
           echo -n "Обработка..." && \
           grep -v '^[[:space:]]*[#!]' "$T" | \
           grep -v '^[[:space:]]*$' | \
@@ -558,21 +568,38 @@ jobs:
           grep -E '^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}' | \
           sed 's/[^0-9\.\/].*$//' | \
           awk '{
-              gsub(/[^0-9\.\/]/, "", $0)
-              if ($0 ~ /^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+\/[0-9]+$/) {
-                  split($0, parts, "/")
-                  if (parts[2] >= 0 && parts[2] <= 32) {
-                      print $0
-                  }
-              } else if ($0 ~ /^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$/) {
-                  print $0 "/32"
+            gsub(/[^0-9\.\/]/, "", $0)
+            if ($0 ~ /^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+\/[0-9]+$/) {
+              split($0, parts, "/")
+              if (parts[2] >= 0 && parts[2] <= 32) {
+                print $0
               }
+            } else if ($0 ~ /^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$/) {
+              print $0 "/32"
+            }
           }' | sort -u | \
-          sed "s/^/  - '/;s/$/'/" > "$T.2"
-          
-          echo " найдено $(wc -l < "$T.2") CIDR" && \
+          awk -F'/' '{
+            n = split($1, o, ".")
+            ipint = 0
+            for (i = 1; i <= n; i++) ipint = ipint * 256 + o[i]
+            prefix = $2 + 0
+            blocksize = 2 ^ (32 - prefix)
+            network = int(ipint / blocksize) * blocksize
+            end = network + blocksize - 1
+            printf "%.0f\t%d\t%.0f\t%s\n", network, prefix, end, $0
+          }' | sort -k1,1n -k2,2n | \
+          awk -F'\t' '
+          BEGIN { maxend = -1 }
+          {
+            network = $1 + 0
+            end = $3 + 0
+            if (network <= maxend) next
+            print $4
+            maxend = end
+          }' | sort -u | \
+          sed "s/^/ - '/;s/$/'/" > "$T.2"
+          echo " найдено $(wc -l < "$T.2") CIDR (подсети, полностью покрытые другой уже включённой подсетью, удалены)" && \
           echo "payload:" > "$O" && cat "$T.2" >> "$O"
-          
           echo "Первая подсеть: $(head -2 "$O" | tail -1)"
           rm -f "$T.2"
           rm -f "$T" && echo "Сохранено в $O"
@@ -580,23 +607,20 @@ jobs:
       - name: Update ip4-cidr-to-direct lists
         run: |
           #!/bin/bash
-          
           T=$(mktemp) && O="uni-ip4-cidr-direct.yaml" && > "$O"
           urls=(
-              "https://raw.githubusercontent.com/Flowseal/zapret-discord-youtube/refs/heads/main/lists/ipset-exclude.txt"
-              "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/cncidr.txt"
-              "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geoip/cn.list"
-              "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geoip/ir.list"
-              "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geoip/ru.yaml"
+            "https://raw.githubusercontent.com/Flowseal/zapret-discord-youtube/refs/heads/main/lists/ipset-exclude.txt"
+            "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/cncidr.txt"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geoip/cn.list"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geoip/ir.list"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geoip/ru.yaml"
           )
-          
           echo "Загрузка ${#urls[@]} источников..."
           for u in "${urls[@]}"; do
-              echo -n "$(basename "$u")..." && \
-              curl -sSL --connect-timeout 10 --max-time 30 "$u" >> "$T" 2>/dev/null && \
-              echo " ✓" || echo " ✗"
+            echo -n "$(basename "$u")..." && \
+            curl -sSL --connect-timeout 10 --max-time 30 "$u" >> "$T" 2>/dev/null && \
+            echo " ✓" || echo " ✗"
           done
-          
           echo -n "Обработка..." && \
           grep -v '^[[:space:]]*[#!]' "$T" | \
           grep -v '^[[:space:]]*$' | \
@@ -609,21 +633,38 @@ jobs:
           grep -E '^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}' | \
           sed 's/[^0-9\.\/].*$//' | \
           awk '{
-              gsub(/[^0-9\.\/]/, "", $0)
-              if ($0 ~ /^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+\/[0-9]+$/) {
-                  split($0, parts, "/")
-                  if (parts[2] >= 0 && parts[2] <= 32) {
-                      print $0
-                  }
-              } else if ($0 ~ /^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$/) {
-                  print $0 "/32"
+            gsub(/[^0-9\.\/]/, "", $0)
+            if ($0 ~ /^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+\/[0-9]+$/) {
+              split($0, parts, "/")
+              if (parts[2] >= 0 && parts[2] <= 32) {
+                print $0
               }
+            } else if ($0 ~ /^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$/) {
+              print $0 "/32"
+            }
           }' | sort -u | \
-          sed "s/^/  - '/;s/$/'/" > "$T.2"
-          
-          echo " найдено $(wc -l < "$T.2") CIDR" && \
+          awk -F'/' '{
+            n = split($1, o, ".")
+            ipint = 0
+            for (i = 1; i <= n; i++) ipint = ipint * 256 + o[i]
+            prefix = $2 + 0
+            blocksize = 2 ^ (32 - prefix)
+            network = int(ipint / blocksize) * blocksize
+            end = network + blocksize - 1
+            printf "%.0f\t%d\t%.0f\t%s\n", network, prefix, end, $0
+          }' | sort -k1,1n -k2,2n | \
+          awk -F'\t' '
+          BEGIN { maxend = -1 }
+          {
+            network = $1 + 0
+            end = $3 + 0
+            if (network <= maxend) next
+            print $4
+            maxend = end
+          }' | sort -u | \
+          sed "s/^/ - '/;s/$/'/" > "$T.2"
+          echo " найдено $(wc -l < "$T.2") CIDR (подсети, полностью покрытые другой уже включённой подсетью, удалены)" && \
           echo "payload:" > "$O" && cat "$T.2" >> "$O"
-          
           echo "Первая подсеть: $(head -2 "$O" | tail -1)"
           rm -f "$T.2"
           rm -f "$T" && echo "Сохранено в $O"
@@ -631,7 +672,7 @@ jobs:
       - name: Create adblock rulesets
         run: |
           mihomo convert-ruleset domain yaml uni-adblock.yaml uni-adblock.mrs
-        
+
       - name: Create block rulesets
         run: |
           mihomo convert-ruleset domain yaml uni-block.yaml uni-block.mrs

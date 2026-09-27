@@ -1,7 +1,6 @@
 # unified mihomo rulesets
 The scripts generate combined and deduplicated mihomo rulesets from huge number of lists from repositories such as:
 - [MetaCubeX/meta-rules-dat](https://github.com/MetaCubeX/meta-rules-dat/tree/meta/geo/geosite)
-- [v2fly domain-list-community](https://github.com/v2fly/domain-list-community/tree/master/data)
 - [itdoginfo allow-domains](https://github.com/itdoginfo/allow-domains)
 - [dartraiden no-russia-hosts](https://github.com/dartraiden/no-russia-hosts)
 - [antifilter-community](https://community.antifilter.download)
@@ -105,8 +104,8 @@ rules:
   - RULE-SET,uni-adblock,REJECT
   - RULE-SET,uni-block,REJECT
   - RULE-SET,uni-app-block,REJECT
-  - RULE-SET,uni-custom-proxy,PROXY
   - RULE-SET,uni-custom-direct,DIRECT
+  - RULE-SET,uni-custom-proxy,PROXY
   - RULE-SET,uni-domains-direct,DIRECT
   - RULE-SET,uni-domains,PROXY
   - RULE-SET,uni-ip4-cidr-direct,DIRECT

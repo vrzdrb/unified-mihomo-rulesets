@@ -7,6 +7,7 @@ payload:
   - DOMAIN-SUFFIX,moonshot.ai
   - DOMAIN-SUFFIX,kimi.ai
   - DOMAIN-SUFFIX,kimi.com
+  - DOMAIN-REGEX,\.kimi\.ai\.
 
   # Google Search
   - DOMAIN,google.com

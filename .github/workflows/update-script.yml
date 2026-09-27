@@ -271,7 +271,6 @@ jobs:
               "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/google-deepmind"
               "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/youtube"
               "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/canva"
-              "https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/tilda"
           )
           
           echo "Загрузка ${#urls[@]} источников..."
@@ -318,6 +317,8 @@ jobs:
           T=$(mktemp) && U=$(mktemp) && O="uni-domains-direct.yaml"
           > "$O"
           urls=(
+              "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/category-ai-ru.yaml"
+              "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/category-ai-cn.yaml"
               "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/github.yaml"
               "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/category-android-app-download.yaml"
               "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/category-ir.yaml"
@@ -523,11 +524,8 @@ jobs:
               "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Subnets/IPv4/Discord.lst"
               "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Subnets/IPv4/Meta.lst"
               "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Subnets/IPv4/Twitter.lst"
-              "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Subnets/IPv4/digitalocean.lst"
               "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Subnets/IPv4/discord.lst"
-              "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Subnets/IPv4/hetzner.lst"
               "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Subnets/IPv4/meta.lst"
-              "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Subnets/IPv4/ovh.lst"
               "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Subnets/IPv4/telegram.lst"
               "https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Subnets/IPv4/twitter.lst"
               "https://raw.githubusercontent.com/GhostRooter0953/discord-voice-ips/refs/heads/master/main_domains/discord-main-ip-list"
@@ -589,6 +587,7 @@ jobs:
               "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/cncidr.txt"
               "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geoip/cn.list"
               "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geoip/ir.list"
+              "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geoip/ru.yaml"
           )
           
           echo "Загрузка ${#urls[@]} источников..."

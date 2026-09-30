@@ -19,25 +19,34 @@ payload:
   - DOMAIN-SUFFIX,sourceforge.net
 
     # Games
-  - DOMAIN-REGEX,brawlstars
-  - DOMAIN-REGEX,supercell
   - DOMAIN-SUFFIX,usercentrics.eu
+  - DOMAIN-SUFFIX,steamcommunity.com
+  - PROCESS-NAME-REGEX,(?i).*SpiritCrossing.*
+
+   # Nikki
   - DOMAIN-SUFFIX,nikke-kr.com
   - DOMAIN-SUFFIX,nikke-en.com
+  - DOMAIN-SUFFIX,nikke.global
   - DOMAIN-SUFFIX,intlgame.com
   - DOMAIN-SUFFIX,na-community.playerinfinite.com
   - DOMAIN-SUFFIX,jupiterlauncher.com
   - DOMAIN-SUFFIX,fleetlogd.com
+  - DOMAIN-SUFFIX,levelinfinite.com
+  - DOMAIN-SUFFIX,proximabeta.com
+  - PROCESS-NAME,com.proximabeta.nikke
+
+    # Peak
+  - DOMAIN-SUFFIX,protonengine.io
+  - PROCESS-NAME-REGEX,(?i).*PEAK.*
+
+    # Supercell
+  - DOMAIN-REGEX,brawlstars
+  - DOMAIN-REGEX,supercell
   - DOMAIN-SUFFIX,clashroyaleapp.com
   - DOMAIN-SUFFIX,clashofclans.com
-  - DOMAIN-SUFFIX,steamcommunity.com
-  - DOMAIN-SUFFIX,protonengine.io
-  - PROCESS-NAME-REGEX,(?i).*SpiritCrossing.*
-  - PROCESS-NAME-REGEX,(?i).*PEAK.*
   - PROCESS-NAME,com.supercell.brawlstars
   - PROCESS-NAME,com.supercell.clashofclans
   - PROCESS-NAME,com.supercell.clashroyale
-  - PROCESS-NAME,com.proximabeta.nikke
 
     # The Isle
   - PROCESS-NAME-REGEX,(?i).*TheIsleClient.*

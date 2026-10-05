@@ -698,5 +698,10 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add .
+          if git diff --cached --quiet; then
+            echo "Нет изменений — коммит не требуется"
+            exit 0
+          fi
           git commit -m "autoupdate"
+          git pull --rebase
           git push

@@ -13,7 +13,7 @@ payload:
   - DOMAIN,google.com
   - DOMAIN,www.google.com
   - DOMAIN,google.ru
-  - DOMAIN,www.google.ru
+  - DOMAIN-SUFFIX,google.ru
   
   # Aliexpress
   - DOMAIN-REGEX,aliexpress

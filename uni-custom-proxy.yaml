@@ -139,7 +139,7 @@ payload:
   - PROCESS-NAME,com.anthropic.claude
   - PROCESS-NAME,com.openai.chatgpt
 
-    # Gemini
+  # Gemini
   - PROCESS-NAME,com.google.android.apps.bard
   - PROCESS-NAME,com.google.android.apps.agentspace
   - PROCESS-NAME,com.google.android.apps.labs.language.tailwind
@@ -150,13 +150,30 @@ payload:
   - DOMAIN,generativelanguage.googleapis.com
   - DOMAIN,cloudcode-pa.googleapis.com
   - DOMAIN,firebaseai.googleapis.com
-  - DOMAIN,aistudio.google.com
-  - DOMAIN,ai.google.dev
-  - DOMAIN,labs.google.com
-  - DOMAIN,bard.google.com
+  - DOMAIN-SUFFIX,gemini.google.com
+  - DOMAIN-SUFFIX,aistudio.google.com
+  - DOMAIN-SUFFIX,ai.google.dev
+  - DOMAIN-SUFFIX,labs.google.com
+  - DOMAIN-SUFFIX,bard.google.com
+  - DOMAIN,accounts.google.com
+  - DOMAIN,myaccount.google.com
   - DOMAIN-KEYWORD,aistudio
   - DOMAIN-KEYWORD,deepmind
-  - DOMAIN-KEYWORD,gemini
+  - DOMAIN,gemini.gstatic.com
+  - DOMAIN,www.gstatic.com
+  - DOMAIN,ssl.gstatic.com
+  - DOMAIN,fonts.gstatic.com
+  - DOMAIN,csi.gstatic.com
+  - DOMAIN,encrypted-tbn0.gstatic.com
+  - DOMAIN,encrypted-tbn1.gstatic.com
+  - DOMAIN,encrypted-tbn2.gstatic.com
+  - DOMAIN,encrypted-tbn3.gstatic.com
+  - DOMAIN,ajax.googleapis.com
+  - DOMAIN,apis.googleapis.com
+  - DOMAIN,ogs.google.com
+  - DOMAIN,www.google-analytics.com
+  - DOMAIN,safebrowsing.google.com
+  - DOMAIN,safebrowsing.googleapis.com
 
     # Cinema
   - DOMAIN-KEYWORD,kinogo

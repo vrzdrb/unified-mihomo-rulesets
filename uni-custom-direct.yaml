@@ -2,6 +2,12 @@ payload:
   # Остальное
   - PROCESS-NAME,club.skllzz.fitness
 
+  # GitHub
+  - DOMAIN,github.com,DIRECT
+  - DOMAIN,api.github.com,DIRECT
+  - DOMAIN,codeload.github.com,DIRECT
+  - DOMAIN,gist.github.com,DIRECT
+
   # Kimi.ai
   - DOMAIN-SUFFIX,moonshot.cn
   - DOMAIN-SUFFIX,moonshot.ai

@@ -3,10 +3,10 @@ payload:
   - PROCESS-NAME,club.skllzz.fitness
 
   # GitHub
-  - DOMAIN,github.com,DIRECT
-  - DOMAIN,api.github.com,DIRECT
-  - DOMAIN,codeload.github.com,DIRECT
-  - DOMAIN,gist.github.com,DIRECT
+  - DOMAIN,github.com
+  - DOMAIN,api.github.com
+  - DOMAIN,codeload.github.com
+  - DOMAIN,gist.github.com
 
   # Kimi.ai
   - DOMAIN-SUFFIX,moonshot.cn

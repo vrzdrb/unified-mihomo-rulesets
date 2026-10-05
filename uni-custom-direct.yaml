@@ -31,9 +31,9 @@ payload:
   
   # Aliexpress
   - DOMAIN-REGEX,aliexpress
-  - DOMAIN-SUFFIX,ae.alibabacorp.com  
-  - DOMAIN-SUFFIX,ae-rus.net  
-  - DOMAIN-SUFFIX,aerdns.ru  
+  - DOMAIN-SUFFIX,ae.alibabacorp.com
+  - DOMAIN-SUFFIX,ae-rus.net
+  - DOMAIN-SUFFIX,aerdns.ru
 
   # Alibaba  
   - DOMAIN-SUFFIX,alibaba.com
@@ -56,10 +56,10 @@ payload:
   - DOMAIN-SUFFIX,alipayobjects.com
 
   # Microsoft Store
-  - PROCESS-NAME-REGEX,(?i)WinStore.App,DIRECT
-  - PROCESS-NAME-REGEX,(?i)Microsoft.WindowsStore,DIRECT
-  - PROCESS-NAME-REGEX,(?i)RuntimeBroker,DIRECT
-  - PROCESS-NAME-REGEX,(?i)StoreDesktopExtension,DIRECT
+  - PROCESS-NAME-REGEX,(?i)WinStore.App
+  - PROCESS-NAME-REGEX,(?i)Microsoft.WindowsStore
+  - PROCESS-NAME-REGEX,(?i)RuntimeBroker
+  - PROCESS-NAME-REGEX,(?i)StoreDesktopExtension
   
   # REGEX
   - DOMAIN-REGEX,^.*.ru$

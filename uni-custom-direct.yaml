@@ -14,6 +14,20 @@ payload:
   - DOMAIN,www.google.com
   - DOMAIN,google.ru
   - DOMAIN-SUFFIX,google.ru
+  - DOMAIN,www.gstatic.com
+  - DOMAIN,ssl.gstatic.com
+  - DOMAIN,fonts.gstatic.com
+  - DOMAIN,csi.gstatic.com
+  - DOMAIN,encrypted-tbn0.gstatic.com
+  - DOMAIN,encrypted-tbn1.gstatic.com
+  - DOMAIN,encrypted-tbn2.gstatic.com
+  - DOMAIN,encrypted-tbn3.gstatic.com
+  - DOMAIN,ajax.googleapis.com
+  - DOMAIN,apis.google.com
+  - DOMAIN,ogs.google.com
+  - DOMAIN,www.google-analytics.com
+  - DOMAIN,safebrowsing.google.com
+  - DOMAIN,safebrowsing.googleapis.com
   
   # Aliexpress
   - DOMAIN-REGEX,aliexpress

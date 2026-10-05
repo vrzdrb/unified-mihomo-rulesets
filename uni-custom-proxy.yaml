@@ -129,12 +129,27 @@ payload:
     # AI
   - DOMAIN-SUFFIX,chatgpt.com
   - DOMAIN-SUFFIX,copilot.microsoft.com
-  - DOMAIN-KEYWORD,gemini
   - PROCESS-NAME,com.anthropic.claude
   - PROCESS-NAME,com.openai.chatgpt
+
+    # Gemini
   - PROCESS-NAME,com.google.android.apps.bard
   - PROCESS-NAME,com.google.android.apps.agentspace
   - PROCESS-NAME,com.google.android.apps.labs.language.tailwind
+  - DOMAIN,alkalicore-pa.clients6.google.com
+  - DOMAIN,geminiweb-pa.clients6.google.com
+  - DOMAIN,signaler-pa.clients6.google.com
+  - DOMAIN,waa-pa.clients6.google.com
+  - DOMAIN,generativelanguage.googleapis.com
+  - DOMAIN,cloudcode-pa.googleapis.com
+  - DOMAIN,firebaseai.googleapis.com
+  - DOMAIN,aistudio.google.com
+  - DOMAIN,ai.google.dev
+  - DOMAIN,labs.google.com
+  - DOMAIN,bard.google.com
+  - DOMAIN-KEYWORD,aistudio
+  - DOMAIN-KEYWORD,deepmind
+  - DOMAIN-KEYWORD,gemini
 
     # Cinema
   - DOMAIN-KEYWORD,kinogo

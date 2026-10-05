@@ -18,6 +18,13 @@ payload:
   - DOMAIN-SUFFIX,alza.cz
   - DOMAIN-SUFFIX,sourceforge.net
 
+    # Github
+  - DOMAIN-SUFFIX,githubusercontent.com
+  - DOMAIN-SUFFIX,githubassets.com
+  - DOMAIN-SUFFIX,github.io
+  - DOMAIN-SUFFIX,ghcr.io
+  - DOMAIN-SUFFIX,githubcopilot.com
+
     # Games
   - DOMAIN-SUFFIX,usercentrics.eu
   - DOMAIN-SUFFIX,steamcommunity.com

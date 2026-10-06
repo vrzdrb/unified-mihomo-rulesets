@@ -160,7 +160,6 @@ payload:
   - DOMAIN-KEYWORD,aistudio
   - DOMAIN-KEYWORD,deepmind
   - DOMAIN,gemini.gstatic.com
-  - DOMAIN,www.gstatic.com
   - DOMAIN,ssl.gstatic.com
   - DOMAIN,csi.gstatic.com
   - DOMAIN,encrypted-tbn0.gstatic.com

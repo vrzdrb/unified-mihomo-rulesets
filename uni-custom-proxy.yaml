@@ -162,7 +162,6 @@ payload:
   - DOMAIN,gemini.gstatic.com
   - DOMAIN,www.gstatic.com
   - DOMAIN,ssl.gstatic.com
-  - DOMAIN,fonts.gstatic.com
   - DOMAIN,csi.gstatic.com
   - DOMAIN,encrypted-tbn0.gstatic.com
   - DOMAIN,encrypted-tbn1.gstatic.com

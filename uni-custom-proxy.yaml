@@ -188,8 +188,15 @@ payload:
   - DOMAIN-SUFFIX,euphoria-hdrezka.org
 
     # REGEX
-  - DOMAIN-REGEX,blsp
-  - DOMAIN-REGEX,bs2best
+  - DOMAIN-REGEX,ddna[0-9]+\..+
+  - DOMAIN-SUFFIX,.onion
+  - DOMAIN-REGEX,\.blsp.*\..+
+  - DOMAIN-REGEX,\.mgmarket[0-9]+\..+
+  - DOMAIN-REGEX,slon[0-9]+\..+
+  - DOMAIN-REGEX,omgmy[0-9]+\..+
+  - DOMAIN-REGEX,bazaar[0-9]+\..+
+  - DOMAIN-REGEX,nova-mtplace[0-9]+\..+
+  - DOMAIN-REGEX,bs2best[0-9]+\..+
 
     # PROCESS-REGEX
   - PROCESS-NAME-REGEX,(?i).*Instagram.*

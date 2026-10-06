@@ -18,9 +18,10 @@ payload:
   # Google
   - DOMAIN,google.com
   - DOMAIN,www.google.com
+  - DOMAIN-SUFFIX,google.ru
+  - DOMAIN,www.gstatic.com
   - DOMAIN,fonts.gstatic.com
   - DOMAIN,fonts.googleapis.com
-  - DOMAIN-SUFFIX,google.ru
   
   # Aliexpress
   - DOMAIN-REGEX,aliexpress

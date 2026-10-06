@@ -15,9 +15,11 @@ payload:
   - DOMAIN-SUFFIX,kimi.com
   - DOMAIN-REGEX,\.kimi\.ai\.
 
-  # Google Search
+  # Google
   - DOMAIN,google.com
   - DOMAIN,www.google.com
+  - DOMAIN,fonts.gstatic.com
+  - DOMAIN,fonts.googleapis.com
   - DOMAIN-SUFFIX,google.ru
   
   # Aliexpress

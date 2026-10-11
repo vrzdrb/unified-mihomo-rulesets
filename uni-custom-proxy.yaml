@@ -49,12 +49,25 @@ payload:
     # Supercell
   - DOMAIN-REGEX,brawlstars
   - DOMAIN-REGEX,supercell
+  - DOMAIN-SUFFIX,brawlstars.com
   - DOMAIN-SUFFIX,brawlstarsgame.com
-  - DOMAIN-SUFFIX,clashroyaleapp.com
   - DOMAIN-SUFFIX,clashofclans.com
+  - DOMAIN-SUFFIX,clashroyale.com
+  - DOMAIN-SUFFIX,clashroyaleapp.com
+  - DOMAIN-SUFFIX,squadbusters.com
+  - DOMAIN-SUFFIX,boombeach.com
+  - DOMAIN-SUFFIX,clash.com
+  - DOMAIN-SUFFIX,seeurlpcl.com
+  - DOMAIN-SUFFIX,hayday.com
+  - DOMAIN-SUFFIX,haydaygame.com
+  - DOMAIN-SUFFIX,clashmini.com
+  - DOMAIN-SUFFIX,mo.co
   - PROCESS-NAME,com.supercell.brawlstars
   - PROCESS-NAME,com.supercell.clashofclans
   - PROCESS-NAME,com.supercell.clashroyale
+  - PROCESS-NAME,com.supercell.boombeach
+  - PROCESS-NAME,com.supercell.squad
+  - PROCESS-NAME,com.supercell.hayday
 
     # The Isle
   - PROCESS-NAME-REGEX,(?i).*TheIsleClient.*

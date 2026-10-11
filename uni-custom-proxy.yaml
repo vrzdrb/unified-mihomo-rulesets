@@ -49,6 +49,7 @@ payload:
     # Supercell
   - DOMAIN-REGEX,brawlstars
   - DOMAIN-REGEX,supercell
+  - DOMAIN-SUFFIX,brawlstarsgame.com
   - DOMAIN-SUFFIX,clashroyaleapp.com
   - DOMAIN-SUFFIX,clashofclans.com
   - PROCESS-NAME,com.supercell.brawlstars

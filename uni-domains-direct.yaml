@@ -826,6 +826,8 @@ payload:
  - '+.itunesconnect.apple.com'
  - '+.jit.si'
  - '+.jitsi.net'
+ - '+.kp-config-smart-tv.akamaized.net'
+ - '+.kp-configs-smart-tv.s3.eu-central-1.amazonaws.com'
  - '+.kr.cdn.blizzard.com'
  - '+.ksn-cinfo-geo.kaspersky-labs.com'
  - '+.ksn-cinfo.geoksn.kaspersky.com'

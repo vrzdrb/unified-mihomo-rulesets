@@ -138,7 +138,7 @@ payload:
   - DOMAIN-SUFFIX,mogujie.com
   - DOMAIN-SUFFIX,smzdm.com
   - DOMAIN-SUFFIX,alibabacloud.com
-  - DOMAIN-SUFFIX,alibabagroup.com  
+  - DOMAIN-SUFFIX,alibabagroup.com
   - DOMAIN-REGEX,aliexpress
   - DOMAIN-SUFFIX,ae.alibabacorp.com
   - DOMAIN-SUFFIX,ae-rus.net
@@ -533,22 +533,20 @@ payload:
   - PROCESS-NAME,EasyAntiCheat.exe
   - PROCESS-NAME,TslGame_BE.exe
   - PROCESS-NAME,TslGame_ZK.exe
-  - PROCESS-NAME,EasyAntiCheat.exe
   - PROCESS-NAME,denuvo-anti-cheat-update-service.exe
   - PROCESS-NAME,EscapeFromTarkovArena_BE.exe
   - PROCESS-NAME,EscapeFromTarkov_BE.exe
   - PROCESS-NAME,EasyAntiCheat_EOS.exe
   - PROCESS-NAME,faceitservice.exe
-  - PROCESS-NAME,faceitclient.exe 
+  - PROCESS-NAME,faceitclient.exe
   - PROCESS-NAME,SGuard64.exe
-  - PROCESS-NAME,SGuardSvc64.exe 
+  - PROCESS-NAME,SGuardSvc64.exe
   - PROCESS-NAME,SGuardUpdate64.exe
-  - PROCESS-NAME,ACE-Service64.exe 
+  - PROCESS-NAME,ACE-Service64.exe
   - PROCESS-NAME,helldivers2.exe
   - PROCESS-NAME,crs-handler.exe
   - PROCESS-NAME,Discovery.exe
   - PROCESS-NAME,Discovery-d.exe
-  - PROCESS-NAME,BsgLauncher.exe
   - PROCESS-NAME,UAGame.exe
   - PROCESS-NAME,MarvelRivals_Launcher.exe
   - PROCESS-NAME,Marvel-Win64-Shipping.exe
@@ -566,7 +564,7 @@ payload:
   - PROCESS-NAME,Wuthering Waves.exe
   - PROCESS-NAME,KRWebView.exe
   - PROCESS-NAME,KRSDKExternal.exe
- 
+
   - PROCESS-NAME-REGEX,Aimbeast.*
   - PROCESS-NAME-REGEX,EscapeFromTarkov.*
   - PROCESS-NAME-REGEX,TslGame.*
@@ -579,6 +577,161 @@ payload:
   - PROCESS-NAME-REGEX,(?i).*RustClient.*
   - PROCESS-NAME-REGEX,(?i).*chivalry.*
   - PROCESS-NAME-REGEX,(?i).*chivalry2.
+
+  # Android Китайские приложения
+  # Китайские приложения
+  - PROCESS-NAME,com.eg.android.AlipayGphone
+  - PROCESS-NAME,com.sankuai.meituan
+  - PROCESS-NAME,com.sankuai.meituan.takeout
+  - PROCESS-NAME,com.dianping.v1
+  - PROCESS-NAME,com.taobao.taobao
+  - PROCESS-NAME,com.taobao.tmstore
+  - PROCESS-NAME,com.jingdong.app.mall
+  - PROCESS-NAME,com.xunmeng.pinduoduo
+  - PROCESS-NAME,com.sina.weibo
+  - PROCESS-NAME,com.zhihu.android
+  - PROCESS-NAME,tv.danmaku.bili
+  - PROCESS-NAME,com.ss.android.ugc.aweme
+  - PROCESS-NAME,com.smile.gifmaker
+  - PROCESS-NAME,com.xingin.xhs
+  - PROCESS-NAME,com.tencent.mobileqq
+  - PROCESS-NAME,com.baidu.searchbox
+  - PROCESS-NAME,com.baidu.BaiduMap
+  - PROCESS-NAME,com.autonavi.minimap
+  - PROCESS-NAME,com.ctrip
+  - PROCESS-NAME,com.MobileTicket
+  # Магазины и маркетплейсы
+  - PROCESS-NAME,com.alibaba.aliexpresshd
+  - PROCESS-NAME,com.alibaba.wireless
+  - PROCESS-NAME,com.tmall.wireless
+  - PROCESS-NAME,com.taobao.idlefish
+  - PROCESS-NAME,com.taobao.mobile.dipei
+  - PROCESS-NAME,com.taobao.litetao
+  - PROCESS-NAME,com.suning.mobile.ebuy
+  - PROCESS-NAME,com.achievo.vipshop
+  - PROCESS-NAME,com.dangdang.buy2
+  - PROCESS-NAME,com.jumei
+  - PROCESS-NAME,com.mogujie
+  - PROCESS-NAME,com.wuba
+  - PROCESS-NAME,com.wuba.zhuanzhuan
+  - PROCESS-NAME,com.koudai.weidian.buyer
+  - PROCESS-NAME,com.coolapk.market
+  # Еда, такси и путешествия
+  - PROCESS-NAME,com.didiglobal.passenger
+  - PROCESS-NAME,ctrip.android.view
+  - PROCESS-NAME,com.Qunar
+  - PROCESS-NAME,me.ele
+  - PROCESS-NAME,com.yumc.kfcchina
+  - PROCESS-NAME,com.mcdonalds.gma.cn
+  - PROCESS-NAME,com.starbucks.cn
+  - PROCESS-NAME,com.luckincoffee.luckybox
+  # Соцсети, мессенджеры и контент
+  - PROCESS-NAME,com.tencent.mobileqqi
+  - PROCESS-NAME,com.tencent.qqlite
+  - PROCESS-NAME,com.tencent.tim
+  - PROCESS-NAME,com.tencent.wework
+  - PROCESS-NAME,com.tencent.weishi
+  - PROCESS-NAME,com.tencent.map
+  - PROCESS-NAME,com.tencent.mtt
+  - PROCESS-NAME,com.tencent.qqmusic
+  - PROCESS-NAME,com.tencent.qqlive
+  - PROCESS-NAME,com.tencent.news
+  - PROCESS-NAME,com.tencent.weread
+  - PROCESS-NAME,com.tencent.qqsports
+  - PROCESS-NAME,com.tencent.edu
+  - PROCESS-NAME,com.tencent.android.qqdownloader
+  - PROCESS-NAME,com.tencent.token
+  - PROCESS-NAME,com.tencent.FileManager
+  - PROCESS-NAME,com.sina.weibolite
+  - PROCESS-NAME,com.douban.frodo
+  - PROCESS-NAME,com.immomo.momo
+  - PROCESS-NAME,com.tantan.x
+  - PROCESS-NAME,cn.soulapp.android
+  - PROCESS-NAME,com.ss.android.article.news
+  - PROCESS-NAME,com.ss.android.article.lite
+  - PROCESS-NAME,com.ss.android.article.video
+  - PROCESS-NAME,com.ss.android.ugc.aweme.lite
+  - PROCESS-NAME,com.ss.android.ugc.live
+  - PROCESS-NAME,com.ss.android.auto
+  - PROCESS-NAME,com.alibaba.android.rimet
+  - PROCESS-NAME,com.ss.android.lark
+  # Видео и музыка
+  - PROCESS-NAME,tv.danmaku.bilibilihd
+  - PROCESS-NAME,com.netease.cloudmusic
+  - PROCESS-NAME,com.kugou.android
+  - PROCESS-NAME,cn.kuwo.player
+  - PROCESS-NAME,fm.qingting.qtradio
+  - PROCESS-NAME,com.ximalaya.ting.android
+  - PROCESS-NAME,com.changba
+  - PROCESS-NAME,com.youku.phone
+  - PROCESS-NAME,com.iqiyi.phone
+  - PROCESS-NAME,com.qiyi.video
+  - PROCESS-NAME,com.hunantv.imgo.activity
+  - PROCESS-NAME,com.sohu.sohuvideo
+  # Поиск, облака и утилиты
+  - PROCESS-NAME,com.baidu.netdisk
+  - PROCESS-NAME,com.baidu.tieba
+  - PROCESS-NAME,com.baidu.input
+  - PROCESS-NAME,com.sogou.inputmethod.sogou
+  - PROCESS-NAME,com.tencent.qqinput
+  - PROCESS-NAME,com.iflytek.inputmethod
+  - PROCESS-NAME,cn.wps.moffice
+  - PROCESS-NAME,cn.wps.moffice_eng
+  - PROCESS-NAME,com.youdao.dict
+  - PROCESS-NAME,com.youdao.note
+  - PROCESS-NAME,com.UCMobile
+  - PROCESS-NAME,com.UCMobile.intl
+  # Банки и платежи
+  - PROCESS-NAME,cmb.pb
+  - PROCESS-NAME,com.icbc
+  - PROCESS-NAME,com.ccb.ccbstart
+  - PROCESS-NAME,com.boc.bocmbci
+  - PROCESS-NAME,com.bankcomm
+  - PROCESS-NAME,com.unionpay
+  - PROCESS-NAME,com.antfortune.wealth
+  - PROCESS-NAME,com.mybank.android.phone
+  - PROCESS-NAME,com.alipay.security.mobile.authenticator
+  - PROCESS-NAME,com.xiaomi.jr
+  - PROCESS-NAME,com.wangyin.payment
+  - PROCESS-NAME,cn.xuexi.android
+  # Магазины приложений и сервисы прошивок
+  - PROCESS-NAME,com.huawei.appmarket
+  - PROCESS-NAME,com.huawei.wallet
+  - PROCESS-NAME,com.huawei.hwid
+  - PROCESS-NAME,com.huawei.health
+  - PROCESS-NAME,com.huawei.music
+  - PROCESS-NAME,com.huawei.video
+  - PROCESS-NAME,com.huawei.browser
+  - PROCESS-NAME,com.xiaomi.market
+  - PROCESS-NAME,com.xiaomi.shop
+  - PROCESS-NAME,com.miui.player
+  - PROCESS-NAME,com.miui.video
+  - PROCESS-NAME,com.miui.browser
+  - PROCESS-NAME,com.miui.notes
+  - PROCESS-NAME,com.xiaomi.scanner
+  - PROCESS-NAME,com.xiaomi.midrop
+  - PROCESS-NAME,com.miui.weather2
+  - PROCESS-NAME,com.heytap.market
+  - PROCESS-NAME,com.heytap.browser
+  - PROCESS-NAME,com.heytap.wallet
+  - PROCESS-NAME,com.vivo.appstore
+  - PROCESS-NAME,com.vivo.browser
+  - PROCESS-NAME,com.vivo.wallet
+  - PROCESS-NAME,com.hihonor.appmarket
+  - PROCESS-NAME,com.hihonor.browser
+  - PROCESS-NAME,com.meizu.mstore
+  # Игры
+  - PROCESS-NAME,com.tencent.tmgp.sgame
+  - PROCESS-NAME,com.tencent.tmgp.pubgmhd
+  - PROCESS-NAME,com.tencent.tmgp.cf
+  - PROCESS-NAME,com.tencent.tmgp.speedmobile
+  - PROCESS-NAME,com.tencent.ig
+  - PROCESS-NAME,com.miHoYo.Yuanshen
+  - PROCESS-NAME,com.miHoYo.GenshinImpact
+  - PROCESS-NAME,com.miHoYo.hkrpg
+  - PROCESS-NAME,com.netease.onmyoji
+  - PROCESS-NAME,com.netease.dwrg
+  - PROCESS-NAME,com.taptap
 
   # Android Государственные и Московские сервисы
   - PROCESS-NAME,ru.dublgis.dgismobile
@@ -645,6 +798,16 @@ payload:
   - PROCESS-NAME,ru.smclinic.app.lk
   - PROCESS-NAME,ru.medtochka
 
+  # Дополнительные приложения: Государственные и Московские сервисы
+  - PROCESS-NAME,ru.gosuslugi
+  - PROCESS-NAME,ru.gosuslugi.auth
+  - PROCESS-NAME,ru.mfc
+  - PROCESS-NAME,ru.nalog.nalogapp
+  - PROCESS-NAME,ru.mos.hcs
+  - PROCESS-NAME,ru.mosgorzdrav
+  - PROCESS-NAME,ru.gibdd
+  - PROCESS-NAME,ru.sfr
+  - PROCESS-NAME,ru.fssp
   # Android Яндекс
   - PROCESS-NAME,ru.yandex.disk
   - PROCESS-NAME,ru.yandex.games
@@ -674,6 +837,16 @@ payload:
   - PROCESS-NAME,com.yandex.tasks.androidapp
   - PROCESS-NAME,com.yandex.yamb
 
+  # Дополнительные приложения: Яндекс
+  - PROCESS-NAME,com.yandex.browser
+  - PROCESS-NAME,ru.yandex.weather
+  - PROCESS-NAME,ru.yandex.market
+  - PROCESS-NAME,ru.yandex.food
+  - PROCESS-NAME,ru.yandex.dzen
+  - PROCESS-NAME,ru.yandex.telemost
+  - PROCESS-NAME,ru.yandex.notebook
+  - PROCESS-NAME,ru.yandex.messenger
+  - PROCESS-NAME,ru.yandex.rasp
   # Android Такси
   - PROCESS-NAME,ru.yandex.uber
   - PROCESS-NAME,ru.yandex.taxi
@@ -779,8 +952,15 @@ payload:
   - PROCESS-NAME,ru.sima_land.spb.market
   - PROCESS-NAME,club.chizhik
   - PROCESS-NAME,com.yandex.lavka
-  - PROCESS-NAME,com.ru.dixy
 
+  # Дополнительные приложения: Доставка
+  - PROCESS-NAME,ru.lamoda
+  - PROCESS-NAME,ru.megamarket
+  - PROCESS-NAME,ru.samokat
+  - PROCESS-NAME,ru.kuper
+  - PROCESS-NAME,ru.vprok
+  - PROCESS-NAME,ru.magnit.delivery
+  - PROCESS-NAME,ru.lenta.delivery
   # Android Торренты
   - PROCESS-NAME,com.kevinforeman.nzb360
   - PROCESS-NAME,org.proninyaroslav.libretorrent
@@ -922,3 +1102,43 @@ payload:
   - PROCESS-NAME,ru.drclinics.app.sovcom
   - PROCESS-NAME,ru.domclick.mortgage
   - PROCESS-NAME,ru.detmir.dmbonus
+  # Дополнительные приложения: Остальное
+  - PROCESS-NAME,ru.vk.store
+  - PROCESS-NAME,com.vkontakte.android
+  - PROCESS-NAME,com.vk.music
+  - PROCESS-NAME,ru.mail.mailapp
+  - PROCESS-NAME,ru.mail.cloud
+  - PROCESS-NAME,ru.aeroexpress
+  - PROCESS-NAME,ru.tutu
+  - PROCESS-NAME,ru.domclick
+  - PROCESS-NAME,ru.sberhealth
+  - PROCESS-NAME,ru.youla
+  - PROCESS-NAME,com.drom
+  - PROCESS-NAME,ru.hh.android
+  - PROCESS-NAME,ru.superjob
+  - PROCESS-NAME,ru.litres
+  - PROCESS-NAME,ru.bookvoed
+  - PROCESS-NAME,ru.skyeng
+  - PROCESS-NAME,ru.foxford
+  - PROCESS-NAME,org.stepic.droid
+  - PROCESS-NAME,ru.geekbrains
+  - PROCESS-NAME,ru.skillbox
+  - PROCESS-NAME,ru.netology
+  - PROCESS-NAME,ru.mts.mymts
+  - PROCESS-NAME,ru.tele2.tele2
+  - PROCESS-NAME,ru.beeline.services
+  - PROCESS-NAME,ru.rtk
+  - PROCESS-NAME,ru.domru
+  - PROCESS-NAME,ru.mgts
+  - PROCESS-NAME,ru.rbc
+  - PROCESS-NAME,ru.kommersant
+  - PROCESS-NAME,ru.ria
+  - PROCESS-NAME,ru.tass
+  - PROCESS-NAME,ru.gazeta
+  - PROCESS-NAME,ru.fontanka
+  - PROCESS-NAME,ru.kion
+  - PROCESS-NAME,ru.okko
+  - PROCESS-NAME,ru.wink
+  - PROCESS-NAME,ru.vkplay
+  - PROCESS-NAME,ru.amedia
+  - PROCESS-NAME,ru.1tv

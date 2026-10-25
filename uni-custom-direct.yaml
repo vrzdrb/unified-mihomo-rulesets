@@ -104,6 +104,29 @@ payload:
   - DOMAIN-SUFFIX,kimi.com
   - DOMAIN-REGEX,\.kimi\.ai\.
 
+  # Zhipu / Z.ai (GLM)
+  - DOMAIN-SUFFIX,z.ai
+  - DOMAIN-SUFFIX,bigmodel.cn
+  - DOMAIN-SUFFIX,chatglm.cn
+
+  # MiniMax
+  - DOMAIN-SUFFIX,minimax.io
+  - DOMAIN-SUFFIX,minimaxi.com
+  - DOMAIN-SUFFIX,hailuoai.com
+
+  # Alibaba Qwen
+  - DOMAIN-SUFFIX,qwen.ai
+  - DOMAIN-SUFFIX,qianwen.com
+  - DOMAIN-SUFFIX,modelscope.cn
+
+  - DOMAIN-SUFFIX,stepfun.com
+  - DOMAIN-SUFFIX,stepfun.ai
+  - DOMAIN-SUFFIX,baichuan-ai.com
+  - DOMAIN-SUFFIX,lingyiwanwu.com
+  - DOMAIN-SUFFIX,01.ai
+  - DOMAIN-SUFFIX,siliconflow.cn
+  - DOMAIN-SUFFIX,tencent.com
+
   # ===== Chinese services: e-commerce =====
   - DOMAIN-SUFFIX,taobao.com
   - DOMAIN-SUFFIX,tmall.com

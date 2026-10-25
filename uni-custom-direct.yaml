@@ -106,6 +106,7 @@ payload:
   - DOMAIN-SUFFIX,moonshot.cn
   - DOMAIN-SUFFIX,moonshot.ai
   - DOMAIN-SUFFIX,kimi.ai
+  - DOMAIN-SUFFIX,kimi.link
   - DOMAIN-SUFFIX,kimi.com
   - DOMAIN-REGEX,\.kimi\.ai\.
 

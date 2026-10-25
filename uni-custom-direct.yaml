@@ -58,12 +58,6 @@ payload:
   - DOMAIN-SUFFIX,ruvds.com
   - DOMAIN-SUFFIX,ispmanager.com
 
-  # ===== Russian services: messengers =====
-  - DOMAIN-SUFFIX,telegram.org
-  - DOMAIN-SUFFIX,t.me
-  - DOMAIN-SUFFIX,tdesktop.com
-  - DOMAIN-SUFFIX,telesco.pe
-
   # ===== Russian services: social =====
   - DOMAIN-SUFFIX,vk.com
   - DOMAIN-SUFFIX,vk.company

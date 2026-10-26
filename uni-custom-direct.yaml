@@ -84,16 +84,6 @@ payload:
   - DOMAIN-REGEX,^.*.tatar$
   - DOMAIN-REGEX,^.*.рф$
 
-  # ===== Russian services: own ASNs =====
-  - IP-ASN,13238
-  - IP-ASN,47764
-  - IP-ASN,8359
-  - IP-ASN,31133
-  - IP-ASN,3216
-  - IP-ASN,12389
-  - IP-ASN,39927
-  - IP-ASN,49505
-
   # China
 
   # Kimi.ai

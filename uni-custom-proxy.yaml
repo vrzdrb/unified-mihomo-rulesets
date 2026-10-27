@@ -1,6 +1,7 @@
 payload:
 
     # Other
+  - DOMAIN-SUFFIX,privatehost.com
   - DOMAIN-SUFFIX,anydesk.com
   - DOMAIN-SUFFIX,s3.amazonaws.com
   - DOMAIN-SUFFIX,amnezia.org

@@ -1,6 +1,8 @@
 payload:
 
     # Other
+  - DOMAIN-SUFFIX,mxcontent.com
+  - DOMAIN-SUFFIX,uqload.vc
   - DOMAIN-SUFFIX,privatehost.com
   - DOMAIN-SUFFIX,anydesk.com
   - DOMAIN-SUFFIX,s3.amazonaws.com

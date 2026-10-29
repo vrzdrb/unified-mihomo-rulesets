@@ -1,1 +1,10 @@
 payload:
+  - DOMAIN-SUFFIX,turn.rtcp.on.epicgames.com
+  - DOMAIN-SUFFIX,turn-eun1.rtcp.on.epicgames.com
+  - DOMAIN-SUFFIX,turn-euc1.rtcp.on.epicgames.com
+  - DOMAIN-SUFFIX,stun.l.google.com
+  - DOMAIN-SUFFIX,global.stun.twilio.com
+  - DOMAIN-SUFFIX,signaling-service-prod.eun1.live.rtcp.on.epicgames.com
+  - DOMAIN-SUFFIX,signaling-service-prod.euc1.live.rtcp.on.epicgames.com
+  - DOMAIN-SUFFIX,signaling-service-prod.use1a.live.rtcp.on.epicgames.com
+  - DOMAIN-SUFFIX,rtcp.on.epicgames.com

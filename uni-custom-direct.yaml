@@ -55,6 +55,7 @@ payload:
   - DOMAIN-SUFFIX,chatglm.cn
   - DOMAIN-SUFFIX,bigmodel.cn
   - DOMAIN-SUFFIX,aminer.cn
+  - DOMAIN-SUFFIX,aliyuncsslbintl.com
 
   # Kimi.ai
   - DOMAIN-REGEX,\.kimi\.ai\.

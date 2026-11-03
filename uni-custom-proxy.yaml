@@ -248,3 +248,8 @@ payload:
   - PROCESS-NAME,deezer.android.app
   - PROCESS-NAME,com.google.android.apps.youtube.music
 
+   # Keyword
+  - DOMAIN-KEYWORD,naked
+  - DOMAIN-KEYWORD,nude
+  - DOMAIN-KEYWORD,webcam
+

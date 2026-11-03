@@ -1,10 +1,16 @@
 payload:
-  - DOMAIN-SUFFIX,turn.rtcp.on.epicgames.com
-  - DOMAIN-SUFFIX,turn-eun1.rtcp.on.epicgames.com
-  - DOMAIN-SUFFIX,turn-euc1.rtcp.on.epicgames.com
-  - DOMAIN-SUFFIX,stun.l.google.com
-  - DOMAIN-SUFFIX,global.stun.twilio.com
-  - DOMAIN-SUFFIX,signaling-service-prod.eun1.live.rtcp.on.epicgames.com
-  - DOMAIN-SUFFIX,signaling-service-prod.euc1.live.rtcp.on.epicgames.com
-  - DOMAIN-SUFFIX,signaling-service-prod.use1a.live.rtcp.on.epicgames.com
-  - DOMAIN-SUFFIX,rtcp.on.epicgames.com
+ turn.rtcp.on.epicgames.com
+ turn-eun1.rtcp.on.epicgames.com
+ turn-euc1.rtcp.on.epicgames.com
+ stun.l.google.com
+ global.stun.twilio.com
+ signaling-service-prod.eun1.live.rtcp.on.epicgames.com
+ signaling-service-prod.euc1.live.rtcp.on.epicgames.com
+ signaling-service-prod.use1a.live.rtcp.on.epicgames.com
+ rtcp.on.epicgames.com
+ nakedcdn.xyz
+ nudesfiles.xyz
+ wcfilescdn.com
+ wcfilesstorage.xyz
+ webcamfiles.xyz
+ nudescdn.xyz

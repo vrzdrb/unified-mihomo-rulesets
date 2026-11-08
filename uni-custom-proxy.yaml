@@ -20,6 +20,8 @@ payload:
   - DOMAIN-SUFFIX,isds.cz
   - DOMAIN-SUFFIX,alza.cz
   - DOMAIN-SUFFIX,sourceforge.net
+  - DOMAIN-SUFFIX,obsd.jukai.icu
+  - DOMAIN-SUFFIX,draw.jukai.icu
 
     # Github
   - DOMAIN-SUFFIX,githubusercontent.com

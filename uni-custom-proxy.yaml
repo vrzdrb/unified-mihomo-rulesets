@@ -26,6 +26,8 @@ payload:
   - DOMAIN-SUFFIX,s1q2105.com
   - DOMAIN-SUFFIX,97bf1.com
   - DOMAIN-SUFFIX,mxzhxco8dft.com
+  - DOMAIN-SUFFIX,thumbnails.roblox.com
+  - DOMAIN-SUFFIX,rbxcdn.com
 
     # Github
   - DOMAIN-SUFFIX,githubusercontent.com

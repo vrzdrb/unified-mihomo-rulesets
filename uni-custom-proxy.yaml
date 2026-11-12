@@ -22,6 +22,10 @@ payload:
   - DOMAIN-SUFFIX,sourceforge.net
   - DOMAIN-SUFFIX,obsd.jukai.icu
   - DOMAIN-SUFFIX,draw.jukai.icu
+  - DOMAIN-SUFFIX,doppiocdn.media
+  - DOMAIN-SUFFIX,s1q2105.com
+  - DOMAIN-SUFFIX,97bf1.com
+  - DOMAIN-SUFFIX,mxzhxco8dft.com
 
     # Github
   - DOMAIN-SUFFIX,githubusercontent.com

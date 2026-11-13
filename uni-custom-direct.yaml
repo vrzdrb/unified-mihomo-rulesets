@@ -1,6 +1,8 @@
 payload:
   # Остальное
   - PROCESS-NAME,club.skllzz.fitness
+  - DOMAIN,apmplus.volces.com,DIRECT
+  - DOMAIN,tkrb7i.launches.appsflyersdk,DIRECT
 
   # GitHub
   - DOMAIN,github.com

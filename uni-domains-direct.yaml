@@ -659,6 +659,7 @@ payload:
  - '+.communities.apple.com'
  - '+.configuration-lb.ls-apple.com.akadns.net'
  - '+.configuration.apple.com'
+ - '+.configuration.ls.apple.com'
  - '+.consultant.ru'
  - '+.content.cdp.bethesda.net'
  - '+.copilot-proxy.githubusercontent.com'

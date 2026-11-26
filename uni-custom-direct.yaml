@@ -185,7 +185,6 @@ payload:
   - PROCESS-NAME,KRWebView.exe
   - PROCESS-NAME,KRSDKExternal.exe
 
-  - PROCESS-NAME-REGEX,(?i:purple)
   - PROCESS-NAME-REGEX,(?i:lagofast)
   - PROCESS-NAME-REGEX,(?i:ncoverlaycefweb)
   - PROCESS-NAME-REGEX,(?i:vrchat)

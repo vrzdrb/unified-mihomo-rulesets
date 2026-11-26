@@ -121,6 +121,7 @@ payload:
   - PROCESS-NAME,transmission-daemon
 
   # PC games
+
   - PROCESS-NAME,morimens.exe
   - PROCESS-NAME,TuanjieCrashHandler64.exe
   - PROCESS-NAME,Among Us.exe
@@ -184,6 +185,7 @@ payload:
   - PROCESS-NAME,KRWebView.exe
   - PROCESS-NAME,KRSDKExternal.exe
 
+  - PROCESS-NAME-REGEX,(?i:vrchat)
   - PROCESS-NAME-REGEX,Aimbeast.*
   - PROCESS-NAME-REGEX,EscapeFromTarkov.*
   - PROCESS-NAME-REGEX,TslGame.*

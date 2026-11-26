@@ -40,6 +40,7 @@ payload:
   - DOMAIN-SUFFIX,usercentrics.eu
   - DOMAIN-SUFFIX,steamcommunity.com
   - PROCESS-NAME-REGEX,(?i).*SpiritCrossing.*
+  - PROCESS-NAME-REGEX,(?i:purple)
 
    # Nikki
   - DOMAIN-SUFFIX,nikke-kr.com

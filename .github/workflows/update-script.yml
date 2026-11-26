@@ -38,6 +38,9 @@ jobs:
           urls=(
             "https://raw.githubusercontent.com/sjhgvr/oisd/refs/heads/main/domainswild2_small.txt"
             "https://raw.githubusercontent.com/sjhgvr/oisd/refs/heads/main/domainswild_small.txt"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/category-ads.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/category-speedtest.yaml"
+            "https://raw.githubusercontent.com/vrzdrb/unified-mihomo-rulesets/refs/heads/main/uni-custom-d-block.yaml"
           )
           echo "Загрузка ${#urls[@]} источников..."
           for u in "${urls[@]}"; do
@@ -85,15 +88,15 @@ jobs:
           echo "Первый домен: $(head -2 "$O" | tail -1)"
           rm -f "$T" "$U" && echo "Сохранено в $O"
 
-      - name: Update block list
+      - name: Update adblock-big list
         run: |
           #!/bin/bash
-          T=$(mktemp) && U=$(mktemp) && O="uni-block.yaml"
+          T=$(mktemp) && U=$(mktemp) && O="uni-adblock-big.yaml"
           > "$O"
           urls=(
+            "https://raw.githubusercontent.com/sjhgvr/oisd/refs/heads/main/domainswild2_big.txt"
             "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/category-speedtest.yaml"
             "https://raw.githubusercontent.com/vrzdrb/unified-mihomo-rulesets/refs/heads/main/uni-custom-d-block.yaml"
-            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/category-ads.yaml"
           )
           echo "Загрузка ${#urls[@]} источников..."
           for u in "${urls[@]}"; do
@@ -328,6 +331,19 @@ jobs:
           T=$(mktemp) && U=$(mktemp) && O="uni-domains-direct.yaml"
           > "$O"
           urls=(
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/sina.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/qihoo360.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/meituan.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/didi.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/pinduoduo.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/category-media-cn.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/category-social-media-cn.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/tld-cn.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/tld-ru.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/baidu.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/alibaba.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/aliyun.yaml"
+            "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/netease.yaml"
             "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/category-ai-ru.yaml"
             "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/category-ai-cn.yaml"
             "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/github.yaml"
@@ -673,9 +689,9 @@ jobs:
         run: |
           mihomo convert-ruleset domain yaml uni-adblock.yaml uni-adblock.mrs
 
-      - name: Create block rulesets
+      - name: Create adblock-big rulesets
         run: |
-          mihomo convert-ruleset domain yaml uni-block.yaml uni-block.mrs
+          mihomo convert-ruleset domain yaml uni-adblock-big.yaml uni-adblock-big.mrs
 
       - name: Create domains rulesets
         run: |

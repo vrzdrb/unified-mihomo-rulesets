@@ -185,19 +185,22 @@ payload:
   - PROCESS-NAME,KRWebView.exe
   - PROCESS-NAME,KRSDKExternal.exe
 
+  - PROCESS-NAME-REGEX,(?i:purple)
+  - PROCESS-NAME-REGEX,(?i:lagofast)
+  - PROCESS-NAME-REGEX,(?i:ncoverlaycefweb)
   - PROCESS-NAME-REGEX,(?i:vrchat)
-  - PROCESS-NAME-REGEX,Aimbeast.*
-  - PROCESS-NAME-REGEX,EscapeFromTarkov.*
-  - PROCESS-NAME-REGEX,TslGame.*
-  - PROCESS-NAME-REGEX,BattleBit.*
-  - PROCESS-NAME-REGEX,DeadByDaylight.*
-  - PROCESS-NAME-REGEX,.*GTA5.*
-  - PROCESS-NAME-REGEX,(?i).*Minecraft.*
-  - PROCESS-NAME-REGEX,(?i).*ragemp.*
-  - PROCESS-NAME-REGEX,(?i).*Majestic.*
-  - PROCESS-NAME-REGEX,(?i).*RustClient.*
-  - PROCESS-NAME-REGEX,(?i).*chivalry.*
-  - PROCESS-NAME-REGEX,(?i).*chivalry2.
+  - PROCESS-NAME-REGEX,(?i:Aimbeast)
+  - PROCESS-NAME-REGEX,(?i:EscapeFromTarkov)
+  - PROCESS-NAME-REGEX,(?i:TslGame)
+  - PROCESS-NAME-REGEX,(?i:BattleBit)
+  - PROCESS-NAME-REGEX,(?i:DeadByDaylight)
+  - PROCESS-NAME-REGEX,(?i:GTA5)
+  - PROCESS-NAME-REGEX,(?i:Minecraft)
+  - PROCESS-NAME-REGEX,(?i:ragemp)
+  - PROCESS-NAME-REGEX,(?i:Majestic)
+  - PROCESS-NAME-REGEX,(?i:RustClient)
+  - PROCESS-NAME-REGEX,(?i:chivalry)
+  - PROCESS-NAME-REGEX,(?i:chivalry2)
 
   # Android Китайские приложения
   # Китайские приложения

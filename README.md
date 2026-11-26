@@ -28,30 +28,6 @@ sniffer:
       
 rule-providers:
 
-  uni-adblock:
-    type: http
-    behavior: domain
-    format: mrs
-    url: https://github.com/vrzdrb/unified-mihomo-rulesets/raw/refs/heads/main/uni-adblock.mrs
-    path: ./unified/uni-adblock.mrs
-    interval: 86400
-
-  uni-block:
-    type: http
-    behavior: domain
-    format: mrs
-    url: https://github.com/vrzdrb/unified-mihomo-rulesets/raw/refs/heads/main/uni-block.mrs
-    path: ./unified/uni-block.mrs
-    interval: 86400
-
-  uni-app-block:
-    type: http
-    behavior: classical
-    format: yaml
-    url: https://raw.githubusercontent.com/vrzdrb/unified-mihomo-rulesets/refs/heads/main/uni-app-block.yaml
-    path: ./unified/uni-app-block.yaml
-    interval: 86400
-
   uni-custom-proxy:
     type: http
     behavior: classical
@@ -66,6 +42,22 @@ rule-providers:
     format: yaml
     url: https://raw.githubusercontent.com/vrzdrb/unified-mihomo-rulesets/refs/heads/main/uni-custom-direct.yaml
     path: ./unified/uni-custom-direct.yaml
+    interval: 86400
+
+  uni-adblock:
+    type: http
+    behavior: domain
+    format: mrs
+    url: https://github.com/vrzdrb/unified-mihomo-rulesets/raw/refs/heads/main/uni-adblock.mrs
+    path: ./unified/uni-adblock.mrs
+    interval: 86400
+
+  uni-adblock-big:
+    type: http
+    behavior: domain
+    format: mrs
+    url: https://github.com/vrzdrb/unified-mihomo-rulesets/raw/refs/heads/main/uni-block.mrs
+    path: ./unified/uni-adblock-big.mrs
     interval: 86400
 
   uni-domains-direct:
@@ -102,8 +94,7 @@ rule-providers:
 
 rules:
   - RULE-SET,uni-adblock,REJECT
-  - RULE-SET,uni-block,REJECT
-  - RULE-SET,uni-app-block,REJECT
+  - RULE-SET,uni-adblock-big,REJECT
   - RULE-SET,uni-custom-proxy,PROXY
   - RULE-SET,uni-custom-direct,DIRECT
   - RULE-SET,uni-domains-direct,DIRECT

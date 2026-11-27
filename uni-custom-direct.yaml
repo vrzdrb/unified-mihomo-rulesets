@@ -184,7 +184,7 @@ payload:
   - PROCESS-NAME,Wuthering Waves.exe
   - PROCESS-NAME,KRWebView.exe
   - PROCESS-NAME,KRSDKExternal.exe
-
+  
   - PROCESS-NAME-REGEX,(?i:lagofast)
   - PROCESS-NAME-REGEX,(?i:ncoverlaycefweb)
   - PROCESS-NAME-REGEX,(?i:vrchat)
@@ -200,6 +200,12 @@ payload:
   - PROCESS-NAME-REGEX,(?i:RustClient)
   - PROCESS-NAME-REGEX,(?i:chivalry)
   - PROCESS-NAME-REGEX,(?i:chivalry2)
+
+  # Aion
+  - PROCESS-NAME-REGEX,(?i:destinynetboost)
+  - PROCESS-NAME-REGEX,(?i:destinycefhost)
+  - PROCESS-NAME-REGEX,(?i:aiondestiny)
+  - PROCESS-NAME-REGEX,(?i:aion.bin)
 
   # Android Китайские приложения
   # Китайские приложения
